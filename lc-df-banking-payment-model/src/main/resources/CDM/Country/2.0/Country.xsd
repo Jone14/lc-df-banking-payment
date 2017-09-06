@@ -1,0 +1,1779 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/Country/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:element name="Country" type="Country"/>
+	<xs:complexType name="Country">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="isoCountryCode2"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The ISO 3166-1 alpha 2 country code. consists of 2 letters. This also serves as the key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isoCountryCode3"  type="CountryCodeKind">
+				<xs:annotation>
+					<xs:documentation>The ISO 3166-1 alpha 3 country code. consists of 2 letters. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isoCountryCodeNum"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The ISO 3166-1 numeric country code. Consists of 3 numbers. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="countryName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Deprecated (for Mercury).The English name for the country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="countryCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Deprecate (For Mercury): This should eventually be deprecated, however the previous 'Country' used in Mercury, in Location, had countryCode and countryName.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="internationalDialingCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>International dialing code e.g. +44</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="currencies" type="CurrencyCountry"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="city" type="City"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CurrencyCountry" type="CurrencyCountry"/>
+	<xs:complexType name="CurrencyCountry">
+		<xs:annotation>
+			<xs:documentation>Shows whether a currency is active in a given country, and if not, what it has been replaced by</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="isoCurrencyCode"  type="typ:CurrencyCodeKind">
+				<xs:annotation>
+					<xs:documentation>The identifier for the currency </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isoCountryCode"  type="CountryCodeKind">
+				<xs:annotation>
+					<xs:documentation>The identifier for the country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates if the currency is still in use in this country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isValid"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the combination of countryCode and currencyCode is (or has been in the past) valid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="replacedByCurrencyCode"  type="typ:CurrencyCodeKind">
+				<xs:annotation>
+					<xs:documentation>If isActive is false, and isValid is true, then this field should be populated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CountryCodeKind">
+		<xs:annotation>
+			<xs:documentation>An ISO standard defining codes that uniquely identify a country. 
+
+For each country this standard defines: 
+- an alpha-2 code (e.g. GB for United Kingdom) 
+- an alpha-3 code (e.g. GBR for United Kingdom), and 
+- a numeric code (e.g. 826) 
+
+The first two characters in an ISO 4217 currency code is the ISO 3166 alpha-2 country code.
+
+SOURCE:  http://www.logisticsworld.com/iso3166.asp</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AFG">
+				<xs:annotation>
+					<xs:documentation>Country:  Afghanistan
+alpha2 code:  AF
+Numeric code:  4</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ALB">
+				<xs:annotation>
+					<xs:documentation>Country:  Albania
+alpha2 code:  AL
+Numeric code:  8</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DZA">
+				<xs:annotation>
+					<xs:documentation>Country:  Algeria
+alpha2 code:  DZ
+Numeric code:  12</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ASM">
+				<xs:annotation>
+					<xs:documentation>Country:  American Samoa
+alpha2 code:  AS
+Numeric code:  16</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AGO">
+				<xs:annotation>
+					<xs:documentation>Country:  Angola
+alpha2 code:  AO
+Numeric code:  24</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AND">
+				<xs:annotation>
+					<xs:documentation>Country:  Andorra
+alpha2 code:  AD
+Numeric code:  20</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AIA">
+				<xs:annotation>
+					<xs:documentation>Country:  Anguilla
+alpha2 code:  AI
+Numeric code:  660</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATA">
+				<xs:annotation>
+					<xs:documentation>Country:  Antarctica
+alpha2 code:  AQ
+Numeric code:  10</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARG">
+				<xs:annotation>
+					<xs:documentation>Country:  Argentina
+alpha2 code:  AR
+Numeric code:  32</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATG">
+				<xs:annotation>
+					<xs:documentation>Country:  Antigua and Barbuda
+alpha2 code:  AG
+Numeric code:  28</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ABW">
+				<xs:annotation>
+					<xs:documentation>Country:  Aruba
+alpha2 code:  AW
+Numeric code:  533</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARM">
+				<xs:annotation>
+					<xs:documentation>Country:  Armenia
+alpha2 code:  AM
+Numeric code:  51</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AUS">
+				<xs:annotation>
+					<xs:documentation>Country:  Australia
+alpha2 code:  AU
+Numeric code:  36</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AUT">
+				<xs:annotation>
+					<xs:documentation>Country:  Austria
+alpha2 code:  AT
+Numeric code:  40</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AZE">
+				<xs:annotation>
+					<xs:documentation>Country:  Azerbaijan
+alpha2 code:  AZ
+Numeric code:  31</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BHS">
+				<xs:annotation>
+					<xs:documentation>Country:  Bahamas
+alpha2 code:  BS
+Numeric code:  44</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BGD">
+				<xs:annotation>
+					<xs:documentation>Country:  Bangladesh
+alpha2 code:  BD
+Numeric code:  50</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BHR">
+				<xs:annotation>
+					<xs:documentation>Country:  Bahrain
+alpha2 code:  BH
+Numeric code:  48</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BLR">
+				<xs:annotation>
+					<xs:documentation>Country:  Belarus
+alpha2 code:  BY
+Numeric code:  112</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRB">
+				<xs:annotation>
+					<xs:documentation>Country:  Barbados
+alpha2 code:  BB
+Numeric code:  52</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BEL">
+				<xs:annotation>
+					<xs:documentation>Country:  Belgium
+alpha2 code:  BE
+Numeric code:  56</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BLZ">
+				<xs:annotation>
+					<xs:documentation>Country:  Belize
+alpha2 code:  BZ
+Numeric code:  84</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BEN">
+				<xs:annotation>
+					<xs:documentation>Country:  Benin
+alpha2 code:  BJ
+Numeric code:  204</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BMU">
+				<xs:annotation>
+					<xs:documentation>Country:  Bermuda
+alpha2 code:  BM
+Numeric code:  60</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BOL">
+				<xs:annotation>
+					<xs:documentation>Country:  Bolivia
+alpha2 code:  BO
+Numeric code:  68</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BTN">
+				<xs:annotation>
+					<xs:documentation>Country:  Bhutan
+alpha2 code:  BT
+Numeric code:  64</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BIH">
+				<xs:annotation>
+					<xs:documentation>Country:  Bosnia and Herzegowina
+alpha2 code:  BA
+Numeric code:  70</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BWA">
+				<xs:annotation>
+					<xs:documentation>Country:  Botswana
+alpha2 code:  BW
+Numeric code:  72</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRA">
+				<xs:annotation>
+					<xs:documentation>Country:  Brazil
+alpha2 code:  BR
+Numeric code:  76</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BVT">
+				<xs:annotation>
+					<xs:documentation>Country:  Bouvet Island
+alpha2 code:  BV
+Numeric code:  74</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRN">
+				<xs:annotation>
+					<xs:documentation>Country:  Brunei Darussalam
+alpha2 code:  BN
+Numeric code:  96</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IOT">
+				<xs:annotation>
+					<xs:documentation>Country:  Biritish Indian Ocean Territory
+alpha2 code:  IO
+Numeric code:  86</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BFA">
+				<xs:annotation>
+					<xs:documentation>Country:  Burkina Faso
+alpha2 code:  BN
+Numeric code:  854</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BGR">
+				<xs:annotation>
+					<xs:documentation>Country:  Bulgaria
+alpha2 code:  BG
+Numeric code:  100</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BDI">
+				<xs:annotation>
+					<xs:documentation>Country:  Burundi
+alpha2 code:  BI
+Numeric code:  108</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KHM">
+				<xs:annotation>
+					<xs:documentation>Country:  Cambodia
+alpha2 code:  KH
+Numeric code:  116</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CMR">
+				<xs:annotation>
+					<xs:documentation>Country:  Cameroon
+alpha2 code:  CM
+Numeric code:  120</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CAN">
+				<xs:annotation>
+					<xs:documentation>Country:  Canada
+alpha2 code:  CA
+Numeric code:  124</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPV">
+				<xs:annotation>
+					<xs:documentation>Country:  Cape Verde
+alpha2 code:  CV
+Numeric code:  132</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CAF">
+				<xs:annotation>
+					<xs:documentation>Country:  Central African Republic
+alpha2 code:  CF
+Numeric code:  140</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CYM">
+				<xs:annotation>
+					<xs:documentation>Country:  Cayman Islands
+alpha2 code:  KY
+Numeric code:  136</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHL">
+				<xs:annotation>
+					<xs:documentation>Country:  Chile
+alpha2 code:  CL
+Numeric code:  152</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TCD">
+				<xs:annotation>
+					<xs:documentation>Country:  Chad
+alpha2 code:  TD
+Numeric code:  148</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHN">
+				<xs:annotation>
+					<xs:documentation>Country:  China
+alpha2 code:  CN
+Numeric code:  156</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CXR">
+				<xs:annotation>
+					<xs:documentation>Country:  Christmas Island
+alpha2 code:  CX
+Numeric code:  162</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CCK">
+				<xs:annotation>
+					<xs:documentation>Country:  Cocos (Keeling) Islands
+alpha2 code:  CC
+Numeric code:  166</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COL">
+				<xs:annotation>
+					<xs:documentation>Country:  Colombia
+alpha2 code:  CO
+Numeric code:  170</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COG">
+				<xs:annotation>
+					<xs:documentation>Country:  Congo
+alpha2 code:  CG
+Numeric code:  178</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COM">
+				<xs:annotation>
+					<xs:documentation>Country:  Comoros
+alpha2 code:  KM
+Numeric code:  174</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COD">
+				<xs:annotation>
+					<xs:documentation>Country:  Congo, The Democratic Republic of the
+alpha2 code:  CD
+Numeric code:  180</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COK">
+				<xs:annotation>
+					<xs:documentation>Country:  Cook Islands
+alpha2 code:  CK
+Numeric code:  184</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CIV">
+				<xs:annotation>
+					<xs:documentation>Country:  Cote D'Ivoire
+alpha2 code:  CI
+Numeric code:  384</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CRI">
+				<xs:annotation>
+					<xs:documentation>Country:  Costa Rica
+alpha2 code:  CR
+Numeric code:  188</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CUB">
+				<xs:annotation>
+					<xs:documentation>Country:  Cuba
+alpha2 code:  CU
+Numeric code:  192</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HRV">
+				<xs:annotation>
+					<xs:documentation>Country:  Croatia (local name:  Hrvatska)
+alpha2 code:  HR
+Numeric code:  191</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CYP">
+				<xs:annotation>
+					<xs:documentation>Country:  Cyprus
+alpha2 code:  CY
+Numeric code:  196</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CZE">
+				<xs:annotation>
+					<xs:documentation>Country:  Czech Republic
+alpha2 code:  CZ
+Numeric code:  203</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DJI">
+				<xs:annotation>
+					<xs:documentation>Country:  Djibouti
+alpha2 code:  DJ
+Numeric code:  262</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DNK">
+				<xs:annotation>
+					<xs:documentation>Country:  Denmark
+alpha2 code:  DK
+Numeric code:  208</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DMA">
+				<xs:annotation>
+					<xs:documentation>Country:  Dominica
+alpha2 code:  DM
+Numeric code:  212</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DOM">
+				<xs:annotation>
+					<xs:documentation>Country:  Dominican Republic
+alpha2 code:  DM
+Numeric code:  214</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ECU">
+				<xs:annotation>
+					<xs:documentation>Country:  Equador
+alpha2 code:  EC
+Numeric code:  218</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TMP">
+				<xs:annotation>
+					<xs:documentation>Country:  East Timor
+alpha2 code:  TP
+Numeric code:  626</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EGY">
+				<xs:annotation>
+					<xs:documentation>Country:  Egypt
+alpha2 code:  EG
+Numeric code:  818</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SLV">
+				<xs:annotation>
+					<xs:documentation>Country:  El Salvador
+alpha2 code:  SV
+Numeric code:  222</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ERI">
+				<xs:annotation>
+					<xs:documentation>Country:  Eritrea
+alpha2 code:  ER
+Numeric code:  232</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GNQ">
+				<xs:annotation>
+					<xs:documentation>Country:  Equatorial Guinea
+alpha2 code:  GQ
+Numeric code:  226</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EST">
+				<xs:annotation>
+					<xs:documentation>Country:  Estonia
+alpha2 code:  EE
+Numeric code:  233</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ETH">
+				<xs:annotation>
+					<xs:documentation>Country:  Ethiopia
+alpha2 code:  ET
+Numeric code:  231</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FLK">
+				<xs:annotation>
+					<xs:documentation>Country:  Falkland Islands (Malvinas)
+alpha2 code:  FK
+Numeric code:  238</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FRO">
+				<xs:annotation>
+					<xs:documentation>Country:  Faroe Islands
+alpha2 code:  FO
+Numeric code:  234</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FIN">
+				<xs:annotation>
+					<xs:documentation>Country:  Finland
+alpha2 code:  FI
+Numeric code:  246</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FJI">
+				<xs:annotation>
+					<xs:documentation>Country:  Fiji Islands
+alpha2 code:  FJ
+Numeric code:  242</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FRA">
+				<xs:annotation>
+					<xs:documentation>Country:  France
+alpha2 code:  FR
+Numeric code:  250</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FXX">
+				<xs:annotation>
+					<xs:documentation>Country:  France, Metropolitan
+alpha2 code:  FX
+Numeric code:  249</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GUF">
+				<xs:annotation>
+					<xs:documentation>Country:  French Guiana
+alpha2 code:  GF
+Numeric code:  254</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PYF">
+				<xs:annotation>
+					<xs:documentation>Country:  French Polynesia
+alpha2 code:  PF
+Numeric code:  258</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATF">
+				<xs:annotation>
+					<xs:documentation>Country:  French Southern Territories
+alpha2 code:  TF
+Numeric code:  260</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GAB">
+				<xs:annotation>
+					<xs:documentation>Country:  Gabon
+alpha2 code:  GA
+Numeric code:  266</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GEO">
+				<xs:annotation>
+					<xs:documentation>Country:  Georgia
+alpha2 code:  GE
+Numeric code:  268</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GMB">
+				<xs:annotation>
+					<xs:documentation>Country:  Gambia
+alpha2 code:  GM
+Numeric code:  270</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DEU">
+				<xs:annotation>
+					<xs:documentation>Country:  Germany
+alpha2 code:  DE
+Numeric code:  276</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GHA">
+				<xs:annotation>
+					<xs:documentation>Country:  Ghana
+alpha2 code:  GH
+Numeric code:  288</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GIB">
+				<xs:annotation>
+					<xs:documentation>Country:  Gibraltar
+alpha2 code:  GI
+Numeric code:  292</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRC">
+				<xs:annotation>
+					<xs:documentation>Country:  Greece
+alpha2 code:  GR
+Numeric code:  300</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRD">
+				<xs:annotation>
+					<xs:documentation>Country:  Grenada
+alpha2 code:  GD
+Numeric code:  308</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRL">
+				<xs:annotation>
+					<xs:documentation>Country:  Greenland
+alpha2 code:  GL
+Numeric code:  304</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GLP">
+				<xs:annotation>
+					<xs:documentation>Country:  Guadeloupe
+alpha2 code:  GP
+Numeric code:  312</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GUM">
+				<xs:annotation>
+					<xs:documentation>Country:  Guam
+alpha2 code:  GU
+Numeric code:  316</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GIN">
+				<xs:annotation>
+					<xs:documentation>Country:  Guinea
+alpha2 code:  GN
+Numeric code:  324</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GTM">
+				<xs:annotation>
+					<xs:documentation>Country:  Guatemala
+alpha2 code:  GT
+Numeric code:  320</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GNB">
+				<xs:annotation>
+					<xs:documentation>Country:  Guinea-Bissau
+alpha2 code:  GW
+Numeric code:  624</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GUY">
+				<xs:annotation>
+					<xs:documentation>Country:  Guyana
+alpha2 code:  GY
+Numeric code:  328</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HMD">
+				<xs:annotation>
+					<xs:documentation>Country:  Heard and McDonald Islands
+alpha2 code:  HM
+Numeric code:  334</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HTI">
+				<xs:annotation>
+					<xs:documentation>Country:  Haiti
+alpha2 code:  HT
+Numeric code:  332</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HND">
+				<xs:annotation>
+					<xs:documentation>Country:  Honduras
+alpha2 code:  GN
+Numeric code:  340</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VAT">
+				<xs:annotation>
+					<xs:documentation>Country:  Holy See (Vatican City State)
+alpha2 code:  VA
+Numeric code:  336</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HKG">
+				<xs:annotation>
+					<xs:documentation>Country:  Hong Kong
+alpha2 code:  HK
+Numeric code:  344</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HUN">
+				<xs:annotation>
+					<xs:documentation>Country:  Hungary
+alpha2 code:  HU
+Numeric code:  348</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IND">
+				<xs:annotation>
+					<xs:documentation>Country:  India
+alpha2 code:  IN
+Numeric code:  356</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ISL">
+				<xs:annotation>
+					<xs:documentation>Country:  Iceland
+alpha2 code:  IS
+Numeric code:  352</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IDN">
+				<xs:annotation>
+					<xs:documentation>Country:  Indonesia
+alpha2 code:  ID
+Numeric code:  360</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRN">
+				<xs:annotation>
+					<xs:documentation>Country:  Iran (Islamic Republic of)
+alpha2 code:  IR
+Numeric code:  364</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRL">
+				<xs:annotation>
+					<xs:documentation>Country:  Ireland
+alpha2 code:  IE
+Numeric code:  372</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRQ">
+				<xs:annotation>
+					<xs:documentation>Country:  Iraq
+alpha2 code:  IQ
+Numeric code:  368</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ISR">
+				<xs:annotation>
+					<xs:documentation>Country:  Israel
+alpha2 code:  IL
+Numeric code:  376</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ITA">
+				<xs:annotation>
+					<xs:documentation>Country:  Italy
+alpha2 code:  IT
+Numeric code:  380</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="JAM">
+				<xs:annotation>
+					<xs:documentation>Country:  Jamaica
+alpha2 code:  JM
+Numeric code:  388</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="JOR">
+				<xs:annotation>
+					<xs:documentation>Country:  Jordan
+alpha2 code:  JO
+Numeric code:  400</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KAZ">
+				<xs:annotation>
+					<xs:documentation>Country:  Kazakhstan
+alpha2 code:  KZ
+Numeric code:  398</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KEN">
+				<xs:annotation>
+					<xs:documentation>Country:  Kenya
+alpha2 code:  KI
+Numeric code:  404</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KIR">
+				<xs:annotation>
+					<xs:documentation>Country:  Kiribati
+alpha2 code:  KI
+Numeric code:  296</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRK">
+				<xs:annotation>
+					<xs:documentation>Country:  Korea, Demcratic People's Republic of
+alpha2 code:  KP
+Numeric code:  408</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KOR">
+				<xs:annotation>
+					<xs:documentation>Country:  Korea, Republic of
+alpha2 code:  KR
+Numeric code:  410</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KWT">
+				<xs:annotation>
+					<xs:documentation>Country:  Kuwait
+alpha2 code:  KW
+Numeric code:  414</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KGZ">
+				<xs:annotation>
+					<xs:documentation>Country:  Kyrgyzstan
+alpha2 code:  KG
+Numeric code:  417</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LAO">
+				<xs:annotation>
+					<xs:documentation>Country:  Lao People's Democratic Republic 
+alpha2 code:  LA
+Numeric code:  418</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBN">
+				<xs:annotation>
+					<xs:documentation>Country:  Lebanon
+alpha2 code:  LB
+Numeric code:  422</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LVA">
+				<xs:annotation>
+					<xs:documentation>Country:  Latvia
+alpha2 code:  LV
+Numeric code:  428</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBR">
+				<xs:annotation>
+					<xs:documentation>Country:  Liberia
+alpha2 code:  LR
+Numeric code:  430</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LSO">
+				<xs:annotation>
+					<xs:documentation>Country:  Lesotho
+alpha2 code:  LS
+Numeric code:  426</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBY">
+				<xs:annotation>
+					<xs:documentation>Country:  Libyan Arab Jamahiriya
+alpha2 code:  LY
+Numeric code:  434</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LIE">
+				<xs:annotation>
+					<xs:documentation>Country:  Liechtenstein
+alpha2 code:  LI
+Numeric code:  438</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LTU">
+				<xs:annotation>
+					<xs:documentation>Country:  Lithuania
+alpha2 code:  LT
+Numeric code:  440</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LUX">
+				<xs:annotation>
+					<xs:documentation>Country:  Luxembourg
+alpha2 code:  LU
+Numeric code:  442</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MAC">
+				<xs:annotation>
+					<xs:documentation>Country:  Macau
+alpha2 code:  MO
+Numeric code:  446</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MKD">
+				<xs:annotation>
+					<xs:documentation>Country:  Macedonia, The Former Yugoslav Republic
+alpha2 code:  MK
+Numeric code:  807</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MDG">
+				<xs:annotation>
+					<xs:documentation>Country:  Madagascar
+alpha2 code:  MG
+Numeric code:  450</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MWI">
+				<xs:annotation>
+					<xs:documentation>Country:  Malawi
+alpha2 code:  MW
+Numeric code:  454</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MDV">
+				<xs:annotation>
+					<xs:documentation>Country:  Maldives
+alpha2 code:  MV
+Numeric code:  462</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MYS">
+				<xs:annotation>
+					<xs:documentation>Country:  Malaysia
+alpha2 code:  MY
+Numeric code:  458</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MLI">
+				<xs:annotation>
+					<xs:documentation>Country:  Mali
+alpha2 code:  ML
+Numeric code:  466</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MLT">
+				<xs:annotation>
+					<xs:documentation>Country:  Malta
+alpha2 code:  MT
+Numeric code:  470</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MHL">
+				<xs:annotation>
+					<xs:documentation>Country:  Marshall Islands
+alpha2 code:  MH
+Numeric code:  584</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MTQ">
+				<xs:annotation>
+					<xs:documentation>Country:  Martinique
+alpha2 code:  MQ
+Numeric code:  474</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MRT">
+				<xs:annotation>
+					<xs:documentation>Country:  Mauritania
+alpha2 code:  MR
+Numeric code:  478</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MUS">
+				<xs:annotation>
+					<xs:documentation>Country:  Mauritius
+alpha2 code:  MU
+Numeric code:  480</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MYT">
+				<xs:annotation>
+					<xs:documentation>Country:  Mayotte
+alpha2 code:  YT
+Numeric code:  175</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MEX">
+				<xs:annotation>
+					<xs:documentation>Country:  Mexico
+alpha2 code:  MX
+Numeric code:  484</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FSM">
+				<xs:annotation>
+					<xs:documentation>Country:  Micronesia, Federated States of
+alpha2 code:  FM
+Numeric code:  483</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MCO">
+				<xs:annotation>
+					<xs:documentation>Country:  Monaco
+alpha2 code:  MC
+Numeric code:  492</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MDA">
+				<xs:annotation>
+					<xs:documentation>Country:  Moldova, Republic of
+alpha2 code:  MD
+Numeric code:  498</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MNG">
+				<xs:annotation>
+					<xs:documentation>Country:  Mongolia
+alpha2 code:  MN
+Numeric code:  496</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MSR">
+				<xs:annotation>
+					<xs:documentation>Country:  Montserrat
+alpha2 code:  MS
+Numeric code:  500</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MAR">
+				<xs:annotation>
+					<xs:documentation>Country:  Morocco
+alpha2 code:  MA
+Numeric code:  504</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MOZ">
+				<xs:annotation>
+					<xs:documentation>Country:  Mozambique
+alpha2 code:  MZ
+Numeric code:  508</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MMR">
+				<xs:annotation>
+					<xs:documentation>Country:  Myanmar
+alpha2 code:  MM
+Numeric code:  104</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NAM">
+				<xs:annotation>
+					<xs:documentation>Country:  Namibia
+alpha2 code:  NA
+Numeric code:  516</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NPL">
+				<xs:annotation>
+					<xs:documentation>Country:  Nepal
+alpha2 code:  NP
+Numeric code:  524</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NRU">
+				<xs:annotation>
+					<xs:documentation>Country:  Nauru
+alpha2 code:  NBR
+Numeric code:  420</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ANT">
+				<xs:annotation>
+					<xs:documentation>Country:  Netherlands Antilles
+alpha2 code:  AN
+Numeric code:  530</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NLD">
+				<xs:annotation>
+					<xs:documentation>Country:  Letherlands
+alpha2 code:  NL
+Numeric code:  528</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NCL">
+				<xs:annotation>
+					<xs:documentation>Country:  New Caledonia
+alpha2 code:  NC
+Numeric code:  540</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NZL">
+				<xs:annotation>
+					<xs:documentation>Country:  New Zealand
+alpha2 code:  NZ
+Numeric code:  554</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NER">
+				<xs:annotation>
+					<xs:documentation>Country:  Niger
+alpha2 code:  NI
+Numeric code:  562</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIC">
+				<xs:annotation>
+					<xs:documentation>Country:  Nicaragua
+alpha2 code:  NI
+Numeric code:  558</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NGA">
+				<xs:annotation>
+					<xs:documentation>Country:  Nigeria
+alpha2 code:  NG
+Numeric code:  566</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIU">
+				<xs:annotation>
+					<xs:documentation>Country:  Niue
+alpha2 code:  NU
+Numeric code:  570</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MNP">
+				<xs:annotation>
+					<xs:documentation>Country:  Northern Mariana Islands
+alpha2 code:  MP
+Numeric code:  580</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NFK">
+				<xs:annotation>
+					<xs:documentation>Country:  Norfolk Island
+alpha2 code:  NF
+Numeric code:  574</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOR">
+				<xs:annotation>
+					<xs:documentation>Country:  Norway
+alpha2 code:  NO
+Numeric code:  578</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OMN">
+				<xs:annotation>
+					<xs:documentation>Country:  Oman
+alpha2 code:  OM
+Numeric code:  512</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PAK">
+				<xs:annotation>
+					<xs:documentation>Country:  Pakistan
+alpha2 code:  PK
+Numeric code:  586</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PLW">
+				<xs:annotation>
+					<xs:documentation>Country:  Palau
+alpha2 code:  PW
+Numeric code:  585</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PAN">
+				<xs:annotation>
+					<xs:documentation>Country:  Panama
+alpha2 code:  PA
+Numeric code:  591</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PNG">
+				<xs:annotation>
+					<xs:documentation>Country:  Papua New Guinea
+alpha2 code:  PG
+Numeric code:  598</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PER">
+				<xs:annotation>
+					<xs:documentation>Country:  Peru
+alpha2 code:  PE
+Numeric code:  604</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRY">
+				<xs:annotation>
+					<xs:documentation>Country:  Paraguay
+alpha2 code:  PY
+Numeric code:  600</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PCN">
+				<xs:annotation>
+					<xs:documentation>Country:  Pitcairn
+alpha2 code:  PN
+Numeric code:  612</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PHL">
+				<xs:annotation>
+					<xs:documentation>Country:  Phillippines
+alpha2 code:  PH
+Numeric code:  608</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="POL">
+				<xs:annotation>
+					<xs:documentation>Country:  Poland
+alpha2 code:  PL
+Numeric code:  616</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRT">
+				<xs:annotation>
+					<xs:documentation>Country:  Portugal
+alpha2 code:  PT
+Numeric code:  620</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRI">
+				<xs:annotation>
+					<xs:documentation>Country:  Puerto Rico
+alpha2 code:  PR
+Numeric code:  630</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="QAT">
+				<xs:annotation>
+					<xs:documentation>Country:  Quatar
+alpha2 code:  QA
+Numeric code:  634</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REU">
+				<xs:annotation>
+					<xs:documentation>Country:  Reunion
+alpha2 code:  RE
+Numeric code:  638</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ROM">
+				<xs:annotation>
+					<xs:documentation>Country:  Romanis
+alpha2 code:  RO
+Numeric code:  642</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RUS">
+				<xs:annotation>
+					<xs:documentation>Country:  Russian Federation
+alpha2 code:  RU
+Numeric code:  643</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RWA">
+				<xs:annotation>
+					<xs:documentation>Country:  Rwanda
+alpha2 code:  RW
+Numeric code:  646</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KNA">
+				<xs:annotation>
+					<xs:documentation>Country:  Saint Kitts and Nevis
+alpha2 code:  KN
+Numeric code:  659</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LCA">
+				<xs:annotation>
+					<xs:documentation>Country:  Saint Lucia
+alpha2 code:  LC
+Numeric code:  662</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VCT">
+				<xs:annotation>
+					<xs:documentation>Country:  Saint Vincent and the Grenadines
+alpha2 code:  VC
+Numeric code:  670</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WSM">
+				<xs:annotation>
+					<xs:documentation>Country:  Samoa
+alpha2 code:  WS
+Numeric code:  882</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SMR">
+				<xs:annotation>
+					<xs:documentation>Country:  San Marinoi
+alpha2 code:  SM
+Numeric code:  674</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STP">
+				<xs:annotation>
+					<xs:documentation>Country:  Sao Tome and Principe
+alpha2 code:  ST
+Numeric code:  678</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SAU">
+				<xs:annotation>
+					<xs:documentation>Country:  Saudi Arabia
+alpha2 code:  SA
+Numeric code:  682</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SEN">
+				<xs:annotation>
+					<xs:documentation>Country:  Senegal
+alpha2 code:  SN
+Numeric code:  686</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SLE">
+				<xs:annotation>
+					<xs:documentation>Country:  Sierra Leone
+alpha2 code:  SL
+Numeric code:  694</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SYC">
+				<xs:annotation>
+					<xs:documentation>Country:  Seychelles
+alpha2 code:  SC
+Numeric code:  690</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SGP">
+				<xs:annotation>
+					<xs:documentation>Country:  Singapore
+alpha2 code:  SG
+Numeric code:  702</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SVK">
+				<xs:annotation>
+					<xs:documentation>Country:  Slovakia (Slovak Republic)
+alpha2 code:  SK
+Numeric code:  703</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SVN">
+				<xs:annotation>
+					<xs:documentation>Country:  Slovenia
+alpha2 code:  SI
+Numeric code:  705</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SLB">
+				<xs:annotation>
+					<xs:documentation>Country:  Solomon Islands
+alpha2 code:  SB
+Numeric code:  90</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SOM">
+				<xs:annotation>
+					<xs:documentation>Country:  Somalia
+alpha2 code:  SO
+Numeric code:  706</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SGS">
+				<xs:annotation>
+					<xs:documentation>Country:  South Georgia and the South Sandwich Islands
+alpha2 code:  GS
+Numeric code:  239</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZAF">
+				<xs:annotation>
+					<xs:documentation>Country:  South Africa
+alpha2 code:  ZA
+Numeric code:  710</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ESP">
+				<xs:annotation>
+					<xs:documentation>Country:  Spain
+alpha2 code:  ES
+Numeric code:  724</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LKA">
+				<xs:annotation>
+					<xs:documentation>Country:  Sri Lanka
+alpha2 code:  LK
+Numeric code:  144</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SHN">
+				<xs:annotation>
+					<xs:documentation>Country:  St. Helena
+alpha2 code:  SH
+Numeric code:  654</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SPM">
+				<xs:annotation>
+					<xs:documentation>Country:  St. Pierre and Miquelon
+alpha2 code:  PM
+Numeric code:  666</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SDN">
+				<xs:annotation>
+					<xs:documentation>Country:  Sudan
+alpha2 code:  SD
+Numeric code:  736</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SUR">
+				<xs:annotation>
+					<xs:documentation>Country:  Suriname
+alpha2 code:  SR
+Numeric code:  740</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SJM">
+				<xs:annotation>
+					<xs:documentation>Country:  Svalbard and Jan Mayen Islands
+alpha2 code:  SJ
+Numeric code:  744</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SWZ">
+				<xs:annotation>
+					<xs:documentation>Country:  Swaziland
+alpha2 code:  SZ
+Numeric code:  748</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHE">
+				<xs:annotation>
+					<xs:documentation>Country:  Switzerland
+alpha2 code:  CH
+Numeric code:  756</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SWE">
+				<xs:annotation>
+					<xs:documentation>Country:  Sweden
+alpha2 code:  SE
+Numeric code:  752</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SYR">
+				<xs:annotation>
+					<xs:documentation>Country:  Syrian Arab Republic
+alpha2 code:  SY
+Numeric code:  760</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TWN">
+				<xs:annotation>
+					<xs:documentation>Country:  Taiwan, Province of China
+alpha2 code:  TW
+Numeric code:  158</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TJK">
+				<xs:annotation>
+					<xs:documentation>Country:  Tajikistand
+alpha2 code:  TJ
+Numeric code:  762</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TZA">
+				<xs:annotation>
+					<xs:documentation>Country:  Tanzania, United Republic of
+alpha2 code:  TZ
+Numeric code:  834</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TGO">
+				<xs:annotation>
+					<xs:documentation>Country:  Togo
+alpha2 code:  TG
+Numeric code:  768</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="THA">
+				<xs:annotation>
+					<xs:documentation>Country:  Thailand
+alpha2 code:  TH
+Numeric code:  764</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TKL">
+				<xs:annotation>
+					<xs:documentation>Country:  Tokelau
+alpha2 code:  TK
+Numeric code:  772</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TON">
+				<xs:annotation>
+					<xs:documentation>Country:  Tonga
+alpha2 code:  TO
+Numeric code:  776</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TTO">
+				<xs:annotation>
+					<xs:documentation>Country:  Trinidad and Tobago
+alpha2 code:  TT
+Numeric code:  780</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TUN">
+				<xs:annotation>
+					<xs:documentation>Country:  Tunisia
+alpha2 code:  TN
+Numeric code:  788</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TKM">
+				<xs:annotation>
+					<xs:documentation>Country:  Turkmenistan
+alpha2 code:  TM
+Numeric code:  795</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TUR">
+				<xs:annotation>
+					<xs:documentation>Country:  Turkey
+alpha2 code:  TR
+Numeric code:  792</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TCA">
+				<xs:annotation>
+					<xs:documentation>Country:  Turks and Caicos Islands
+alpha2 code:  TC
+Numeric code:  796</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TUV">
+				<xs:annotation>
+					<xs:documentation>Country:  Tuvalu
+alpha2 code:  TV
+Numeric code:  798</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UGA">
+				<xs:annotation>
+					<xs:documentation>Country:  Uganda
+alpha2 code:  UG
+Numeric code:  800</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UKR">
+				<xs:annotation>
+					<xs:documentation>Country: Ukraine
+alpha2 code:  UA
+Numeric code:  804</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARE">
+				<xs:annotation>
+					<xs:documentation>Country:  United Arab Emirates
+alpha2 code:  AE
+Numeric code:  784</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GBR">
+				<xs:annotation>
+					<xs:documentation>Country:  United Kingdom
+Alpha2 code:  GB
+Numeric code:  826</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="USA">
+				<xs:annotation>
+					<xs:documentation>Country:  United States
+alpha2 code:  US
+Numeric code:  840</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UMI">
+				<xs:annotation>
+					<xs:documentation>Country:  United States Minor Outlying Islands
+alpha2 code:  UM
+Numeric code:  581</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="URY">
+				<xs:annotation>
+					<xs:documentation>Country:  Uruguay
+alpha2 code:  UY
+Numeric code:  858</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UZB">
+				<xs:annotation>
+					<xs:documentation>Country:  Uzbekistan
+alpha2 code:  UZ
+Numeric code:  860</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VEN">
+				<xs:annotation>
+					<xs:documentation>Country:  Venezuela
+alpha2 code:  VE
+Numeric code:  862</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VUT">
+				<xs:annotation>
+					<xs:documentation>Country:  Vanuatu
+alpha2 code:  VU
+Numeric code:  548</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VGB">
+				<xs:annotation>
+					<xs:documentation>Country:  Virgin Islands (British)
+alpha2 code:  VG
+Numeric code:  92</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VNM">
+				<xs:annotation>
+					<xs:documentation>Country:  Viet Nam
+alpha2 code:  VN
+Numeric code:  704</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VIR">
+				<xs:annotation>
+					<xs:documentation>Country:  Virgin Islands (U.S.)
+alpha2 code:  VI
+Numeric code:  850</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WLF">
+				<xs:annotation>
+					<xs:documentation>Country:  Wallis and Futuna Islands
+alpha2 code:  WF
+Numeric code:  876</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ESH">
+				<xs:annotation>
+					<xs:documentation>Country:  Western Sahara
+alpha2 code:  EH
+Numeric code:  732</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="YEM">
+				<xs:annotation>
+					<xs:documentation>Country:  Yemen
+alpha2 code:  YE
+Numeric code:  887</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="YUG">
+				<xs:annotation>
+					<xs:documentation>Country:  Yugoslavia
+alpha2 code:  GU
+Numeric code:  891</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZMB">
+				<xs:annotation>
+					<xs:documentation>Country:  Zambia
+alpha2 code:  ZM
+Numeric code:  894</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZWE">
+				<xs:annotation>
+					<xs:documentation>Country:  Zimbabwe
+alpha2 code:  ZW
+Numeric code:  716</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="City" type="City"/>
+	<xs:complexType name="City">
+		<xs:annotation>
+			<xs:documentation>Maintains the city details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="cityCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique code of a city</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="cityName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the city in English</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isoCountryCode3"  type="CountryCodeKind">
+				<xs:annotation>
+					<xs:documentation>The country where this city belongs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

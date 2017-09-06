@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/trading/Price/2.0" xmlns:bprc="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" xmlns:prc="http://cdm.ladbrokes.co.uk/trading/Price/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/trading/Price/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" schemaLocation="../../Customer/2.0/Customer.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" schemaLocation="../../BasePrice/2.0/BasePrice.xsd"/>
+	<xs:element name="PricingInputParameter" type="PricingInputParameter"/>
+	<xs:complexType name="PricingInputParameter">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PriceStreamStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Inactive"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriceCouplingTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Enhanced"/>
+			<xs:enumeration value="Reduced"/>
+			<xs:enumeration value="Standard"/>
+			<xs:enumeration value="Manual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriceFormatKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Decimal"/>
+			<xs:enumeration value="Fractional"/>
+			<xs:enumeration value="American"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SelectionPriceCategoryKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AntePostPrice"/>
+			<xs:enumeration value="EarlyPrice"/>
+			<xs:enumeration value="BoardPrice"/>
+			<xs:enumeration value="StartingPrice"/>
+			<xs:enumeration value="InPlayPrice"/>
+			<xs:enumeration value="FixedPrice"/>
+			<xs:enumeration value="IndicativePrice"/>
+			<xs:enumeration value="PrePlayPrice"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriceStreamTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Core"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="Manual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StreamVarianceSignKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="+"/>
+			<xs:enumeration value="-"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PriceCouplingMapping" type="PriceCouplingMapping"/>
+	<xs:complexType name="PriceCouplingMapping">
+		<xs:annotation>
+			<xs:documentation>Maintains the mapping details between price coupling and price.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="mappingId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for price coupling mapping.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Validity of price coupling mapping</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceFormat"  type="PriceFormatKind">
+				<xs:annotation>
+					<xs:documentation>Format of the price which could be of type;Decimal
+Fractional
+American</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="valueA" type="bprc:Price"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="valueB" type="bprc:Price"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PriceStream" type="PriceStream"/>
+	<xs:complexType name="PriceStream">
+		<xs:annotation>
+			<xs:documentation>Maintains the details of all the price streams for Ladbrokes. A price stream is a stream for which a different price can be defined which is different from the default pricing, so as keep up with competition in that segment.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for the stream.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the stream.
+There would at least be one stream data in this and it would be for default pricing, which would be "Default Stream", which will the normal price offered by Ladbrokes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamType"  type="PriceStreamTypeKind">
+				<xs:annotation>
+					<xs:documentation>The type of the stream.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamShortName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Short name associated with stream if any</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamVarianceSign"  type="StreamVarianceSignKind">
+				<xs:annotation>
+					<xs:documentation>Short name associated with stream if any</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamVarianceValue"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Short name associated with stream if any</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Short name associated with stream if any</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="streamCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Code of the price stream.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sortOrder"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="PriceStreamStatusKind">
+				<xs:annotation>
+					<xs:documentation>Status  of the price stream.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isShown"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isPriceLinked"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Mercury - TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isEnabled"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Mercury - TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroup" type="cus:CustomerGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerGroupDownStream" type="CustomerGroupDownStream"/>
+	<xs:complexType name="CustomerGroupDownStream">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroup" type="cus:CustomerGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerGroupPriceStreams" type="CustomerGroupPriceStreams"/>
+	<xs:complexType name="CustomerGroupPriceStreams">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="isApplyToAllLevelsVariance"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>If TRUE then price variance is applicable to all the childs of the selected entity else not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroupPrice" type="PriceStream"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PriceCoupling" type="PriceCoupling"/>
+	<xs:complexType name="PriceCoupling">
+		<xs:annotation>
+			<xs:documentation>Maintains Strategies i.e coupling types which define which coupling would be applied for selecting the selection 2 price when the selection 1 price is entered. prices are selected based on the coupling type.
+This is applicable only for two way markets
+A two way market is a market which can have only two outcomes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="couplingDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description of coupling type if any</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="couplingType"  type="PriceCouplingTypeKind">
+				<xs:annotation>
+					<xs:documentation>The type of the coupling strategy (i.e. mappings)
+Enhanced
+Reduced
+Standard</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="mapping" type="PriceCouplingMapping"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

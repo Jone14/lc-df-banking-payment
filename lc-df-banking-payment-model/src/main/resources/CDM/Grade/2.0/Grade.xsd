@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/trading/Grade/2.0" xmlns:grd="http://cdm.ladbrokes.co.uk/trading/Grade/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/trading/Grade/2.0">
+	<xs:element name="ArrayOfGrade" type="ArrayOfGrade"/>
+	<xs:complexType name="ArrayOfGrade">
+		<xs:annotation>
+			<xs:documentation>Collection of Grades</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="ArrayOfGrade" type="Grade"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DefaultGrades" type="DefaultGrades"/>
+	<xs:complexType name="DefaultGrades">
+		<xs:annotation>
+			<xs:documentation>Maintains List of all In Play and pre match grades.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="preMatchGrades" type="ArrayOfGrade"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="inPlayGrades" type="ArrayOfGrade"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Grade" type="Grade"/>
+	<xs:complexType name="Grade">
+		<xs:annotation>
+			<xs:documentation>Maintains details of all the Grades used in Ladbrokes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="gradeId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Id for the Grade</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gradeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the grade of the match</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gradeDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description of the grade which again could be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gradeCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Type of the grade.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isSelected"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>isSelected</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/banking/Payment/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/banking/Payment/2.0" xmlns:pay="http://cdm.ladbrokes.co.uk/banking/Payment/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:ptr="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" xmlns:txn="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:imy="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" schemaLocation="../../Customer/2.0/Customer.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" schemaLocation="../../InternationalMoney/2.0/InternationalMoney.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" schemaLocation="../../Transaction/2.0/Transaction.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" schemaLocation="../../PartyRole/2.0/PartyRole.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="PaymentMethodCharacteristic" type="PaymentMethodCharacteristic"/>
+	<xs:complexType name="PaymentMethodCharacteristic">
+		<xs:annotation>
+			<xs:documentation>A generic container of name value pair characteristics for future payment extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the generic characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the generic characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the value of the generic characteristic (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Active or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Paybox" type="Paybox"/>
+	<xs:complexType name="Paybox">
+		<xs:annotation>
+			<xs:documentation>The Paybox payment method</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="payboxNumber" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Paybox account number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WesternUnion" type="WesternUnion"/>
+	<xs:complexType name="WesternUnion">
+		<xs:annotation>
+			<xs:documentation>This class represents the western union details of a customer used to transfer payment via western union</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="payee" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A name that the payee that of this western union account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountNumber" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The western union account number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="office" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The office name of the western union branch where this payment method is registered</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="branchCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The western union branch code</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="branchCountry" type="cty:Country" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DataCash" type="DataCash"/>
+	<xs:complexType name="DataCash">
+		<xs:annotation>
+			<xs:documentation>The datacash payment method</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="dataCashUserId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The datacash user Id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subType" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The subtype of datacash card.
+e.g: PaySafeCard, Sofort</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CreditPayment" type="CreditPayment"/>
+	<xs:complexType name="CreditPayment">
+		<xs:annotation>
+			<xs:documentation>This would result in transferring money INTO an account FROM Ladbrokes.
+
+e.g. The result of a 'WithdrawFunds' initiated by a Customer, or Paying an Affiliate</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Payment">
+				<xs:sequence>
+					<xs:element name="creditNote" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A note on the credit payemnt</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Payment" type="Payment"/>
+	<xs:complexType name="Payment" abstract="true">
+		<xs:annotation>
+			<xs:documentation>This class represents a payment with a payment provider.  A Wallet Transaction (process) may or may not have a payment associated with it (e.g:  DepositFunds transaction does, TransferFunds does not).
+
+A Payment may also originate that is not intended for customers, rather employees.
+
+Thus Wallet Transaction and Payment are separate concepts and modelled as such.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="txn:Transaction">
+				<xs:sequence>
+					<xs:element name="paymentKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A Unique payment Key identifying this payment</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+					<xs:element name="paymentSettledDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+					<xs:element name="paymentSort" type="PaymentSortKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Sort of payment: 'W'ithdraw or 'D'eposit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="amount" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The amount</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentChannel" type="chn:Channel" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="paymentCountry" type="cty:Country" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="paymentMethod" type="PaymentMethod" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="paymentCharacteristics" type="PaymentCharacteristics" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Ukash" type="Ukash"/>
+	<xs:complexType name="Ukash">
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="ukashExternalId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The ukash account id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The email address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isVerified" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this verified?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Neteller" type="Neteller"/>
+	<xs:complexType name="Neteller">
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="netellerId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The Neteller user ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Cheque" type="Cheque"/>
+	<xs:complexType name="Cheque">
+		<xs:annotation>
+			<xs:documentation>Cheque payment method</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="payee" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The payee the cheque is to be made out to</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="addressLine1" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The address line 1 of the payee address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="addressLine2" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The address line 2 of the payee address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="addressLine3" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The address line 3 of the payee address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="addressLine4" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The address line 4 of the payee address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="addressPostcode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The postcode of the payee address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="addressCity" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The city of the payee address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="address" type="loc:Address" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Card" type="Card"/>
+	<xs:complexType name="Card">
+		<xs:annotation>
+			<xs:documentation>A Card type of payment method</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="cardNo" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>User's card number (Only the first 6 and last 4 digits of the card number are returned).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cardKind" type="CardSortKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The kind of the card, Credit or Debit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="startDate" type="xs:date" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>User's payment method start date.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="endDate" type="xs:date" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>User's payment method end date.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="issueNo" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>User's payment method issue number (note some cards do not have a issue number).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="country" type="cty:CountryCodeKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Country the cardholder is from</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cardHolderName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Name on the card</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cardScheme" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Scheme for the card.
+e.g:  VISA, VISA Delta, Mastercard, Switch</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cardStatus" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Specific card status (e.g. Active, Suspended (fraud), Expired, etc)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cvv" type="xs:integer" minOccurs="0" maxOccurs="1" />
+					<xs:element name="isHidden" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this card hidden?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cardToken" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Payment gateway encypted token for every card stored</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isPrimaryCard" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Indicates if the card is primary among all cards registered</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PaymentSortKind">
+		<xs:annotation>
+			<xs:documentation>Sorts of Payment available to the customer</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Debit">
+				<xs:annotation>
+					<xs:documentation>Debit customer's account aka Deposit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Credit">
+				<xs:annotation>
+					<xs:documentation>Credit customer's account aka Withdrawal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Paypal" type="Paypal"/>
+	<xs:complexType name="Paypal">
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="userName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Paypal user name</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The email of the paypal account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paypalCountry" type="cty:Country" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PaymentMethodStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the status values for a Payment Method.
+
+Each payment method may have further specialisations of status related to the type (e.g. suspended for fraud - for a card)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The payment method is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The payment method is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>TBD - Placeholder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ClickAndBuy" type="ClickAndBuy"/>
+	<xs:complexType name="ClickAndBuy">
+		<xs:annotation>
+			<xs:documentation>The click and buy payment method</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="userName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The username</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="createDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaymentMethodType" type="PaymentMethodType"/>
+	<xs:complexType name="PaymentMethodType">
+		<xs:annotation>
+			<xs:documentation>The type of the payment method.  e.g. Card, Paypal.
+
+Each type will have Ladbrokes defined constraints on aspects such as withdrawal and deposit limits</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="PaymentMethodTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The code representing the payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="minimumDeposit" type="typ:Money" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The minimum deposit amount for this payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maximumDeposit" type="typ:Money" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The maximum deposit amount for this payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="depositProcessingTime" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The deposit processing time In hours - 0 is 'Instant'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="withdrawalProcessingTime" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>In hours - 0 is 'Instant'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="depositFee" type="typ:Percentage" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A fee for depositing if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="withdrawalFee" type="typ:Percentage" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A fee for withdrawing if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="notes" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A notes on the method</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="riskValue" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Risk value for thjs payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentMethodTypeKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="minimumWithdrawal" type="typ:Money" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The minimum withdrawal amount for this payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maximumWithdrawal" type="typ:Money" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The maximum withdrawal amount for this payment method type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PaymentCharacteristics" type="PaymentCharacteristics"/>
+	<xs:complexType name="PaymentCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class is a collection of payment characteristics</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numChars" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The number of characteristics in the collection</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentCharacteristic" type="PaymentCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetCard" type="BetCard"/>
+	<xs:complexType name="BetCard">
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="betCardUserId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The bet card user Id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EnvoyOneClick" type="EnvoyOneClick"/>
+	<xs:complexType name="EnvoyOneClick">
+		<xs:annotation>
+			<xs:documentation>The envoy one click payment method</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="envoyExternalId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The envoy Id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subType" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The subtype of envoy account.
+e.g: PaySafeCard, Sofort</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CardStatusKind">
+		<xs:annotation>
+			<xs:documentation>TBD - This enumeration represents the status of the payment method</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Can be used for financial transactions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Cannot be used for financial transactions - the Customer has explicitly deactivated it</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Cannot be used for financial transactions - Ladbrokes has explicitly deactivated it</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Expired">
+				<xs:annotation>
+					<xs:documentation>Cannot be used for financial transactions - the card has expired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Cannot be used for financial transactions - the card has expired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Earthport" type="Earthport"/>
+	<xs:complexType name="Earthport">
+		<xs:annotation>
+			<xs:documentation>This class represents the earthport details of a customer used to transfer payment via earthport</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="earthportVAN" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The earthport VAN number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A name that the customer has provided to identify this account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sortCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the sort code of the branch in the format xx-xx-xx</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountNumber" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the bank account number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Uniquely identifies a bank branch. In the UK this is usually the first 2 digits of the sortCode</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the name of the bank company</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="holding" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Holding</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankSwiftCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Uniquely identifies a bank internationally - this forms part of the IBAN. Also known as a BIC (Bank Identifier Code)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IBAN" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>International Bank Account Number - used to uniquely identify a bank account anywhere in the world;
+http://en.wikipedia.org/wiki/International_Bank_Account_Number </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="extId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The external ID of the account?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="remoteStatus" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Status of the remote provider</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PaymentMethodTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Card"/>
+			<xs:enumeration value="Cash"/>
+			<xs:enumeration value="Cheque"/>
+			<xs:enumeration value="Neteller"/>
+			<xs:enumeration value="BankDetails"/>
+			<xs:enumeration value="Moneybookers"/>
+			<xs:enumeration value="Paypal"/>
+			<xs:enumeration value="Ukash"/>
+			<xs:enumeration value="ClickAndBuy"/>
+			<xs:enumeration value="WesternUnion"/>
+			<xs:enumeration value="BACSCHAPS"/>
+			<xs:enumeration value="Earthport"/>
+			<xs:enumeration value="BasicPay"/>
+			<xs:enumeration value="BetCard"/>
+			<xs:enumeration value="EnvoyOneClick"/>
+			<xs:enumeration value="DataCash"/>
+			<xs:enumeration value="Paybox"/>
+			<xs:enumeration value="PayPoint"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Moneybookers" type="Moneybookers"/>
+	<xs:complexType name="Moneybookers">
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="mbCustId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The money bookers specific customer id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="mbEmail" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The money bookers customer email address</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CardSortKind">
+		<xs:annotation>
+			<xs:documentation>An Enumeration of the card sorts
+
+Credit, Debit</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Credit">
+				<xs:annotation>
+					<xs:documentation>Credit Card</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Debit">
+				<xs:annotation>
+					<xs:documentation>Credit Card</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PaymentSolutionProvider" type="PaymentSolutionProvider"/>
+	<xs:complexType name="PaymentSolutionProvider">
+		<xs:annotation>
+			<xs:documentation>This class represents a relationship of Payment Provider to a particular payment solution</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this active?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="priorityIndex" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>TBD - Prioritisation value of PaymentProviders for a payment Method type.  Enables the dynamic selection of the most appropriate payment gateway depending on changing rules.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="displayOrder" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>TBD - A display order</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PaymentMethodType" type="PaymentMethodType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="PaymentProvider" type="PaymentProvider" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaymentCharacteristic" type="PaymentCharacteristic"/>
+	<xs:complexType name="PaymentCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a single payment characteristic</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The description  of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this characteristic active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PaymentProvider" type="PaymentProvider"/>
+	<xs:complexType name="PaymentProvider">
+		<xs:annotation>
+			<xs:documentation>A role assumed by an Organisation who are supplier of payment services to Ladbrokes.  Ladbrokes may have a number of preferred suppliers which have differing degrees of use</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Cash" type="Cash"/>
+	<xs:complexType name="Cash">
+		<xs:annotation>
+			<xs:documentation>This class represents a 'Cash' payment</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="note" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A note entered by a user</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cashOutletId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The outlet that cashed the payment</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="idType" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The type of ID supplied at the outlet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="idSerialNo" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The type of ID supplied at the outlet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaymentMethod" type="PaymentMethod"/>
+	<xs:complexType name="PaymentMethod" abstract="true">
+		<xs:annotation>
+			<xs:documentation>This class represents a configured instance of a payment method type.
+
+For a customer, or any other party that can configure payment methods (partners?).  Currently only Customers have payment methods configured in OpenBet, but could change with future Banking programme.
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="paymentMethodKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The Unique key for the payment method</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKey" type="cus:CustomerKey" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The unique key identifying the customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="registeredDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Date and time the payment method was registered.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="PaymentMethodStatusKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A generic status of the payment method</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isDefaultMethod" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this method the default method for the customer (configured by them)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="canDeposit" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Can this method be used to deposit?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="canWithdraw" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Can this method be used to deposit?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="extraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Placeholder for extra info</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentMethodCharacteristic" type="PaymentMethodCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="paymentMethodType" type="PaymentMethodType" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="BasicPay" type="BasicPay"/>
+	<xs:complexType name="BasicPay">
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="basicInfoId" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The basic pay Id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="BankDetails" type="BankDetails"/>
+	<xs:complexType name="BankDetails">
+		<xs:annotation>
+			<xs:documentation>This class represents the bank details of a customer used to transfer payment via bank transfer</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="accountName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A name that the customer has provided to identify this account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountNumber" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the bank account number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sortCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the sort code of the branch in the format xx-xx-xx</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the name of the bank company</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="branchName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the name of the bank branch where the account is held</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="branchAddress" type="loc:Address" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="bankCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Uniquely identifies a bank branch. In the UK this is usually the first 2 digits of the sortCode</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankBranchCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Uniquely identifies a branch within a bank's network of branches. In the UK this is usually the last 4 digits of the sortCode</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankSwiftCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Uniquely identifies a bank internationally - this forms part of the IBAN. Also known as a BIC (Bank Identifier Code)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IBAN" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>International Bank Account Number - used to uniquely identify a bank account anywhere in the world;
+http://en.wikipedia.org/wiki/International_Bank_Account_Number </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="BACS" type="BACS"/>
+	<xs:complexType name="BACS">
+		<xs:annotation>
+			<xs:documentation>This class represents the BACs details of a customer used to transfer payments via BACs</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentMethod">
+				<xs:sequence>
+					<xs:element name="accountName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A name that the customer has provided to identify this account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sortCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the sort code of the branch in the format xx-xx-xx</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountNumber" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>the bank account number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The name of the bank company branch</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankBranchName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The name of the bank company branch</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankVATNo" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The name of the bank company branch</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bankCountry" type="cty:Country" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DebitPayment" type="DebitPayment"/>
+	<xs:complexType name="DebitPayment">
+		<xs:annotation>
+			<xs:documentation>This would result in transferring money INTO an account FROM Ladbrokes.
+
+e.g. The result of a 'WithdrawFunds' initiated by a Customer, or Paying an Affiliate</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Payment">
+				<xs:sequence>
+					<xs:element name="debitNote" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A note for the debit payment</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

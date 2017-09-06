@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/trading/Participant/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:par="http://cdm.ladbrokes.co.uk/trading/Participant/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/trading/Participant/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:simpleType name="PlayerStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="NotActive"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TeamTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Country"/>
+			<xs:enumeration value="NonCountry"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Participant" type="Participant"/>
+	<xs:complexType name="Participant">
+		<xs:annotation>
+			<xs:documentation>Maintains participant details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for a participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the participant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantShortName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Short name of the participant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="parentParticipantId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the Id of the parent participant id. parent participant comes in, when we want to assign a participant to a team. example Wayne Rooney to ManUnited</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Validity of a participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="seasonYear"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Season for which the player information is being captured. season would be the</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantOrderNo"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isHighlighted"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isPlaying"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="team" type="Team"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="type" type="ParticipantType"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="player" type="Player"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ParticipantType" type="ParticipantType"/>
+	<xs:complexType name="ParticipantType">
+		<xs:annotation>
+			<xs:documentation>Maintains various participant Types.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantTypeCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identification(Surrogate key) for participant type.Participant type  to which the participant belongs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantTypeId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantTypeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the participant type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Player" type="Player"/>
+	<xs:complexType name="Player">
+		<xs:annotation>
+			<xs:documentation>Maintains player details for the major sports, i.e at event class level.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="playerId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identification for a player.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="firstName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>First Name of the player.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Last Name of the player.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="displayName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the display name which would be displayed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sex"  type="PlayerGenderKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the player is Male or Female</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="dateOfBirth"  type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Specifies the date of birth of the player.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="countryCode"  type="cty:CountryCodeKind">
+				<xs:annotation>
+					<xs:documentation>Unique identification for a country.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="PlayerStatusKind">
+				<xs:annotation>
+					<xs:documentation>Status of the player, whether he is active or in-active</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isHighlighted"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamPlayerMappingId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isAdded"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="assignmentType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Assignment Type of Player to Team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="assignmentDate"  type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Specifies the date on which player will join the team.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="playerNote" type="PlayerNote"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="representsCountry" type="cty:Country"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PlayerNote" type="PlayerNote"/>
+	<xs:complexType name="PlayerNote">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="noteId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="noteName"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="noteType"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="noteDescription"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Team" type="Team"/>
+	<xs:complexType name="Team">
+		<xs:annotation>
+			<xs:documentation>Maintains team details, team could even be country in tournaments like world cup or in match between two countries or a bilateral series.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identification for a team.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamType"  type="TeamTypeKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the team is country or not a country.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the team.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamShortName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Short name for the team if any.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="countryCode"  type="cty:CountryCodeKind">
+				<xs:annotation>
+					<xs:documentation>Specifies the country to which the team belongs. When the team is country then the team_id and country_id would have the same value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="internationalTeam"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether team is international team.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamCategory"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="externalLinkKey"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="teamPlayer" type="Player"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="representsCountry" type="cty:Country"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PlayerGenderKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Male"/>
+			<xs:enumeration value="Female"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

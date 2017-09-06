@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0"
+	 xmlns:ptr="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0"
+	 xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0"
+	 xmlns:txn="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0"
+	 xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0"
+	 xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0"
+	 xmlns:pty="http://cdm.ladbrokes.co.uk/party/Party/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/Party/2.0" schemaLocation="../../Party/2.0/Party.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" schemaLocation="../../Transaction/2.0/Transaction.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="PartyRole" type="ptr:PartyRole"/>
+	<xs:complexType name="PartyRole" abstract="true">
+		<xs:annotation>
+			<xs:documentation>PartyRole is an abstract concept that should be used in places where the business refers to a Party playing a Role. A single party can be involved in business activity under one or many different roles.
+
+(Adopted from industry standards such as SID and UBL)
+
+A Party Role is the part played by a party in a given context/role with any characteristics, such as expected pattern of behavior, attributes, and/or associations that it entails.
+
+e.g A party can playa number of roles such as a 'Customer' and a 'Trader' (if this is legally allowed?). There is flexibility in such a model where an entity can assume many different roles within the organisation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="partyRoleKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique canonical identifier for Party Role.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="partyRoleName" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The PartyRole name</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The status of the partyRole</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="description" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Description of the partyRole</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="party" type="pty:Party" minOccurs="0"/>
+					<xs:element name="partyRoleType" type="ptr:PartyRoleType" minOccurs="0"/>
+					<xs:element name="partyRoleContactProfile" type="ptr:PartyRoleContactProfile" minOccurs="0"/>
+					<xs:element name="partyRoleCharacteristics" type="ptr:PartyRoleCharacteristcs" minOccurs="0"/>
+					<xs:element name="partyRoleRelations" type="ptr:PartyRoleRelations" minOccurs="0"/>
+					<xs:element name="partyRoleInteractions" type="ptr:PartyRoleInteractions" minOccurs="0"/>
+					<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the party role is valid from.  This is validity with respect to a business definition, rather then record creation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the party role is valid to, if not active</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="partyRoleSubtype" type="ptr:PartyRoleSubtype" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PartyRoleType" type="ptr:PartyRoleType"/>
+	<xs:complexType name="PartyRoleType">
+		<xs:annotation>
+			<xs:documentation>This class represents reference data that is a type of party role.  
+e.g: Customer, Affiliate, Trader, Employee, Content Provider, Payment Provider etc</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyRoleType 
+e.g. Customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the PartyRoleType 
+e.g. CUST</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the partyRoleType
+e.g Active</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of the PartyRoleType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partyRoleSubtype" type="ptr:PartyRoleSubtype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleContactProfile" type="ptr:PartyRoleContactProfile"/>
+	<xs:complexType name="PartyRoleContactProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a PartyRole's ContactProfile - a container for details of contact methods and contact reasons for Ladbrokes and Partners</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="isContactable" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Overriding value determining if a Party Role can be contacted by Ladbrokes?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isPartnerContactable" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Overriding value determining if a Party Role can be contacted by Ladbrokes PARTNER?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="contactMethod" type="ptr:ContactMethod" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ContactMethod" type="ptr:ContactMethod"/>
+	<xs:complexType name="ContactMethod">
+		<xs:annotation>
+			<xs:documentation>This class represents a method of contact for communicating with a PartyRole (e.g. Customer).  
+
+A Party may have a different contact methods depending on what the role and what contact is for.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactMethodKind" type="ptr:ContactMethodKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of method this contact details is for  e.g. Telephone, email).  This will determine the other values populated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="emailAddress" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The email address to be contacted on if the type of the contactMethodKind is 'EmailAddress'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="telephoneNumber" type="ptr:TelephoneNumber" minOccurs="0"/>
+			<xs:element name="partyAddress" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boolean indicating if the parties address details are to be used? Otherwise use 'otherAddress'.  (should be renamed to usePartyName)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherAddress" type="loc:Address" minOccurs="0"/>
+			<xs:element name="canUse" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Can this method be used to contact? (should be renamed to isActive)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contactPurpose" type="ptr:ContactPurpose" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContactPurpose" type="ptr:ContactPurpose"/>
+	<xs:complexType name="ContactPurpose">
+		<xs:annotation>
+			<xs:documentation>The purpose for contacting the party playing the partyRole role.
+
+e.g. CustomerCare, LadbrokesPromotional, ParterPromotional</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactPurposeType" type="ptr:ContactPurposeType" minOccurs="0"/>
+			<xs:element name="timePeriod" type="ptr:ContactTimePeriodKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The preferred time period to be contacted on if Ladbrokes wish to contact this partyRole for a reason.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContactPurposeType" type="ptr:ContactPurposeType"/>
+	<xs:complexType name="ContactPurposeType">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="purposeName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the contact purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="purposeCode" type="ptr:ContactPurposeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the contact purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="purposeType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the contact purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the contact purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The name of the contact purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherPurpose" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Other purpose</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TelephoneNumber" type="ptr:TelephoneNumber"/>
+	<xs:complexType name="TelephoneNumber">
+		<xs:annotation>
+			<xs:documentation>This class represents a telephone number in the 4 formats of LandLine, Mobile, Fax, Pager</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="type" type="ptr:TelephoneNumberKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the telephone number.  e.g. Mobile, FixedLine, Fax, pager</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="incInternationalDialingCode" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Does the phoneNumber include a country specific international dialing code?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="internationalDialingCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country specific international dialing code?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phoneNumber" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The actual phone number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="includesCountryCode" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Does the phoneNumber include a countryCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="country" type="cty:Country" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleCharacteristcs" type="ptr:PartyRoleCharacteristcs"/>
+	<xs:complexType name="PartyRoleCharacteristcs">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for PartyRole characteristic's to enable future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="partyRoleCharacteristic" type="ptr:PartyRoleCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleCharacteristic" type="ptr:PartyRoleCharacteristic"/>
+	<xs:complexType name="PartyRoleCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents the detail of a generic characteristic of a partyRole and can be used for future extensibility of the model</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the value of the PartyCharacteristic (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleRelations" type="ptr:PartyRoleRelations"/>
+	<xs:complexType name="PartyRoleRelations">
+		<xs:annotation>
+			<xs:documentation>This represents a collection of PartyRoleRelation(s) for a given PartyRole.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numRels" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of relationships this party role has</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partyRoleRelation" type="ptr:PartyRoleRelation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleRelation" type="ptr:PartyRoleRelation"/>
+	<xs:complexType name="PartyRoleRelation">
+		<xs:annotation>
+			<xs:documentation>Represents relationships between Party Roles
+e.g. a 'Customer' role can have a relation to the 'MarketingContact' role</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the relationship was valid from</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the relationship ended</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="partyRoleRelationKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The canonical Key of this partyRoleRelationship</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="name" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name of the PartyRoleRelationship</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="description" type="xs:string"  minOccurs="0"/>
+					<xs:element name="withPartyRole" type="ptr:PartyRole" minOccurs="0"/>
+					<xs:element name="characteristics" type="ptr:PartyRoleRelationChars" minOccurs="0"/>
+					<xs:element name="partyRoleRelationType" type="ptr:PartyRoleRelationType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PartyRoleRelationType" type="ptr:PartyRoleRelationType"/>
+	<xs:complexType name="PartyRoleRelationType">
+		<xs:annotation>
+			<xs:documentation>This class represents a PartyRoleRelationType.
+e.g: MARKETING_CONTACT, FRAUD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the PartyRoleRelationshipType </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyRoleRelationshipType e.g. AuthorizerOfTrades, NextOfKin, </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of the PartyRoleType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleSubtype" type="ptr:PartyRoleSubtype"/>
+	<xs:complexType name="PartyRoleSubtype">
+		<xs:annotation>
+			<xs:documentation>This class represents reference data that is a sub type of party role.  A partyRole (e.g Customer) may have subRoles (SportsbookBetter, CasinoBetter, FraudSuspect) which we can attirbute particular actions to while playing these subroles</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The code for the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The name for the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The description of the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The parent PartyRoleType code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleRelationChars" type="ptr:PartyRoleRelationChars"/>
+	<xs:complexType name="PartyRoleRelationChars">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for PartyRoleRelation characteristic's to enable future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numChars" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of characteristics</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="characteristic" type="ptr:PartyRoleRelationChar" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleRelationChar" type="ptr:PartyRoleRelationChar"/>
+	<xs:complexType name="PartyRoleRelationChar">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic characteristic of a party and can be used for future extensibility of the PartyRoleRelation model</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the value of the PartyCharacteristic (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of this characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is the PartyRoleRelationshipCharacteristic active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleInteractions" type="ptr:PartyRoleInteractions"/>
+	<xs:complexType name="PartyRoleInteractions">
+		<xs:annotation>
+			<xs:documentation>TBD - Container for the list of partyRoleInteractions this partyRole has been involved with.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="partyRoleInteraction" type="ptr:PartyRoleInteraction" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleInteraction" type="ptr:PartyRoleInteraction"/>
+	<xs:complexType name="PartyRoleInteraction">
+		<xs:annotation>
+			<xs:documentation>This class represents all the significant interactions that have occurred with a particular party role.  for example, all the business interactions for a particular customer.
+
+This format gives a generic and consistent way to capture all interactions from all party roles.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="partyRoleIntKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical ID for this interaction (</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A derived value (based on some rules) for the name of the partyRoles interaction.
+e.g.  betslip placed by Kurt Maile</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="ptr:InteractionStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the interaction
+e.g:  InProgress, Completed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0"/>
+			<xs:element name="beginDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time the interaction began</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time the interaction ended (if it has)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="withPartyRoleKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical identifier of the PartRoleKey of another partyRole if involved in this interaction (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="characteristics" type="ptr:PartyRoleInteractionChars" minOccurs="0"/>
+			<xs:element name="interactionType" type="ptr:PartyRoleInteractionType" minOccurs="0"/>
+			<xs:element name="transaction" type="txn:Transaction" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleInteractionType" type="ptr:PartyRoleInteractionType"/>
+	<xs:complexType name="PartyRoleInteractionType">
+		<xs:annotation>
+			<xs:documentation>This class represents reference data for a type of a  PartyRole Interaction. For example, this could be a 'Bet Placement' interaction, a 'Login' interaction, a 'SelfExclude' interaction.
+
+Global interaction types.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the PartyRoleInteractionType .
+e.g:  BET_PLC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyRoleInteractionType 
+e.g:  'Bet Placement'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of the PartyRoleType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleInteractionChars" type="ptr:PartyRoleInteractionChars"/>
+	<xs:complexType name="PartyRoleInteractionChars">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for PartyRoleInteraction characteristic's to enable future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numChars" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of characteristics in the collection</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="characteristic" type="ptr:PartyRoleInteractionChar" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyRoleInteractionChar" type="ptr:PartyRoleInteractionChar"/>
+	<xs:complexType name="PartyRoleInteractionChar">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic characteristic of a partyRoleInteraction that can be used for future extensibility of the PartyRoleInteraction model</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the value of the characteristic (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ContactMethodKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration detailing the various types of contact methods to contact a PartyRole on.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PostalAddress">
+				<xs:annotation>
+					<xs:documentation>A postal address</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TelephoneNumber">
+				<xs:annotation>
+					<xs:documentation>Alandline number contact method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EmailAddress">
+				<xs:annotation>
+					<xs:documentation>An email address contact method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContactTimePeriodKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration detailing thepossible  time periods appropriate to be communicate to the PartyRole on a chosen method</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AnyTime"/>
+			<xs:enumeration value="DayTime"/>
+			<xs:enumeration value="EveningTime"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TelephoneNumberKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration detailing the various types of telephone number types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Mobile"/>
+			<xs:enumeration value="FixedLine"/>
+			<xs:enumeration value="Fax"/>
+			<xs:enumeration value="Pager"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContactTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CustomerContact"/>
+			<xs:enumeration value="OtherContact"/>
+			<xs:enumeration value="NextOfKinContact"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContactPurposeKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration detailing the various purposes for Ladbrokes (or Partner) communicating with the PartyRole</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="General">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for general Ladbrokes informational (non marketing) reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerCare">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes customer care reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Payment">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes for reasons related to Payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LadbrokesPromotional">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes for promotional reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartnerPromotional">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes Partners for promotional reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Verification">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes for Age or Identify verification reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Fraud">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes for Fraud reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Any">
+				<xs:annotation>
+					<xs:documentation>This value indicates that the purpose of contact, by the contact method, is for Ladbrokes for any/all reasons</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Placeholder for other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartyRoleCharacteristicStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the status of a PartyRoleCharacteristic</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The partyCharacteristic is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The PartyCharacteristic is Inactive and should not be considered.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InteractionStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the status of a PartyRoleInteraction</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Scheduled">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="InProgress">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Completed">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Failed">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RelationshipStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the status of a PartyRoleRelationship</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The PartyRoleRelationship is Active and should not be considered.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The PartyRoleRelationship is Inactive and should not be considered.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>The PartyRoleRelationship is Suspended and should not be considered in some processes.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Future">
+				<xs:annotation>
+					<xs:documentation>The PartyRoleRelationship is a future relationship and should not be considered just yet.  The validFrom date will be a future date, at which point it becomes active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartyRoleTypeKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration of the various types of PartyRole's a Party can play.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Customer"/>
+			<xs:enumeration value="CustomerProspect"/>
+			<xs:enumeration value="Trader"/>
+			<xs:enumeration value="FeedProvider"/>
+			<xs:enumeration value="ProductionSupport"/>
+			<xs:enumeration value="PaymentProvider"/>
+			<xs:enumeration value="Competitor">
+				<xs:annotation>
+					<xs:documentation>A competitor company like Betfair</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GoverningBody"/>
+			<xs:enumeration value="ContentProvider"/>
+			<xs:enumeration value="Partner">
+				<xs:annotation>
+					<xs:documentation>A Partner Company like an Affiliate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RetailAgent">
+				<xs:annotation>
+					<xs:documentation>A Retail agent working in a Retail Shop</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TelesalesAgent">
+				<xs:annotation>
+					<xs:documentation>A Telesales agent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerSupportAgent">
+				<xs:annotation>
+					<xs:documentation>A Customer Support Agent using a CRM system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Anonymous">
+				<xs:annotation>
+					<xs:documentation>Anonymous User</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HVC">
+				<xs:annotation>
+					<xs:documentation>High Value Customer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OtherEmployee">
+				<xs:annotation>
+					<xs:documentation>Other type of Employee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>TBD - Placeholder?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Partner" type="ptr:Partner"/>
+	<xs:complexType name="Partner" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole"/>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0" xmlns:aff="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0" xmlns:ptr="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" schemaLocation="../../PartyRole/2.0/PartyRole.xsd"/>
+	<xs:element name="AffiliateSite" type="AffiliateSite"/>
+	<xs:complexType name="AffiliateSite">
+		<xs:sequence>
+			<xs:element name="siteName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="siteID" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExternalAffiliate" type="ExternalAffiliate"/>
+	<xs:complexType name="ExternalAffiliate">
+		<xs:complexContent>
+			<xs:extension base="AcquisitionMethod">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Affiliate" type="Affiliate"/>
+	<xs:complexType name="Affiliate">
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole">
+				<xs:sequence>
+					<xs:element name="affiliateKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Unique key for the affiliate</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="affiliateName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A general name of the affiliate</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AffiliateSite" type="AffiliateSite" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="affiliateType" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The type of the affiliate</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="affiliateCategory" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The type of the affiliate</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="relationshipStartDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+					<xs:element name="relationshipEndDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+					<xs:element name="affiliateTrackingCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The 'code' used to track the affiliate if different to the affiliateKey</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AcquisitionMethod" type="AcquisitionMethod"/>
+	<xs:complexType name="AcquisitionMethod" abstract="true">
+		<xs:sequence>
+			<xs:element name="acquisitionMethodType" type="AcquisitionMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The kind of method acquisition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acquisitionParam" type="AcquisitionMethodParam" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AffiliateAssetCookie" type="AffiliateAssetCookie"/>
+	<xs:complexType name="AffiliateAssetCookie">
+		<xs:complexContent>
+			<xs:extension base="AcquisitionMethod">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AcquisitionMethodParam" type="AcquisitionMethodParam"/>
+	<xs:complexType name="AcquisitionMethodParam">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the config proptery</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the acquisition param</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SEOCookie" type="SEOCookie"/>
+	<xs:complexType name="SEOCookie">
+		<xs:complexContent>
+			<xs:extension base="AcquisitionMethod">
+				<xs:sequence>
+					<xs:element name="seoValue" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The SEO URL that directed the customer to Ladbrokes</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PromoCode" type="PromoCode"/>
+	<xs:complexType name="PromoCode">
+		<xs:complexContent>
+			<xs:extension base="AcquisitionMethod">
+				<xs:sequence>
+					<xs:element name="promoCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The Promo code value</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="AcquisitionMethodKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AffiliateAssetCookie">
+				<xs:annotation>
+					<xs:documentation>Affiliate asset cookie type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SEOCookie">
+				<xs:annotation>
+					<xs:documentation>SEO Cookie type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PromoCode">
+				<xs:annotation>
+					<xs:documentation>Promo code type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ExternalAffiliate">
+				<xs:annotation>
+					<xs:documentation>External Affiliate type. i.e. Income Access</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

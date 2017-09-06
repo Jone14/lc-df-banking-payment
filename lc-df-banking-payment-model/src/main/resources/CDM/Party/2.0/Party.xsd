@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/party/Party/2.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:pty="http://cdm.ladbrokes.co.uk/party/Party/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/party/Party/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:element name="Party" type="Party"/>
+	<xs:complexType abstract="true" name="Party">
+		<xs:annotation>
+			<xs:documentation>A Person or Organisation in which Ladbrokes has a current, past or future interest with.
+
+A Party can play many Party Roles depending on the business interaction or transaction taking place.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="partyKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for Party.  Would be created and mastered by an MDM System.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="partyType"  type="PartyTypeKind">
+						<xs:annotation>
+							<xs:documentation>Type of the Party.  A Person or an Organisation</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="address" type="loc:Address"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="characteristics" type="PartyCharacteristcs"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Person" type="Person"/>
+	<xs:complexType name="Person">
+		<xs:annotation>
+			<xs:documentation>A human being regarded as an individual. [Concise Oxford Dictionary]</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Party">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="dateOfBirth"  type="xs:date">
+						<xs:annotation>
+							<xs:documentation>Date of birth of the Person.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="sex"  type="SexKind">
+						<xs:annotation>
+							<xs:documentation>Sex of the Person.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="maritalStatus"  type="MaritalStatusKind">
+						<xs:annotation>
+							<xs:documentation>Marital status of the Peson.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="nationality"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Nationality of the Person.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="checkedIdentification" type="PersonIdentification"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="personName" type="PersonName"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PersonName" type="PersonName"/>
+	<xs:complexType name="PersonName">
+		<xs:annotation>
+			<xs:documentation>The name of a Person.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="title"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Contains the Salutation,e.g. Mr., Mrs., Hon., Dr.,Major, etc </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="firstName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The first name for the person.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="middleName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The persons middle name(s) or initial(s).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The persons last name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="formattedName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Contains, in one string, a fully formatted name with all of its pieces in their proper place. This includes all of the necessary punctuation. This de-normalized form of the name cannot be easily parsed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PersonIdentification" type="PersonIdentification"/>
+	<xs:complexType name="PersonIdentification">
+		<xs:annotation>
+			<xs:documentation>Contains details of a  Person identification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="type"  type="PersonIdentificationKind">
+				<xs:annotation>
+					<xs:documentation>The type of identification of a Person.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="idValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Value of the identification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Time period for which a person's identification is valid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Organisation" type="Organisation"/>
+	<xs:complexType name="Organisation">
+		<xs:annotation>
+			<xs:documentation>A Party which has a recognisable collective identity governed by an explicit or implicit form of constitution. 
+
+Explicit forms of constitution include trust deeds, wills, statutes, Acts of Parliament, royal charter.  Implicit forms of constitution include customary practice and behavioural tradition in common law or by default under statute (e.g. some partnerships and some clubs).</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Party">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="organisationTypeKind"  type="OrganisationKind">
+						<xs:annotation>
+							<xs:documentation>Type of the Organisation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="organisationName" type="OrganisationName"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="OrganisationName" type="OrganisationName"/>
+	<xs:complexType name="OrganisationName">
+		<xs:annotation>
+			<xs:documentation>A word, term, or phrase by which an organization is known and distinguished from other organizations.
+
+An OrganizationName is a type of PartyName.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="nameType"  type="OrganisationNameKind">
+				<xs:annotation>
+					<xs:documentation>The type of organisation.
+Co., Inc., Ltd., Pty Ltd. , Plc., Gmbh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="tradingName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name that the organization (unit) trades under.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="shortName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name that the organization is best known by (shortened versions).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyCharacteristcs" type="PartyCharacteristcs"/>
+	<xs:complexType name="PartyCharacteristcs">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for party characteristic's to enable future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="PartyCharacteristic"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartyCharacteristic" type="PartyCharacteristic"/>
+	<xs:complexType name="PartyCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic characteristic of a party and can be used for future extensibility of the Party model</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="valueType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The type of the value of the PartyCharacteristic (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="PartyCharacteristicStatusKind">
+				<xs:annotation>
+					<xs:documentation>The status if the PartyCharacteristic.  Active or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the PartyCharacteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PartyTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Person"/>
+			<xs:enumeration value="Organisation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartyCharacteristicStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the status of a PartyCharacteristic</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The partyCharacteristic is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The PartyCharacteristic is Inactive and should not be considered.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonIdentificationKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Passport"/>
+			<xs:enumeration value="UkDriversLicence"/>
+			<xs:enumeration value="UkCreditCard"/>
+			<xs:enumeration value="UkDebitCard"/>
+			<xs:enumeration value="UkPhotoCardDriversLicence"/>
+			<xs:enumeration value="UkCardStatement"/>
+			<xs:enumeration value="UtilityBill"/>
+			<xs:enumeration value="Affiliate"/>
+			<xs:enumeration value="Bank"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrganisationNameKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Co"/>
+			<xs:enumeration value="Inc"/>
+			<xs:enumeration value="Ltd"/>
+			<xs:enumeration value="Plc"/>
+			<xs:enumeration value="PtyLtd"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrganisationKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LimitedCompany"/>
+			<xs:enumeration value="LimitedPartnership"/>
+			<xs:enumeration value="Partnership"/>
+			<xs:enumeration value="PublicLimitedCompany"/>
+			<xs:enumeration value="SoleTrader"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaritalStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Cohabiting"/>
+			<xs:enumeration value="Divorced"/>
+			<xs:enumeration value="Married"/>
+			<xs:enumeration value="Separated"/>
+			<xs:enumeration value="Single"/>
+			<xs:enumeration value="Widowed"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SexKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Male"/>
+			<xs:enumeration value="Female"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

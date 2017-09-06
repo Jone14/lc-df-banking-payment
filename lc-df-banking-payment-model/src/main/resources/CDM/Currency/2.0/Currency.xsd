@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/common/Currency/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/common/Currency/2.0" xmlns:ccy="http://cdm.ladbrokes.co.uk/common/Currency/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+
+	<xs:element name="ExchangeRates" type="ExchangeRates"/>
+	<xs:complexType name="ExchangeRates">
+		<xs:sequence>
+			<xs:element name="exchangeRate" type="ExchangeRate" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Currency" type="Currency"/>
+	<xs:complexType name="Currency">
+		<xs:sequence>
+			<xs:element name="isoCode" type="typ:CurrencyCodeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The 3 letter ISO 4217 currency code. This also serves as the key for this entity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="symbol" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="symbolLocation" type="CurrencySymbolLocation" minOccurs="0" maxOccurs="1" />
+			<xs:element name="decimalCharacter" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Default is . (full stop). Some currencies use a comma. May be superceded by i18n display logic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="thousandsCharacter" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Default is , (comma). Some currencies use full stop</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currencyCountry" type="cty:CurrencyCountry" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExchangeRate" type="ExchangeRate"/>
+	<xs:complexType name="ExchangeRate">
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="validTo" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is active record?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="buyingExchangeRate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="sellingExchangeRate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="spotExchangeRate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="forwardExchangeRate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="inverseSpotExchangeRate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="sourceCurrency" type="Currency" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="targetCurrency" type="Currency" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="lastUpdated" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CurrencyExchangeRateProfile" type="CurrencyExchangeRateProfile"/>
+	<xs:complexType name="CurrencyExchangeRateProfile">
+		<xs:sequence>
+			<xs:element name="sourceCurrency" type="Currency" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="exchangeRates" type="ExchangeRates" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CurrencySymbolLocation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Right"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

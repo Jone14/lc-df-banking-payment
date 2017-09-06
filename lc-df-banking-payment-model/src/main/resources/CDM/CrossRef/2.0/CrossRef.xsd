@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0"
+	 xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0"
+	 xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="CrossRefExternalEntityKeys" type="xref:CrossRefExternalEntityKeys"/>
+	<xs:complexType name="CrossRefExternalEntityKeys">
+		<xs:sequence>
+			<xs:element name="orgId" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The organisation that masters this key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keyValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the external key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keyName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the external key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CrossRefEntityKeys" type="xref:CrossRefEntityKeys"/>
+	<xs:complexType name="CrossRefEntityKeys">
+		<xs:annotation>
+			<xs:documentation>Represents a container for cross referencing ID's for the canonical entity - e.g: OpenBet and Mercury IDs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="entityType" type="man:ManagedEntityTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the entity the crossRef values identify.
+
+e.g. EventClass, EventType, EventSubtype, Event Market, Selection, Customer etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="canonicalKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If known, the canonical key for this entity type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="usesWildcards" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Does any of the xref use wildcards?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="openBetKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique reference Key mastered by OpenBet. 
+
+This should ALWAYS be available and the master if the sport is NOT managed by Mercury.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tradingKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique reference Key mastered by Trading/Mercury. 
+
+This should ALWAYS be available and the master if the sport IS managed by Mercury.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailBS2000Key" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique reference Key mastered by B2000</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailSportsDBKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique reference Key mastered by Retail SportsDB LES System.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hybrisKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Future:  The eCommerce product key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ADWKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Future: The active data warehouse key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MDMKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Future: The MDM key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="givexKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Future: The MDM key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ERPKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ERP / Financial System key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRMKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>CRMKey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ODINKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Odin legacy warehouse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailWarehouseKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Retail legacy warehouse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mgsCasinoKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Natural MGS casino key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mgsPokerKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Natural MGS poker key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mgsPreNetPokerKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Natural MGS pre net poker key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="teamTalkKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="racingPostKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="runningBallKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="optaKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="heronKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="enetPulseKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="pressAssociationKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="performKey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="crossRefExternalEntityKeys" type="xref:CrossRefExternalEntityKeys" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CrossReferencedEntity" type="xref:CrossReferencedEntity"/>
+	<xs:complexType name="CrossReferencedEntity">
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="crossRefEntityKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+					<xs:element name="crossRefDetail" type="xref:CrossRefDetail" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CrossRefDetail" type="xref:CrossRefDetail"/>
+	<xs:complexType name="CrossRefDetail">
+		<xs:sequence>
+			<xs:element name="mappingTypeCode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="organizationName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="organizationCode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="ladbrokesId" type="xs:string"  minOccurs="0"/>
+			<xs:element name="ladbrokesName" type="xs:string"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

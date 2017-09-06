@@ -1,0 +1,2683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0"
+	 xmlns:sbk="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0"
+	 xmlns:res="http://cdm.ladbrokes.co.uk/trading/Result/2.0"
+	 xmlns:evt="http://cdm.ladbrokes.co.uk/trading/Event/2.0"
+	 xmlns:bts="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0"
+	 xmlns:sel="http://cdm.ladbrokes.co.uk/trading/Selection/2.0"
+	 xmlns:ccy="http://cdm.ladbrokes.co.uk/common/Currency/2.0"
+	 xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0"
+	 xmlns:subs="http://cdm.ladbrokes.co.uk/common/Subscription/1.0"
+	 xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0"
+	 xmlns:hrc="http://cdm.ladbrokes.co.uk/content/RacingContent/1.0"
+	 xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0"
+	 xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0"
+	 xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0"
+	 xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/content/RacingContent/1.0" schemaLocation="../../RacingContent/1.0/RacingContent.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Subscription/1.0" schemaLocation="../../Subscription/1.0/Subscription.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Currency/2.0" schemaLocation="../../Currency/2.0/Currency.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" schemaLocation="../../Selection/2.0/Selection.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0" schemaLocation="../../Betslip/2.0/Betslip.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Event/2.0" schemaLocation="../../Event/2.0/Event.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Result/2.0" schemaLocation="../../Result/2.0/Result.xsd"/>
+	<xs:simpleType name="ResultConfirmationStateKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the result confirmed states.
+
+Confirmed (Openbet res_conf='Y')
+
+NotConfirmed (Openbet res_conf='N')</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ResultConfirmed">
+				<xs:annotation>
+					<xs:documentation>ResultConfirmed (Openbet res_conf='Y')
+
+Settlement can begin on the selection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ResultNotConfirmed">
+				<xs:annotation>
+					<xs:documentation>NotConfirmed (Openbet res_conf='N')
+
+Result entered, but not confirmed (provisional)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SportsbookPrice" type="sbk:SportsbookPrice"/>
+	<xs:complexType name="SportsbookPrice">
+		<xs:annotation>
+			<xs:documentation>Represents the 'odds' of a selection in a Market.
+
+e.g. 1/8, 2.0, -260
+
+An odd can be represented in different formats - American, Fractional, Decimal.
+
+A SelectionPrice should at least have one of the format values populated, ideally all three to avoid conversion client side.
+
+If the Market is an indexMarket, then there will be a latest price for each index (so multiple price rows) </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="selectionPriceKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical selection price key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical selection key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical market key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical event key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="selectionExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="marketKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="eventKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valid from date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valid to date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this an active record</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birIndex" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The MarketIndex that this price is for.  Index's move on, so the price should be attached to the right index</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="americanPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the price if the priceFormat is 'American'.
+
+e.g. -200</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decimalPrice" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the price if the priceFormat is 'Decimal'
+
+e.g. 2.36</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numFractionalPrice" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The NUMERATOR value of the price if the priceFormat is 'Fractional'.
+
+e.g. for 1/4, this would be 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="denFractionalPrice" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Denominator value of the price if the priceFormat is 'Fractional'.
+
+e.g. for 1/4, this would be 4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionPriceType" type="sel:SelectionPriceType" minOccurs="0"/>
+			<xs:element name="priceStreamKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Mercury future for differential pricing
+
+The unique ID/Key for the Price Stream that this selection price was calculated.  Price Streams are controlled by the traders.
+
+This tries to cater for differential pricing, something Mercury is introducing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerGroupKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Mercury future for differential pricing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue" type="xs:string"  minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The Outcome handicap value at which this price is offered (if applicable). The handicap value is expressed as a list of decimal numbers; a split-line handicap will be represented as two values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookMarketType" type="sbk:SportsbookMarketType"/>
+	<xs:complexType name="SportsbookMarketType">
+		<xs:annotation>
+			<xs:documentation>This class represents a Sportsbook Market Type (in OB, a 'TemplateMarket).
+
+The combination of marketType and marketSort shapes the betting behaviour / opportunities.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="marketTypeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical market type key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="marketTypeName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The maket type name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventTypeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical event type key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventTypeExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="marketGroupKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical market group key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketGroupExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The display order of this Market Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketMeaningMajorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>From SiteServer:
+
+A short code indicating the general sort of betting possibilities offered within this Market.
+
+[TODO - exhaustive list of codes] Note that historically this information has been known within OpenBet as Market "type".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketMeaningMinorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>From SiteServer:
+
+A short code that further specialises marketMeaningMajorCode to provide further detail 
+about the sort of betting possibilities offered within this Market. [TODO - exhaustive list of 
+codes] Note that historically this information has been known within OpenBet as Market 
+"sort"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketTypeChannelDetail" type="sbk:ChannelDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookCoupon" type="sbk:SportsbookCoupon"/>
+	<xs:complexType name="SportsbookCoupon">
+		<xs:sequence>
+			<xs:element name="couponKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies this Coupon amongst other Coupons </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="couponName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of this Coupon.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Suggested display order relative to other Coupons </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayStatus" type="sbk:SportsbookDisplayStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Attribute that will help decide if the coupon needs to be displayed in the front end or not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="couponFlagCodes" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Bookmaker-specific flags which apply to this class. Used to provide layout hints </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="couponSortCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A short code indicating the kind of markets to expect in the coupon </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasOpenEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>True if any Event belonging to this Coupon  is Open</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasNext24HourEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>True if any Event belonging to this Coupon is Next24HourEvent </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasLiveNowEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>True if any Event belonging to this Coupon  is Live Now.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasLiveNowOrFutureEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>True if any Event belonging to this Coupon  is Live Now or start in future.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="classKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies the Class to which this Coupon belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="className" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the Class to which this Coupon belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies the Category to which this Coupon belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the Category to which this Coupon belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="couponChannelDetail" type="sbk:ChannelDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookEvent" type="sbk:SportsbookEvent" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="parentExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ChannelStateKind">
+		<xs:annotation>
+			<xs:documentation>TBD - Enumeration of channel actions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Channel is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="InActive">
+				<xs:annotation>
+					<xs:documentation>Channel is inActive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PoolResult" type="sbk:PoolResult"/>
+	<xs:complexType name="PoolResult">
+		<xs:annotation>
+			<xs:documentation>Details of the result of the pool</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dividend" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The dividend amount </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="runnerNumbers" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The list of runnerNumbers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legNumber" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The leg number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKeys" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The list of event keys / ids</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventRacingForm" type="sbk:EventRacingForm"/>
+	<xs:complexType name="EventRacingForm">
+		<xs:annotation>
+			<xs:documentation>New for eCommerce</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="raceNumber" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The race number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="title" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Title or name given for the race</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overview" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Text providing a description of the race</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="distance" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Distance of the race, as text. For example &amp;ldquo;1m 2f&amp;rdquo;</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="class" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The class of race</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="going" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The current declared going</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="goingCurrentSetDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time the current going was set.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="goingPrevious" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The previous going value, which can change during the course of the day</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="goingPreviousDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The last date and time the going was last changed - that is, the previous going was set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SportsbookMarketStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the 'status' of the Market which affects taking bets.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>
+Active ('A' in OpenBet) - Bets can be taken on this market and all its Selections (providing Selection not explicitly suspended), all functions OK.
+
+If the PARENT Event is 'Suspended' though, even if this is 'Active', the market  will be implicitly suspended.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended  ('S' in OpenBet) - Bets CANNOT be taken on this selection
+
+Even if the PARENT Event is Active, the Market  is explicitly suspended so takes precendece</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="InActive">
+				<xs:annotation>
+					<xs:documentation>Placeholder for a status when a Market is 'retired' / 'finished' (not to be confused with 'Suspended', which only relates to taking bets)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SportsbookTeam" type="sbk:SportsbookTeam"/>
+	<xs:complexType name="SportsbookTeam">
+		<xs:sequence>
+			<xs:element name="teamKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical team key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="teamName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="teamShortName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The team short name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="teamType" type="sbk:TeamTypeKind"  minOccurs="0"/>
+			<xs:element name="teamStatus" type="sbk:TeamStatusKind"  minOccurs="0"/>
+			<xs:element name="countryCode" type="cty:CountryCodeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The ISO Country code of the country the player represents (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="teamCategory" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The category of the team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="sportsbookPlayer" type="sbk:SportsbookPlayer" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookMarketCharacteristics" type="sbk:SportsbookMarketCharacteristics"/>
+	<xs:complexType name="SportsbookMarketCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class represents a container of extensibility characteristics for a Market</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hasCharacteristics" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Market has some characteristics</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketCharacteristic" type="sbk:SportsbookCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SelectionRacingForm" type="sbk:SelectionRacingForm"/>
+	<xs:complexType name="SelectionRacingForm">
+		<xs:sequence>
+			<xs:element name="weight" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The weight of the handicap</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="age" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Age of the horse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="trainer" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The current trainer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="draw" type="xs:string"  minOccurs="0"/>
+			<xs:element name="daysSinceRun" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Days since the last run.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="runnerNumber" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The runners number in the race.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="jockey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The jockey riding the horse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="owner" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The owner of the horse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="formGuide" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A name for the silk image file</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overview" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A text description of the runner.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="silks" type="xs:string"  minOccurs="0"/>
+			<xs:element name="sireOverview" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A text description of the runners sire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="breedingOverview" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A text description of the runners sire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TeamType" type="sbk:TeamType"/>
+	<xs:complexType name="TeamType">
+		<xs:sequence>
+			<xs:element name="Country" type="xs:int"  minOccurs="0"/>
+			<xs:element name="NounCountry" type="xs:int"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PoolProvider" type="sbk:PoolProvider"/>
+	<xs:complexType name="PoolProvider">
+		<xs:annotation>
+			<xs:documentation>This class represents a Pool Provider</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="providerKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique key of the provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="providerDefaultCurrency" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The ISO Code of the providers default currency</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RaceCourse" type="sbk:RaceCourse"/>
+	<xs:complexType name="RaceCourse">
+		<xs:annotation>
+			<xs:documentation>Race Course for Horse Race. This will be mapped to SportbookCategory (Type) e.g: Cheltanam</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="raceCoursekey" type="xs:string"  minOccurs="0"/>
+			<xs:element name="courseName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="trackType" type="xs:string"  minOccurs="0"/>
+			<xs:element name="description" type="xs:string"  minOccurs="0"/>
+			<xs:element name="shortName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="stewardsSecretary" type="xs:string"  minOccurs="0"/>
+			<xs:element name="starter" type="xs:string"  minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="phone" type="xs:string"  minOccurs="0"/>
+			<xs:element name="judge" type="xs:string"  minOccurs="0"/>
+			<xs:element name="clerkOfScales" type="xs:string"  minOccurs="0"/>
+			<xs:element name="industryCID" type="xs:string"  minOccurs="0"/>
+			<xs:element name="graphicUrl" type="xs:string"  minOccurs="0"/>
+			<xs:element name="flatDescription" type="xs:string"  minOccurs="0"/>
+			<xs:element name="jumpDescription" type="xs:string"  minOccurs="0"/>
+			<xs:element name="parkingDescription" type="xs:string"  minOccurs="0"/>
+			<xs:element name="childrensFacilities" type="xs:string"  minOccurs="0"/>
+			<xs:element name="disabledFacilities" type="xs:string"  minOccurs="0"/>
+			<xs:element name="admissionRestrictions" type="xs:string"  minOccurs="0"/>
+			<xs:element name="admissionOther" type="xs:string"  minOccurs="0"/>
+			<xs:element name="admissionFees" type="xs:string"  minOccurs="0"/>
+			<xs:element name="dressCode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="steward" type="xs:string"  minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="clerkOfCourse" type="xs:string"  minOccurs="0"/>
+			<xs:element name="location" type="loc:Location" minOccurs="0"/>
+			<xs:element name="raceMeet" type="sbk:RaceMeeting" minOccurs="0" maxOccurs="unbounded"/>
+			<!--xs:element name="clerkOfCourse" type="hrc:ClerkOfCourse" minOccurs="0" maxOccurs="1"/-->
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:element name="RaceRunner" type="sbk:RaceRunner"/>
+	<xs:complexType name="RaceRunner">
+		<xs:annotation>
+			<xs:documentation>It extends SportsbookParticipant. It Represents Runner in the Horse racing meet and provides additional horse racing runner details. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sbk:SportsbookParticipant">
+				<xs:sequence>
+					<xs:element name="runnerKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>can be an outcome id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="runnerName" type="xs:string"  minOccurs="0"/>
+					<xs:element name="drawNumber" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="status" type="xs:string"  minOccurs="0"/>
+					<xs:element name="lane" type="xs:string"  minOccurs="0"/>
+					<xs:element name="raceWinner" type="xs:string"  minOccurs="0"/>
+					<xs:element name="distanceBehindWinner" type="xs:string"  minOccurs="0"/>
+					<xs:element name="finalPosition" type="xs:string"  minOccurs="0"/>
+					<xs:element name="weightLbs" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="headgearShortCode" type="xs:string"  minOccurs="0"/>
+					<xs:element name="headgearDescription" type="xs:string"  minOccurs="0"/>
+					<xs:element name="daysSinceLastRun" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="beatenFavourite" type="xs:string"  minOccurs="0"/>
+					<xs:element name="saddleClothNumber" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="penaltyWeightLbs" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="horseAge" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="silkImageName" type="xs:string"  minOccurs="0"/>
+					<xs:element name="isReservedRunner" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="trapNumber" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="isFavourite" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="overweightLbs" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="headgearFirsttimeIndicator" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="favouritePosition" type="xs:string"  minOccurs="0"/>
+					<xs:element name="racingPostSpeedFigure" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="commentInRun" type="xs:string"  minOccurs="0"/>
+					<xs:element name="shorthandForm" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>6 digits</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="topSpeed" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="distanceToHorseInFront" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="isPastCourseWinner" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="isPastDistanceWinner" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="silksUrl" type="xs:string"  minOccurs="0"/>
+					<xs:element name="nonRunnerPulledOutTime" type="xs:string"  minOccurs="0"/>
+					<xs:element name="racingPostPrediction" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="toWinSelectionKey" type="xs:string"  minOccurs="0"/>
+					<xs:element name="toWinNumPrice" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="toWinDecPrice" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="unadjustedMasterRating" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="adjusted_master_rating" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="forecastSP" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="aWWinner" type="xs:string"  minOccurs="0"/>
+					<xs:element name="lastRFNumber" type="xs:string"  minOccurs="0"/>
+					<xs:element name="pastPostPosition" type="xs:string"  minOccurs="0"/>
+					<xs:element name="weight" type="xs:string"  minOccurs="0"/>
+					<xs:element name="formFigs" type="xs:string"  minOccurs="0"/>
+					<xs:element name="isPastCourseAndDistanceWinner" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="dog" type="hrc:Dog" minOccurs="0"/>
+					<xs:element name="horse" type="hrc:Horse" minOccurs="0"/>
+					<xs:element name="jockey" type="hrc:Jockey" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="rating" type="hrc:RunnerRating" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="runnerStat" type="hrc:RunnerStatistic" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Race" type="sbk:Race"/>
+	<xs:complexType name="Race">
+		<xs:annotation>
+			<xs:documentation>This represents horse or dog racing event and is part of sportsbookEvent</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sbk:SportsbookEvent">
+				<xs:sequence>
+					<xs:element name="raceKey" type="xs:string"  minOccurs="0"/>
+					<xs:element name="startTime" type="xs:dateTime"  minOccurs="0"/>
+					<xs:element name="raceNumber" type="xs:string"  minOccurs="0"/>
+					<xs:element name="raceTitle" type="xs:string"  minOccurs="0"/>
+					<xs:element name="audioURL" type="xs:string"  minOccurs="0"/>
+					<xs:element name="distanceYards" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="runnerCount" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="trackType" type="xs:string"  minOccurs="0"/>
+					<xs:element name="baseDistance" type="xs:string"  minOccurs="0"/>
+					<xs:element name="raceClass" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="minimumWeight" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="minimumWeight3yrOld" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="stallPosition" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>for flat races</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isAllWeather" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="isHandicap" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="flatOrJumps" type="xs:string"  minOccurs="0"/>
+					<xs:element name="verdict" type="xs:string"  minOccurs="0"/>
+					<xs:element name="diomedComment" type="xs:string"  minOccurs="0"/>
+					<xs:element name="grade" type="xs:string"  minOccurs="0"/>
+					<xs:element name="isBAGS" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>British Afternoon Greyhound Service?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isBEGS" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>British Evening Greyhound Service?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="postPick" type="xs:string"  minOccurs="0"/>
+					<xs:element name="isAbandoned" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="winnerTimeSecs" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Winners time in seconds</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="agesAllowed" type="xs:string"  minOccurs="0"/>
+					<xs:element name="raceStartedTime" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>hh-mm</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="racingPostStandardTime" type="xs:string"  minOccurs="0"/>
+					<xs:element name="toteSwinger" type="xs:string"  minOccurs="0"/>
+					<xs:element name="tote" type="xs:string"  minOccurs="0"/>
+					<xs:element name="abandonReason" type="xs:string"  minOccurs="0"/>
+					<xs:element name="longHandicap" type="xs:string"  minOccurs="0"/>
+					<xs:element name="handicapRatingBandFrom" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="handicapRatingBandTo" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="raceComment" type="xs:string"  minOccurs="0"/>
+					<xs:element name="sellingDetails" type="xs:string"  minOccurs="0"/>
+					<xs:element name="handicapType" type="xs:string"  minOccurs="0"/>
+					<xs:element name="raceValue" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="thoroughbredRaceNo" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="tvChannel" type="xs:string"  minOccurs="0"/>
+					<xs:element name="raceDate" type="xs:dateTime"  minOccurs="0"/>
+					<xs:element name="raceTime24Hr" type="xs:string"  minOccurs="0"/>
+					<xs:element name="totalStartingPrice" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="numberOfFences" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="animalType" type="xs:string"  minOccurs="0"/>
+					<xs:element name="seller" type="xs:string"  minOccurs="0"/>
+					<xs:element name="pattern" type="xs:string"  minOccurs="0"/>
+					<xs:element name="weightsRaised" type="xs:string"  minOccurs="0"/>
+					<xs:element name="ageLimitation" type="xs:string"  minOccurs="0"/>
+					<xs:element name="openAgeRace" type="xs:string"  minOccurs="0"/>
+					<xs:element name="crsgraphicFileName" type="xs:string"  minOccurs="0"/>
+					<xs:element name="trackFences" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="lastYear" type="xs:string"  minOccurs="0"/>
+					<xs:element name="lastYearsWinnerName" type="xs:string"  minOccurs="0"/>
+					<xs:element name="lastYearsOdds" type="xs:string"  minOccurs="0"/>
+					<xs:element name="lastYearsRunners" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="lastYearsDraw" type="xs:string"  minOccurs="0"/>
+					<xs:element name="lastYearsWeight" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="distance" type="xs:string"  minOccurs="0"/>
+					<xs:element name="runner" type="sbk:RaceRunner" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="prize" type="hrc:Prize" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="raceValueCurrency" type="ccy:Currency" minOccurs="0"/>
+					<xs:element name="nonRunner" type="sbk:RaceRunner" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="course" type="sbk:RaceCourse" minOccurs="0"/>
+					<!--xs:element name="trend" type="hrc:RaceTrend" minOccurs="0" maxOccurs="unbounded"/-->
+					<xs:element name="raceType" type="hrc:RaceType" minOccurs="0"/>
+					<xs:element name="going" type="hrc:RacingGoing" minOccurs="0"/>
+					<xs:element name="jockeyStat" type="hrc:RacingStatistic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="trainerStat" type="hrc:RacingStatistic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="tip" type="hrc:RacingTip" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="trend" type="hrc:Trend" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="winner" type="sbk:RaceRunner" minOccurs="0"/>					
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RaceMeeting" type="sbk:RaceMeeting"/>
+	<xs:complexType name="RaceMeeting">
+		<xs:annotation>
+			<xs:documentation>A special form of Sportsbook Type that represents a Race Meeting (typically horse or greyhound)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sbk:SportsbookCategory">
+				<xs:sequence>
+					<xs:element name="meetingKey" type="xs:string"  minOccurs="0"/>
+					<xs:element name="meetName" type="xs:string"  minOccurs="0"/>
+					<xs:element name="shortName" type="xs:string"  minOccurs="0"/>
+					<xs:element name="description" type="xs:string"  minOccurs="0"/>
+					<xs:element name="meetingDate" type="xs:dateTime"  minOccurs="0"/>
+					<xs:element name="drawComment" type="xs:string"  minOccurs="0"/>
+					<xs:element name="shortDrawComment" type="xs:string"  minOccurs="0"/>
+					<xs:element name="tvChannel" type="xs:string"  minOccurs="0"/>
+					<xs:element name="numberOfRaces" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="isAbandoned" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="race" type="sbk:Race" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="dogStat" type="hrc:DogStatistic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="trainerStat" type="hrc:DogTrainerStatistic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="favouriteStat" type="hrc:FavouriteStatistic" minOccurs="0"/>
+					<xs:element name="track" type="sbk:RaceCourse" minOccurs="0"/>
+					<xs:element name="course" type="sbk:RaceCourse" minOccurs="0"/>
+					<xs:element name="officialGoing" type="hrc:RacingGoing" minOccurs="0"/>
+					<xs:element name="trapStat" type="hrc:TrapStatistic" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ChannelDetail" type="sbk:ChannelDetail"/>
+	<xs:complexType name="ChannelDetail">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents channel details related top the entity.  This determines what catalogue the entity should appear in.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="channel" type="chn:Channel"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The channel that the entity is published to</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currentState" type="sbk:ChannelStateKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Current state of whether the channel applies or not to the entity. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookCategoryCharacteristics" type="sbk:SportsbookCategoryCharacteristics"/>
+	<xs:complexType name="SportsbookCategoryCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class is a container for generic Category Characteristics to use for future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hasCharacteristics" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer has applicable Characteristics </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryCharacteristic" type="sbk:SportsbookCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ScorecastSelection" type="sbk:ScorecastSelection"/>
+	<xs:complexType name="ScorecastSelection">
+		<xs:annotation>
+			<xs:documentation>This class  represents a scorecast pair of scorer and another outcome, and the price</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="scorerSelectionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical scorer selection key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical selection key for the other selection that is paired with the scorer.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="scorerSelectionKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="selectionKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="numFractionalPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Numerator of the fractional price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="denFractionalPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Denominator of the fractional price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decimalPrice" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Decimal price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="americanPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>American price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="scorecastName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookPool" type="sbk:SportsbookPool"/>
+	<xs:complexType name="SportsbookPool">
+		<xs:annotation>
+			<xs:documentation>This class represents a pool TBD</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sbk:SportsbookCategory">
+				<xs:sequence>
+					<xs:element name="poolKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique key for the pool</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currency" type="typ:CurrencyCodeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The default currency of a Pool - could be in currencies other then GBP</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numLegs" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>number of legs. This should agree with the number of market IDs.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="poolValue" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>current total value of the pool, in the above currency code</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is the pool active?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isResulted" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>true if all results are believed to be known for this event.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="poolProvider" type="sbk:PoolProvider" minOccurs="0"/>
+					<xs:element name="poolMarket" type="sbk:SportsbookMarket" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="poolType" type="sbk:PoolType" minOccurs="0"/>
+					<xs:element name="poolResult" type="sbk:PoolResult" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="TeamStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="NotActive"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SportsbookMarketGroup" type="sbk:SportsbookMarketGroup"/>
+	<xs:complexType name="SportsbookMarketGroup">
+		<xs:annotation>
+			<xs:documentation>This represents 'Collections' in Openbet, which a Market can be associated to 0..* of these.  A 'Group' could be 'Next 10 races'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="marketGroupKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical market group key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketGroupName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Market Group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0"/>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SportsbookPriceFormatKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the format of the price in this SelectionPrice</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Fractional">
+				<xs:annotation>
+					<xs:documentation>e.g. 4/1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Decimal">
+				<xs:annotation>
+					<xs:documentation>e.g. 4.2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="American">
+				<xs:annotation>
+					<xs:documentation>e.g. 200</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsbookCategoryStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the status' of a Sportsbook Category</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Active (OpenBet 'A') - Bets can be taken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended (OpenBet 'S') - Bets CANNOT be taken at this level, or any child level</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="InActive">
+				<xs:annotation>
+					<xs:documentation>Placeholder for a status when a category is 'retired' / 'finished' (not to be confused with 'Suspended', which only relates to taking bets)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsbookSelectionStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the values of a selectionStatus</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Active ('A' in OpenBet) - Bets can be taken on this selection, all functions OK.
+
+If the PARENT is suspended though, even if this is 'Active', the selection will be implicitly suspended.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended  ('S' in OpenBet) - Bets CANNOT be taken on this selection
+
+Even if the PARENT is Active, the selection is explicitly suspended.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="InActive">
+				<xs:annotation>
+					<xs:documentation>Placeholder for a status when a Selection is 'retired' / 'finished' (not to be confused with 'Suspended', which only relates to taking bets)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PlayerGenderKind">
+		<xs:annotation>
+			<xs:documentation>This class represents an enumeration of gender types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Male">
+				<xs:annotation>
+					<xs:documentation>Player is a Male/Man</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Female">
+				<xs:annotation>
+					<xs:documentation>Player is a Female/Woman</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PlayerStatusKind">
+		<xs:annotation>
+			<xs:documentation>This class is an enumeration of player status.  A player can be active, and then 'removed' (e.g. retire)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The player is actively participating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NotActive">
+				<xs:annotation>
+					<xs:documentation>The player is not actively participating in sporting events.  e.g. Retired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SportsbookPlayer" type="sbk:SportsbookPlayer"/>
+	<xs:complexType name="SportsbookPlayer">
+		<xs:sequence>
+			<xs:element name="playerKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical player key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="teamKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical team key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="lastName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="displayName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="sex" type="sbk:PlayerGenderKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sex/gender of the player</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfBirth" type="xs:date"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date of birth of the player</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="countryCode" type="cty:CountryCodeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ISO Country code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="playerStatus" type="sbk:PlayerStatusKind"  minOccurs="0"/>
+			<xs:element name="playerRating" type="xs:string"  minOccurs="0"/>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="teamExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SportsbookDisplayStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the Display Status of the Entity. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Displayed">
+				<xs:annotation>
+					<xs:documentation>Display the Entity on the web.  ('isDisplayed='Y') in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NotDisplayed">
+				<xs:annotation>
+					<xs:documentation>Do NOT Display the Entity, or any of its Children, on the web 
+
+(Bets can still be taken via other channels - purely a display concern) ('isDisplayed='N') in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsbookCategoryTypeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the types of SportsbookCategory's that can exists - the specialisations.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EventCategory">
+				<xs:annotation>
+					<xs:documentation>TBD - Not supported for R1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EventClass">
+				<xs:annotation>
+					<xs:documentation>The Sportsbook category is an 'EventClass' type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EventType">
+				<xs:annotation>
+					<xs:documentation>The Sportsbook category is an 'EventType' type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EventSubType">
+				<xs:annotation>
+					<xs:documentation>The Sportsbook category is an 'EventSubType' type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Event">
+				<xs:annotation>
+					<xs:documentation>The Sportsbook category is an 'Event' type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pool">
+				<xs:annotation>
+					<xs:documentation>TBD - The Sportsbook category is an 'Pool' type.
+
+A pool has references to Markets making up the pool, from across different events</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Coupon">
+				<xs:annotation>
+					<xs:documentation>The Sportsbook category is an 'Coupon' type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsbookPriceTypeKind">
+		<xs:annotation>
+			<xs:documentation>The type of price this SportsbookPrice represents (Note these are OpenBet as Mercury doesnt pass this??)  Default to L
+
+Openbet:
+
+Indicates the type of price taken, will be one of the following values (not all of these will be
+supported in all systems and others may exist):
+L: Live (i.e. Fixed odds)
+S: Starting Price
+D: Dividend declaration (forecasts etc.)
+P: Pari-mutuel
+B: Best Price
+N: Next Price
+G: Guaranteed Price
+1: First Show
+2: Second Show</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation>L: Live (i.e. Fixed odds) - The most common</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>S: Starting Price</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>D: Dividend declaration (forecasts etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="P">
+				<xs:annotation>
+					<xs:documentation>P: Pari-mutuel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>B: Best Price</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>N: Next Price</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="G">
+				<xs:annotation>
+					<xs:documentation>G: Guaranteed Price</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>1: First Show</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>2: Second Show</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="dividend">
+				<xs:annotation>
+					<xs:documentation>Price related to paramutel / pools</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="MarketNcastDividend" type="sbk:MarketNcastDividend"/>
+	<xs:complexType name="MarketNcastDividend">
+		<xs:annotation>
+			<xs:documentation>Details of the ncast (e.g. Tricast) dividend</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ncastTypeCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of ncast e.g. FC for forecast.  This should be the same as the legSort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dividend" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The dividend amount </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dividendCurrency" type="typ:CurrencyCodeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The dividend currency</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legSort" type="bts:LegSort" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookEventCharacteristics" type="sbk:SportsbookEventCharacteristics"/>
+	<xs:complexType name="SportsbookEventCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class is a container for generic Sportsbook Event Characteristics to use for future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hasCharacteristics" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer has applicable Characteristics </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsbookEventCharacteristics" type="sbk:SportsbookCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookEvent" type="sbk:SportsbookEvent"/>
+	<xs:complexType name="SportsbookEvent">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="eventKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical event key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="eventDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The event start date time.
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time at which event actually went off at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="suspendAtDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The event start date time.
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="finishedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time at which event DID end. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endAtDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time (estimated) at which event will be end. This is the time at which event should be ended. A suspend request need to be sent to retail system to suspend the event at this time.(Mercury Only)
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventStatus" type="sbk:SportsbookCategoryStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Status Of Event - Active, Suspended or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventSort" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sort of the event.  e.g.
+
+Match
+Tournament
+Round
+Group 1&amp;hellip;Group 9
+
+Different values from Mercury to OpenBet, need to transform to Mercury values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasBIRMarkets" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate whether the event has any In Running Markets..
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The order in which it will be displayed to customer. Event with lowest display order goes first.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventNotes" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>User comments, 250 Characters limit.
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="blurb" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Event description text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventRaceNumber" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The race number if the event is racing (horse and dogs)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="streamAvailable" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Value of this attribute is a comma-separate list of ISO country codes where the video is viewable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEventStarted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is used to control when the event starts and we stop taking bets (also known as 'isOff').  There are three options to chose from:- 
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEventFinished" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boolean indicates if this event is finished.  
+
+Only applicable for 'sportsbookCategoryType'=Event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEventResulted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boolean indicates if all results for this event are known.  
+
+Only applicable for 'sportsbookCategoryType'=Event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates if betting on the event is suspended or not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="raceStarted" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>indicates if race has started - "Y", "N" or blank</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isOpenEvent" type="xs:boolean"  minOccurs="0"/>
+			<xs:element name="isNext24HourEvent" type="xs:boolean"  minOccurs="0"/>
+			<xs:element name="isLiveNowEvent" type="xs:boolean"  minOccurs="0"/>
+			<xs:element name="isLiveNowOrFutureEvent" type="xs:boolean"  minOccurs="0"/>
+			<xs:element name="sportKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Sport Id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Category Id to which this Event belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryCode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="categoryName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of Category to which Event belongs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="classKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Class Key for event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type Id of event if it exist</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subTypeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SubType Id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="className" type="xs:string"  minOccurs="0"/>
+			<xs:element name="typeName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="subTypeName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="classDisplayOrder" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>display order of the Class to which this Event belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeDisplayOrder" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>display order of the Type to which this Event belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subTypeDisplayOrder" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>display order of the SubType to which this Event belongs </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="classFlagCodes" type="xs:string"  minOccurs="0"/>
+			<xs:element name="typeFlagCodes" type="xs:string"  minOccurs="0"/>
+			<xs:element name="classSortCode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="SportsbookEventCharacteristic" type="sbk:SportsbookEventCharacteristics" minOccurs="0"/>
+			<xs:element name="eventLocation" type="loc:Location" minOccurs="0"/>
+			<xs:element name="sportsbookParticipant" type="sbk:SportsbookParticipant" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookMarket" type="sbk:SportsbookMarket" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="eventScoreboard" type="evt:EventScoreboard" minOccurs="0"/>
+			<xs:element name="tvBroadcast" type="sbk:TVBroadcast" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="eventFlag" type="sbk:EventFlag" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookEventChannel" type="sbk:ChannelDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="subscription" type="subs:Subscription" minOccurs="0"/>
+			<xs:element name="parentExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="siblingEventExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="race" type="sbk:Race" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TVBroadcast" type="sbk:TVBroadcast"/>
+	<xs:complexType name="TVBroadcast">
+		<xs:annotation>
+			<xs:documentation>This class represents details of the TV Broadcast for a station</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="broadcaster" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The station/broadcaster e.g. Sky Sports</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="channelName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the TV Channel e.g. Sky Sports 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="broadcastTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time of the broadcast</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherInfo" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Other info</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventFlag" type="sbk:EventFlag"/>
+	<xs:complexType name="EventFlag">
+		<xs:annotation>
+			<xs:documentation>Maintains the event flags which have been selected for an event</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="deleteFlag" type="typ:DeleteFlagKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="flagCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="flagName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookMarket" type="sbk:SportsbookMarket"/>
+	<xs:complexType name="SportsbookMarket">
+		<xs:annotation>
+			<xs:documentation>This class represents the various markets that are part of Sportsbook Event (i.e Category=Event).
+
+These are the containers for selections which a customer selects to form a Bet.
+
+A Market will only ever have one parent Event.
+
+A Market can be an 'indexMarket' - which means it is a continuous market that is constantly resulted and prices reset.  Has many mini-lifecycles (e.g. Runs in Next Over).  For every over, this is resulted, settled and then 'reset' for the next over.
+
+TBD - Is SportsbookMarketGroup (Market Type) in Mercury.  Think MarketType maps to MarketGroup in OB.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="marketKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical market key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical event key.  (Optional now as there is no canonical defined as of yet).  Refer to parent external keys for the system specific keys like openBet (parentExternalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="parentExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="createdDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time that the Market was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time that the Market was last updated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Market - note that this is of the format:
+
+|tournament winner|
+
+The bars used to do translation by openBet
+
+Must be used by Hybris for internal cross referencing
+
+If not managed by Mercury, this will come from OpenBet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketNameTranslated" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The translated name of the market.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketStatus" type="sbk:SportsbookMarketStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the Market.  This will change frequently between Active and Suspended, particularly if the market is an Bet In play one.  If isBIR=false, this will just become suspended once the event goes in play.
+
+Status of the selection. Whether it is Active or Suspended. Upon suspension of the market all its selection will also be suspended.
+
+Active ('A' in OpenBet) - Bets can be taken on this market and all its Selections (providing Selection not explicitly suspended), all functions OK.
+
+If the PARENT Event is 'Suspended' though, even if this is 'Active', the market  will be implicitly suspended.
+
+Suspended  ('S' in OpenBet) - Bets CANNOT be taken on this Market
+
+Even if the PARENT Event is Active, the Market  is explicitly suspended so takes precedence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketStatusDerived" type="sbk:SportsbookMarketStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>As above, however this status CONSIDERS the status of ALL parents of the Market and is derived.  Currently SiteServer can provide this.
+
+e.g. Status individually could be 'Active', but derived is 'Suspended' because the parent is suspended.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayStatus" type="sbk:SportsbookDisplayStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Attribute that will help decide if the market needs to be displayed in the front end or not.  Higher level displayStatus take precedence and front ends will manage this.
+
+Displayed ('isDisplayed='Y' in OpenBet) - Can be shown on the WEB
+
+If the PARENT Event is 'NotDisplayed' though, even if this is 'Displayed', the market will be implicitly 'NotDisplayed'
+
+NotDisplayed  ('isDisplayed='N' in OpenBet) - Do NOT display on the web
+
+Even if the PARENT Event is 'Displayed', the Market  is explicitly 'NotDisplayed' so takes precedence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0"/>
+			<xs:element name="isIndexMarket" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate if the market is an index market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birIndex" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The current index value for the index Market.  Only applicable if isIndexMarket=true.
+
+The index will be updated as and when game progresses.
+
+Indexs are used for 'continuous' markets such as 'next goal scorer.  Such markets can keep 'resetting'.  e.g there is not cap on the number of goals in a football match, hence there is always a 'next' goal scorer possibility.
+
+Another example is 'runs next over'.  The market is resulted against an index, the index moves x+1, and it starts again</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isAntepost" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If it is antepost market (yes or no). Used for Bet Acceptance. Antepost flag is used to indicate when credit customers will pay for the bet they have placed, when event start or when they place the bet.
+
+Only applicable for horse racing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isMarketBIR" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this Market a Bet In Running Market?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isStandardFixedOddsMarket" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this market a 'standard' fixed offs market?   i.e. marketSort='-'.  Refer SiteServer API / appendix
+
+If true, this cannot be a handicap or over under market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isHandicapMarket" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this market a handicap market? </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isOverUnderMarket" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this market an over - under market (e.g. over 2.5 goals)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isForecastMarket" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this market a forecast market (subclass)?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isTricastMarket" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this market a tricast market (subclass)?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isSPAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Assuming betting is available, will starting price bets be accepted (RACING ONLY)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isGPAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Assuming betting is available, will guaranteed (best price) price bets be accepted (RACING ONLY)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEWAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Assuming betting is available, will each-way bets be accepted
+
+Note:  E/W palces and factor often change during the course of 'long running' / elimination type tournaments. 
+
+e.g. golf, after each day of play out of a total of 4, the number of places reduces (5,4,3,2) as does the factor (1/4.1/5) as the result draws closer to conclusion.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPlaceOnlyAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Assuming betting is available, will place-only bets be accepted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ewPlaces" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If places is applicable, how many places (2 [top 2], 3 [top 3])</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ewFactorNum" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>E/W Factor Numerator.  For 1/4, this is '1'.  This is a quarter of the original to win odds
+
+The factor indicates the amount to reduce the 'to win' odds by to accommodate places.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ewFactorDen" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>E/W Factor Denominator.  For 1/4, this is '4'.  This is a quarter of the original to win odds
+
+The factor indicates the amount to reduce the 'to win' odds by to accommodate places.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ewTerms" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any terms associated to the EW</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isResulted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates if a traders has confirmed all resulting of the market.(i.e. all selections individually resulted)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="priceTypeCodes" type="xs:string"  minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Set of zero or more short codes representing all the types of prices currently offered on this .
+TO DEPRECATE - This will map to SelectionPriceType instead
+Market, including any "alternative" price types. e.g. SP, DP</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionPriceType" type="sel:SelectionPriceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ncastTypeCodes" type="xs:string"  minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>codes for *cast style markets.
+TO DEPRECATE:  This will map to legSort instead</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketMeaningMajorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>From SiteServer API:
+
+A short code indicating the general sort of betting possibilities offered within this Market. 
+
+[Refer SiteServer API for exhaustive list of codes] Note that historically this information has been known within OpenBet as Market "type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketMeaningMinorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>From SiteServer API:
+
+A short code that further specialises marketMeaningMajorCode to provide further detail 
+about the sort of betting possibilities offered within this Market. [TODO - exhaustive list of 
+codes] Note that historically this information has been known within OpenBet as Market 
+"sort".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="blurb" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Market blurb</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPMAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Related to Pools only - is Paramutel betting available?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the handicap if a handicap market.
+
+set if isHandicapMarket is true</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapMarketType" type="sbk:HandicapMarketTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of handicap market if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overUnderLineValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the overUnder line value if the market is a over-under market (aka above/below).
+
+Set if isOverUnderMarket is true</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketChannelDetail" type="sbk:ChannelDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookMarketGroup" type="sbk:SportsbookMarketGroup" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookMarketSort" type="sbk:SportsbookMarketSort" minOccurs="0"/>
+			<xs:element name="sportsbookMarketType" type="sbk:SportsbookMarketType" minOccurs="0"/>
+			<xs:element name="marketCharacteristics" type="sbk:SportsbookMarketCharacteristics" minOccurs="0"/>
+			<xs:element name="sportsbookSelection" type="sbk:SportsbookSelection" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="rawHandicapValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The RAW value of the handicap if a handicap market.
+
+set if isHandicapMarket is true</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isLPAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Assuming betting is available, will live-price (also known as fixed-odds) bets be accepted?  priceTypeCode and SelectionPriceType.code='LP'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isSCAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Assuming betting is available, does this market have scorecast options available?  Set true if marketMeaningMajorCode=C and marketMeaningMinorCode='SC'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="scorecastSelection" type="sbk:ScorecastSelection" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="marketNcastDividend" type="sbk:MarketNcastDividend" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="subscription" type="subs:Subscription" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookCharacteristic" type="sbk:SportsbookCharacteristic"/>
+	<xs:complexType name="SportsbookCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for Sportsbook characteristics / properties - this aids in future extensibility for all sportsbook entities</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the characteristic value (if known or applicable - default String)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the characteristic.  Active or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PoolType" type="sbk:PoolType"/>
+	<xs:complexType name="PoolType">
+		<xs:annotation>
+			<xs:documentation>The type of the PoolBet.
+
+Type of pool: 
+- Win / place /show : 
+WIN WINPLC WINSHW WINPLCSHW 
+PLC PLCSHW 
+SHW 
+- Exacta :EXA 
+- Quinella :QIN 
+- Daily Double :DBL 
+- Trifecta :TRI 
+- Superfecta :SPR 
+- Pick 3 :PK3 
+- Pick 4 :PK4 
+- Pick 6 :PK6 
+- Pick 9 :PK9 
+- ToteExacta :UEXA 
+- ToteTrifecta :UTRI 
+- ToteQuadpot :UQDP 
+- TotePlacepot :UPLP 
+- ToteJackpot :UJKP 
+- ToteScoop6 :USC6</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code for the poolType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code for the poolType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code for the poolType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresCrossRef" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasCrossRef" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether this type has a cross reference associated to it? This value is persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="poolTypeKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookParticipant" type="sbk:SportsbookParticipant"/>
+	<xs:complexType name="SportsbookParticipant">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a Sportsbook Participant.
+
+This is OUT OF SCOPE for now.
+
+Currently only Mercury supports this - this model is similar to Mercury's</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="participantKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical participant key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical event key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="participantName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the participant - this will be in the 'bar' version (un-translated).
+
+e.g. |Roger Federer|</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="participantType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the participant.  Player or Team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFor" type="typ:TimePeriod"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time period that the participant is valid for</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="sportsbookTeam" type="sbk:SportsbookTeam" minOccurs="0"/>
+			<xs:element name="sportsbookPlayer" type="sbk:SportsbookPlayer" minOccurs="0"/>
+			<xs:element name="eventExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookResult" type="sbk:SportsbookResult"/>
+	<xs:complexType name="SportsbookResult">
+		<xs:annotation>
+			<xs:documentation>This class represent the result of the selection in the market (possibly per index)
+
+Trading will set the results of the selections.
+
+If the market is an index market, then a SportsbookSelection will have multiple results, one for each index.  A match does not need to be completed to have a selection resulted.
+
+Also, as a match progresses, some selections can be resulted, while others till remain 'open'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="selectionResultKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical selection result key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical selection key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="selectionExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time the result is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time that the selection result was expired.  Only set if future result overrides.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this result record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birIndex" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The market bir index that this selection result is for.
+
+For index markets (i.e continuous markets), the selection is repeatedly priced, resulted as the index moves on for the market </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="score" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The score related to selection</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="place" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The place/position value that the runner finished</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isConfirmed" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this result confirmed?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="result" type="res:Result" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="HandicapMarketTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AsianHandicap">
+				<xs:annotation>
+					<xs:documentation>Asian handicap market.
+
+marketSort='A'
+marketMeaningMajorCode='A'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TwoOptionWesternHandicap">
+				<xs:annotation>
+					<xs:documentation>Two option western handicap market.
+
+marketSort='H'
+marketMeaningMajorCode='H'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ThreeOptionWesternHandicap">
+				<xs:annotation>
+					<xs:documentation>Three option western handicap market.
+
+marketSort='M'
+marketMeaningMajorCode='M'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SelectionResultedPrice" type="sbk:SelectionResultedPrice"/>
+	<xs:complexType name="SelectionResultedPrice">
+		<xs:annotation>
+			<xs:documentation>This is the price that the Bet ws captured at.  This is not always directly related to a selection price, but if it is, then there is an association to the correct SelectionPrice.
+
+The attribute may or may not be populated depending on the selectionpPriceType e.g. SP (Starting price) wont have a 'price' at point of capture, rather it will get the price at the start of the event, what ever that is.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numFractionalPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The fractional numerator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="denFractionalPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The fractional denominator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="americanPrice" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The american representation of the price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decimalPrice" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The decimal representation of the price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionPriceType" type="sel:SelectionPriceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportsbookSelection" type="sbk:SportsbookSelection"/>
+	<xs:complexType name="SportsbookSelection">
+		<xs:annotation>
+			<xs:documentation>This class represents a selection that is an 'outcome' for a particular market, and will have an associated SportsbookPrice to represent those odds.
+
+A selection is unique and only associated to a SINGLE market.
+
+e.g. if Wayne Rooney is an outcome in a number of markets (e.g. first goal scorer, to be sent off - these are DIFFERENT (i.e. diff id) SportsbookSelection instances</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="selectionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical selection key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical market key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical event key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet (externalKeys)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="marketExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="eventExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="createdDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the Selection was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the Selection was last updated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The selection name using the OpenBet format with 'bars' - acting like a code 
+
+e.g. |Wayne Rooney|</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionNameTranslated" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A translated version of the selectionName for a consumer (if required)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionStatus" type="sbk:SportsbookSelectionStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Status of the selection. Whether it is Active or Suspended. Upon suspension of the market all its selection will also be suspended.
+
+Active ('A' in OpenBet) - Bets can be taken on this selection, all functions OK.
+
+If the PARENT is suspended though, even if this is 'Active', the selection will be implicitly suspended.
+
+Suspended  ('S' in OpenBet) - Bets CANNOT be taken on this selection
+
+Even if the PARENT is Active, the selection is explicitly  suspended so takes precedence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionStatusDerived" type="sbk:SportsbookSelectionStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>As above, however this status CONSIDERS the status of ALL parents of the Selection and is derived.  Currently SiteServer can provide this.
+
+e.g. Status individually could be 'Active', but derived is 'Suspended' because the parent is suspended.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayStatus" type="sbk:SportsbookDisplayStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the selection.  Active or Suspended.  Determines whether this should be displayed on the Internet (different to suspension i.e. selectionStatus, where bets CANNOT be taken.)
+
+
+Displayed ('isDisplayed='Y' in OpenBet) - Bets can be taken on this market and all its Selections (providing Selection not explicitly suspended), all functions OK, and can be shown on the WEB
+
+If the PARENT Market is 'NotDisplayed' though, even if this is 'Displayed', the Selection will be implicitly 'NotDisplayed' as parent takes precendece
+
+NotDisplayed  ('isDisplayed='N' in OpenBet) - Bets can be taken be taken on this Selection, however this is NOT to be displayed on the web
+
+Even if the PARENT Market is 'Displayed', the Selection is explicitly 'NotDisplayed' so takes precedence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The order the trader would like the selection displayed within the Market.  Better to have favourites at the top to encourage betting.  Who the favourite is changes over the course of an event.  (more applicable with markets with many selections)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="runnerNumber" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of the runner in the race.  Applicable to horse and dog racing only</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="outcomeMeaningMajorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A short code indicating the general sort of betting possibility that this Outcome represents within its Market (such as a home win, an away win or a draw). Refer to SiterServer API for list. 
+
+See also: outcomeMeaningMinorCode,  Note that historically this information has been captured within OpenBet as an Outcome's "fb_result" value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="outcomeMeaningMinorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A short code that further specialises outcomeMeaningMajorCode further to provide further detail betting possibility that this Outcome represents within its Market (such as a home win, an away win or a draw). Refer to SiterServer API for list. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="outcomeMeaningScores" type="xs:string"  minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>From SiteServer:
+
+For an Outcome that represents a particular score (or range or combination of scores) 
+being attained, this field indicates what those score(s) are. The exact interpretation will 
+depend on the meaning of the outcome as indicated by outcomeMeaningMajorCode. 
+[TODO - document these exact interpretations] See also: outcomeMeaningMajorCode, 
+hcapValue Example: 2,1 for an Outcome (in a "Correct Score" Market) that represents the 
+home team scoring two goals and the away team scoring one in a Correct Score market.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue" type="xs:string"  minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>From SiteServer:
+
+The handicap value(s) which are considered to apply to this Outcome, expressed as decimal values. A split-line handicap will be represented as two values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isResulted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Has the result for the Selection been confirmed?  If so, the SelectionResult value stands as official</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsbookParticipant" type="sbk:SportsbookParticipant" minOccurs="0"/>
+			<xs:element name="selectionChannelDetail" type="sbk:ChannelDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="currentPrice" type="sbk:SportsbookPrice" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="historicalPrice" type="sbk:SportsbookPrice" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookResult" type="sbk:SportsbookResult" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="isUnnamedFav" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this selection an unnamed favourite</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unnamedFavPos" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unnamed favourite position if is an unnamed favourite (1 or 2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isNonRunner" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this selection a non-runner?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isRule4Applied" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is rule 4 applied to this selection?  if so, the selectionRule4 element will contain the details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isDHReductionApplied" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is dead heat reduction applied to the selection?  If so, the deadheatReduction element will be populated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isSettled" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this selection settled</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionRule4" type="sbk:SelectionRule4" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="selectionDeadHeatReduction" type="sbk:SelectionDeadHeatReduction" minOccurs="0"/>
+			<xs:element name="selectionResultedPrice" type="sbk:SelectionResultedPrice" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="selectionRacingForm" type="sbk:SelectionRacingForm" minOccurs="0"/>
+			<xs:element name="runnerWeight" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Weight of the runner of the race.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subscription" type="subs:Subscription" minOccurs="0"/>
+			<xs:element name="runner" type="sbk:RaceRunner" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SelectionDeadHeatReduction" type="sbk:SelectionDeadHeatReduction"/>
+	<xs:complexType name="SelectionDeadHeatReduction">
+		<xs:annotation>
+			<xs:documentation>Details of the selection dead heat reduction</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="winDHReductNum" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The numerator of the win reduction factor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="winDHReductDen" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The denominator of the win reduction factor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="placeDHReductNum" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The numerator of the win reduction factor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="placeDHReductDen" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The denominator of the win reduction factor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SelectionRule4" type="sbk:SelectionRule4"/>
+	<xs:complexType name="SelectionRule4">
+		<xs:annotation>
+			<xs:documentation>Maintains all the selection deduction detail like rule 4 and dead heats details for a selection</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Rule 4 Deduction is applied to bets taken within this time period. This can change over time - this is the date this record is valid from.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Deduction is applied to bets taken within this time period.  This can change over time - this is the date this record is valid to.  If this is null, this is the active record.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketRule4Id" type="xs:integer"  minOccurs="0"/>
+			<xs:element name="rule4Deduction" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Deduction in pence per pound.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rule4Reason" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reason for rule 4 deduction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SportsbookResultCodeKind">
+		<xs:annotation>
+			<xs:documentation>The allowed values for a selection result.  These are the Trading Mercury values.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Win"/>
+			<xs:enumeration value="Lose"/>
+			<xs:enumeration value="Void"/>
+			<xs:enumeration value="Place"/>
+			<xs:enumeration value="Unset"/>
+			<xs:enumeration value="Handicap"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SportsbookMarketSort" type="sbk:SportsbookMarketSort"/>
+	<xs:complexType name="SportsbookMarketSort">
+		<xs:annotation>
+			<xs:documentation>The values of market sort are as follows:
+
+Win/Draw/Win
+Total Goals
+Double Chance
+Head to Head
+Goal Crazy
+Half Time Correct Score
+Asian Handicap
+Asian Handicap Halftime Betting
+3-options Western Handicap
+2-option Western Handicap
+Scorecast
+Goals 10-band
+Bookings 10-band
+etc</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sortId" type="xs:integer"  minOccurs="0"/>
+			<xs:element name="sortName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Win/Draw/Win, Total Goals, Double Chance, Head to Head, Goal Crazy, Half Time Correct Score, Next Scorer (Match)
+Odd/Even
+Anytime Scorer
+Quatro	First to score	
+Total Goals (Over/Under)
+Correct Score	
+First half result	
+Both/One/Neither 
+Team to Score
+Half-time/Full-time	
+Second half result	
+Odd/Even
+First Scorer	
+Last Team To Score	
+Time of next match goal
+Last scorer	
+Time of first home/away/match Goal	
+Time of next home goal
+Asian Handicap	
+Corners 3-band	
+Time of next away goal
+Asian Handicap Halftime Betting	
+Bookings 3-band	
+Draw No Bet
+Over/Under (split)	
+Goals 3-band	
+Next Penalty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sortCode" type="xs:string"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TeamTypeKind">
+		<xs:annotation>
+			<xs:documentation>This class is an enumeration of 'team types'.  Country or NonCountry</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Country">
+				<xs:annotation>
+					<xs:documentation>Team is a 'country' based team  e.g. England</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NonCountry">
+				<xs:annotation>
+					<xs:documentation>The team is a non-country based team  e.g. Manchester United</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SportsbookCategory" type="sbk:SportsbookCategory"/>
+	<xs:complexType name="SportsbookCategory">
+		<xs:annotation>
+			<xs:documentation>This class represents a 'Product Category' used to classify part of the Sportsbook hierarchy structure.  This equates to capturing the natural 'Event Hierarchy' modelled by Openbet and known by traders down to 'Event' level.
+
+More specifically, this models:
+
+Event Category
+Event Class
+Event Type
+Event Sub Type
+Event (has more attributes filled in)
+Coupon
+Pool
+
+Only when the type is =Event will the SportsbookCategory have any markets.
+
+however, participants can be at every level, from subtype up, indicating defaults participants, and at event level, the actual participants from the event</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="categoryKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical category key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="parentCategoryKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical parent category key.  (Optional now as there is no canonical defined as of yet).  Refer to external keys for the system specific keys like openBet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="externalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="parentExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="isParentEventSubtype" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Only applicable for subcategories that are 'Events' - Is the parent of this Event a Subtype?
+
+false or empty implies it is a standard EventType (not EventSubtype)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The 'categoryName' of this category, including the openbet translation 'bars'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="createdDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the SportsbookCategory was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the SportsbookCategory was last updated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsbookCategoryType" type="sbk:SportsbookCategoryTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The specific type of the SportsbookCategory.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsbookCategoryStatus" type="sbk:SportsbookCategoryStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of this SportsbookCategory - applies to any of the 'levels' e.g. Event, Event Type.  This can be Active or Suspended and is critical for Ladbrokes managing liability.  At event level, this will change fairly often.  For other levels, far less often.
+
+
+Active ('A' in OpenBet) - Bets can be taken on this Cateogry and its children, providing the children are not explicitly Suspended.
+
+If the PARENT Category is 'Suspended' though, even if this is 'Active', this category will be implicitly 'Suspended' as parents take precedence
+
+Suspended  ('S' in OpenBet) - Bets CANNOT be taken on this Category or any other Subcategory, regardless.
+
+Even if the PARENT Cateogry is 'Active', the Children are explicitly 'Suspended' so takes precedence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsbookCategoryStatusDerived" type="sbk:SportsbookCategoryStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>As above, however this status CONSIDERS the status of ALL parents of the Category and is derived.  Currently SiteServer can provide this.
+
+e.g. Status individually could be 'Active', but derived is 'Suspended' because the parent is suspended.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayStatus" type="sbk:SportsbookDisplayStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The display status of the SportsbookCategory.  - applies to any of the 'levels' e.g. Event, Event Type.  Determines whether to display on the customer channels or not (Not to be confused with Suspension - the sportsbookCategoryStatus)
+
+The PARENT status takes precedence as per the ususal hierarchy model of parent overriding children.
+
+Displayed ('isDisplayed='Y' in OpenBet) - Bets can be taken on this Cateogry and all its Children (providing not explicitly 'NotDisplayed'), will be shown on the WEB
+
+If the PARENT of the hierarchy is 'NotDisplayed' though, even if this is 'Displayed', the entity will be implicitly 'NotDisplayed' as parent overrides.
+
+NotDisplayed  ('isDisplayed='N' in OpenBet) - Do NOT displaye on the web, or any of its hierarchy children.
+
+Even if the PARENT Category is 'Displayed', the Category is explicitly 'NotDisplayed' so takes precedence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryNameTranslated" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The 'categoryName' translated (TBD)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The event start date time.
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="suspendAtDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The event start date time.
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventSort" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sort of the event.  e.g.
+
+Match
+Tournament
+Round
+Group 1&amp;hellip;Group 9
+
+Different values from Mercury to OpenBet, need to transform to Mercury values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasBIRMarkets" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate whether the event has any In Running Markets..
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="displayOrder" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The order in which it will be displayed to customer. Event with lowest display order goes first.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEventStarted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is used to control when the event starts and we stop taking bets (also known as 'isOff').  There are three options to chose from:- 
+
+N/A, No, Yes
+
+N/A &amp;ndash; Suspend the event at Start Time (Mercury only)
+No &amp;ndash; We want the event to continue to be active even after the start time has passed for e.g. for a late running horse race
+Yes &amp;ndash; The event has started
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time at which event actually went off at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endAtDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time (estimated) at which event will be end. This is the time at which event should be ended. A suspend request need to be sent to retail system to suspend the event at this time.(Mercury Only)
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEventFinished" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boolean indicates if this event is finished.  
+
+Only applicable for 'sportsbookCategoryType'=Event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="finishedDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Time at which event DID end. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEventResulted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boolean indicates if all results for this event are known.  
+
+Only applicable for 'sportsbookCategoryType'=Event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventNotes" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>User comments, 250 Characters limit.
+
+Only applicable to SportsbookCategories where SportsbookCategoryType='Event'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="blurb" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Event description text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventRaceNumber" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The race number if the event is racing (horse and dogs)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="streamAvailable" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Value of this attribute is a comma-separate list of ISO country codes where the video is viewable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsbookParticipant" type="sbk:SportsbookParticipant" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="categoryChannelDetail" type="sbk:ChannelDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="childCategory" type="sbk:SportsbookCategory" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sportsbookMarket" type="sbk:SportsbookMarket" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="categoryCharacteristics" type="sbk:SportsbookCategoryCharacteristics" minOccurs="0"/>
+			<xs:element name="location" type="loc:Location" minOccurs="0"/>
+			<xs:element name="classSortCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The class sort code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeFlagCodes" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type flag codes of the type the event belongs to</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isOpenEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this event open</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isNext24HourEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this an event that starts in the next 24 hours</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isLiveNowEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this an event live now</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isLiveNowOrFutureEvent" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this an event that is live now or in the next 24 hours?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventRacingForm" type="sbk:EventRacingForm" minOccurs="0"/>
+			<xs:element name="classKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Class Id from Sportsbook</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="className" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the Class</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subTypeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>subType identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subTypeName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the subType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="siblingEventExternalKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+			<xs:element name="sportsbookEvent" type="sbk:SportsbookEvent" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="subscription" type="subs:Subscription" minOccurs="0"/>
+			<xs:element name="raceCourse" type="sbk:RaceCourse" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

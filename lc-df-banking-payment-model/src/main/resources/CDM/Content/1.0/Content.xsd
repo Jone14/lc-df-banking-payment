@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/content/Content/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/content/Content/1.0" xmlns:cnt="http://cdm.ladbrokes.co.uk/content/Content/1.0" xmlns:not="http://cdm.ladbrokes.co.uk/common/Notification/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:sbk="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:med="http://cdm.ladbrokes.co.uk/common/Media/1.0" xmlns:bin="http://cdm.ladbrokes.co.uk/common/BusinessInteraction/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Internationalisation/1.0" schemaLocation="../../Internationalisation/1.0/Internationalisation.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" schemaLocation="../../Sportsbook/2.0/Sportsbook.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Media/1.0" schemaLocation="../../Media/1.0/Media.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Notification/2.0" schemaLocation="../../Notification/2.0/Notification.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>	
+	
+	<xs:element name="TranslatedDescription" type="TranslatedDescription"/>
+	<xs:complexType name="TranslatedDescription">
+		<xs:annotation>
+			<xs:documentation>This entity represents the translated data for content description</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="langCodeIETF" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>IETF tags for country generally used in internet protocol</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Translated Text.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ContentEntityTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FeedProvider"/>
+			<xs:enumeration value="Notification"/>
+			<xs:enumeration value="Customer"/>
+			<xs:enumeration value="Account"/>
+			<xs:enumeration value="Transaction"/>
+			<xs:enumeration value="Payment"/>
+			<xs:enumeration value="Betting"/>
+			<xs:enumeration value="Sports"/>
+			<xs:enumeration value="Games"/>
+			<xs:enumeration value="Casino"/>
+			<xs:enumeration value="Poker"/>
+			<xs:enumeration value="BettingExchange"/>
+			<xs:enumeration value="Results"/>
+			<xs:enumeration value="Promotion"/>
+			<xs:enumeration value="RetailShop"/>
+			<xs:enumeration value="Affiliate"/>
+			<xs:enumeration value="NewsFeed"/>
+			<xs:enumeration value="PrePlayStatistics"/>
+			<xs:enumeration value="InPlayStatistics"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContentPriorityKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration that states content Priority</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="High">
+				<xs:annotation>
+					<xs:documentation>High Priority </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Medium">
+				<xs:annotation>
+					<xs:documentation>Medium Priority</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Low">
+				<xs:annotation>
+					<xs:documentation>Low Priority</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ManagedSystemTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hybris">
+				<xs:annotation>
+					<xs:documentation>Hybris E-Commerce System</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OpenBetLiveServ">
+				<xs:annotation>
+					<xs:documentation>Openbet LiveServ System</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ADW"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AussieRules"/>
+			<xs:enumeration value="Badminton"/>
+			<xs:enumeration value="Baseball"/>
+			<xs:enumeration value="Basketball"/>
+			<xs:enumeration value="BeachVolleyball"/>
+			<xs:enumeration value="Boxing"/>
+			<xs:enumeration value="Bandy"/>
+			<xs:enumeration value="Cricket"/>
+			<xs:enumeration value="Darts"/>
+			<xs:enumeration value="GreyhoundRacing"/>
+			<xs:enumeration value="BeachSoccer"/>
+			<xs:enumeration value="Golf"/>
+			<xs:enumeration value="Netball"/>
+			<xs:enumeration value="Volleyball"/>
+			<xs:enumeration value="Tennis"/>
+			<xs:enumeration value="Pool"/>
+			<xs:enumeration value="FieldHockey "/>
+			<xs:enumeration value="Futsal"/>
+			<xs:enumeration value="Handball"/>
+			<xs:enumeration value="IceHockey"/>
+			<xs:enumeration value="Lacrosse"/>
+			<xs:enumeration value="Rugby League"/>
+			<xs:enumeration value="Rugby Union"/>
+			<xs:enumeration value="Squash"/>
+			<xs:enumeration value="TableTennis"/>
+			<xs:enumeration value="WaterPolo"/>
+			<xs:enumeration value="HorseRacing"/>
+			<xs:enumeration value="Snooker"/>
+			<xs:enumeration value="Mixed"/>
+			<xs:enumeration value="MotorCycling"/>
+			<xs:enumeration value="Football"/>
+			<xs:enumeration value="Archery"/>
+			<xs:enumeration value="Martial Arts"/>
+			<xs:enumeration value="Soccer"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Content" type="Content"/>
+	<xs:complexType name="Content">
+		<xs:annotation>
+			<xs:documentation>Content: - This entity stores content information shared across Ladbrokes Enterprise systems</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contentKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This contains client supplied ID for traceability and auditing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="priority" type="ContentPriorityKind" minOccurs="0" maxOccurs="1" />
+			<xs:element name="createdBy" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>User  that created the content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="createdDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Datetime when the content message was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contentDescription" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="contentCategory" type="ContentEntityTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This contains the type for entity that this content is related to, if applicable.  Not all content need be related to an entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sportsCategory" type="SportsTypeKind" minOccurs="0" maxOccurs="1" />
+			<xs:element name="freeText" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This free text content placeholder in case there is no name-value content details. e.g: HTML, XML etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="translatedDescription" type="TranslatedDescription" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="actionType" type="not:ActionType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="contentDetail" type="ContentDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="contentDistribution" type="ContentDistribution" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="blockedCountryCodes" type="cty:Country" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="distributionChannel" type="chn:Channel" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="eventLocation" type="loc:Location" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="externalKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="sports" type="sbk:SportsbookCategory" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mediaDetails" type="med:Media" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContentDetail" type="ContentDetail"/>
+	<xs:complexType name="ContentDetail">
+		<xs:annotation>
+			<xs:documentation>ContentDetail: - This entity stores content detail in a name value pair to be shared across Ladbrokes Enterprise systems</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contentName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This contains id for content detail</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contentValue" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>value for content key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContentDistribution" type="ContentDistribution"/>
+	<xs:complexType name="ContentDistribution">
+		<xs:annotation>
+			<xs:documentation>ContentDistribution: - This entity stores details for distribution channels to which content will be published</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="channelCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This contains channel code of target distribution channel. e.g: I (Internet), M(Mobile), Z (Externals)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="countryCode" type="cty:CountryCodeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This contains target distribution channel country code. in future there will be multiple countries mapped to single tenant in a multi-tenant deployment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="distributionChannel" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This contains name of destination that could be either a external channel name or a JMS destination name. 
+e.g:
+LDBMKT- liveServ Channel Name
+JMS queue/topic names</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

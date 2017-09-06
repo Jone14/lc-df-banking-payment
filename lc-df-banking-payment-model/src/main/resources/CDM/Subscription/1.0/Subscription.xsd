@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/common/Subscription/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/common/Subscription/1.0" xmlns:subs="http://cdm.ladbrokes.co.uk/common/Subscription/1.0">
+	<xs:element name="Subscription" type="Subscription"/>
+	<xs:complexType name="Subscription">
+		<xs:sequence>
+			<xs:element name="subscriptionIds" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Holds the information of Live Server Channel details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="childSubscriptionIds" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Holds the info of Live server  Child channel details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastMessageIds" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Last Message Identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

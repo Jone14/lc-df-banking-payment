@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/trading/Feed/2.0" xmlns:fed="http://cdm.ladbrokes.co.uk/trading/Feed/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/trading/Feed/2.0">
+	<xs:element name="FeedProvider" type="FeedProvider"/>
+	<xs:complexType name="FeedProvider">
+		<xs:annotation>
+			<xs:documentation>Maintains the details of feed provider.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="providerId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for feed provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="providerName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the feed provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="providesFeed" type="Feed"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FeedTechnicalDetail" type="FeedTechnicalDetail"/>
+	<xs:complexType name="FeedTechnicalDetail">
+		<xs:annotation>
+			<xs:documentation>Maintains technical details of the feed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="protocol"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="transport"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="URL"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FeedType" type="FeedType"/>
+	<xs:complexType name="FeedType">
+		<xs:annotation>
+			<xs:documentation>Maintains details of category of feeds.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="feedTypeCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Category of the Feed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="feedTypeDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description of the feed type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FeedTypeCodeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EventCreation"/>
+			<xs:enumeration value="EventUpdate"/>
+			<xs:enumeration value="InPlayUpdate"/>
+			<xs:enumeration value="Result"/>
+			<xs:enumeration value="IndicativePricing"/>
+			<xs:enumeration value="ActualPricing"/>
+			<xs:enumeration value="Informational"/>
+			<xs:enumeration value="Media"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Feed" type="Feed"/>
+	<xs:complexType name="Feed">
+		<xs:annotation>
+			<xs:documentation>Maintains detail of various of feeds.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="feedId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique Id of the Feed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="feedName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name for the feed being provided by the feed provider.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="feedTypeCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Type of feed to which the feed belongs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="adminName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Administrator of feed is a person who is responsible for managing the feed, if there is any issues then an email can be sent to him.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="adminEmailId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Email Id of the administrator for the feed, which can be used for sending notifications when required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="feedTechnicalDetail" type="FeedTechnicalDetail"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="feedType" type="FeedType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

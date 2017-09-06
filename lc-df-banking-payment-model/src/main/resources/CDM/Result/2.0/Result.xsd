@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/trading/Result/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/trading/Result/2.0" xmlns:res="http://cdm.ladbrokes.co.uk/trading/Result/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:mkt="http://cdm.ladbrokes.co.uk/trading/Market/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Market/2.0" schemaLocation="../../Market/2.0/Market.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:simpleType name="ResultPublicationStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ResultPublished"/>
+			<xs:enumeration value="ResultNotPublished"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResultConfirmationStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ResultConfirmed"/>
+			<xs:enumeration value="ResultNotConfirmed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResultLifecycleStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Confirmed"/>
+			<xs:enumeration value="NotConfirmed"/>
+			<xs:enumeration value="NotEntered"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Result" type="Result"/>
+	<xs:complexType name="Result">
+		<xs:annotation>
+			<xs:documentation>Maintains all the distinct (unique) results which the selection can have.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="resultId" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="resultCode" type="ResultCodeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Unique code for the result</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultDescription" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Detail description for the result</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResultSort" type="ResultSort"/>
+	<xs:complexType name="ResultSort">
+		<xs:annotation>
+			<xs:documentation>Maintains the details of results which each of the sort can have
+Example "To Win" Market can only have the following
+Win
+Lose
+Void
+Place
+Unset</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="resultSortId" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="resultValue" type="Result" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="marketSort" type="mkt:MarketSort" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ResultCodeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Win"/>
+			<xs:enumeration value="Lose"/>
+			<xs:enumeration value="Void"/>
+			<xs:enumeration value="Place"/>
+			<xs:enumeration value="Unset"/>
+			<xs:enumeration value="Handicap"/>
+			<xs:enumeration value="PushOnLine"/>
+			<xs:enumeration value="IndexedMarket"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResultComputationKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Automatically">
+				<xs:annotation>
+					<xs:documentation>Result Automatically derived for Selection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Manually">
+				<xs:annotation>
+					<xs:documentation>Result Automatically derived for Selection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

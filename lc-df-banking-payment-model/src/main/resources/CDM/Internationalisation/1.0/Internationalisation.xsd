@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/common/Internationalisation/1.0"
+	 xmlns:intl="http://cdm.ladbrokes.co.uk/common/Internationalisation/1.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/common/Internationalisation/1.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="Language" type="intl:Language"/>
+	<xs:complexType name="Language">
+		<xs:annotation>
+			<xs:documentation>This entity represents the Language entity to be used Internationalization &amp; data translation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="langCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This field represents 2-digit ISO 639-1 code for language. It is lowercase abbreviation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="langCodeISO6392" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This field represents 3-digit ISO 639-2 code for language. It is lowercase abbreviation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="langCodeIETF" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>IETF tags for country generally used in internet protocol</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="languageName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Language Name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="createdDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time this was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Translation" type="intl:Translation"/>
+	<xs:complexType name="Translation">
+		<xs:annotation>
+			<xs:documentation>This entity represents the translation data for ladbrokes products records</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="recordKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>External party key for given key name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keyName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the translation record key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keyValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the translation record key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="translationKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique key for translation record</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lang" type="intl:Language"  minOccurs="0"/>
+			<xs:element name="createdDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time this was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

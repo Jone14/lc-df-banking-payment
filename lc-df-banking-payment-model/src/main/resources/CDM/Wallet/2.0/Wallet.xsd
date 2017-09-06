@@ -1,0 +1,1420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0"
+	 xmlns:wal="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0"
+	 xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0"
+	 xmlns:txn="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0"
+	 xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0"
+	 xmlns:imy="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0"
+	 xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0"
+	 xmlns:pay="http://cdm.ladbrokes.co.uk/banking/Payment/2.0"
+	 xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0"
+	 xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0"
+	 xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" schemaLocation="../../Customer/2.0/Customer.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" schemaLocation="../../Promotions/2.0/Promotions.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/banking/Payment/2.0" schemaLocation="../../Payment/2.0/Payment.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" schemaLocation="../../InternationalMoney/2.0/InternationalMoney.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" schemaLocation="../../Transaction/2.0/Transaction.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="WalletLock" type="wal:WalletLock"/>
+	<xs:complexType name="WalletLock">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents the lock details that may be associated with this wallet.  Such details may be needed to ensure correctness of the wallet in transactional scenarios.
+
+This will be key as the Wallet will be used in a highly distributed manner, inncluding B2B transactions
+
+A Lock can only go from Active -&gt; Inactive once and then becomes historical.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="walletLockKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The unique key for this wallet lock</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The unique key for this wallet lock</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletLockStatus" type="wal:WalletLockStatusKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The status of this wallet lock</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletTransactionKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The unique key for this wallet transaction that obtained this lock</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+
+					<!--xs:element name="balanceWhenObtained" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The balance of the account when the lock was obtained</xs:documentation>
+						</xs:annotation>
+					</xs:element-->
+					<xs:element name="lockOwnerKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The key of the owner of the lock</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lockOwnerName" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The name of the owner of the lock</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="encryptedSemiphore" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Encrypted Semiphore that MUST be used on all transactions</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="releasedDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time that the WalletLock was 'relinquished'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WalletSecurityDetails" type="wal:WalletSecurityDetails"/>
+	<xs:complexType name="WalletSecurityDetails">
+		<xs:annotation>
+			<xs:documentation>Security details required for the transaction</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="WalletTransactionCharacteristic" type="wal:WalletTransactionCharacteristic"/>
+	<xs:complexType name="WalletTransactionCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for transaction characteristics / properties - this aids in future extensibility of the account entity.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Customer characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the Customer characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the customer characteristic value (if known or applicable - default String)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletCharacteristic" type="wal:WalletCharacteristic"/>
+	<xs:complexType name="WalletCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for account characteristics / properties - this aids in future extensibility of the account entity</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the account characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the account characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the account characteristic value (if known or applicible - default String)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="wal:WalletCharacteristicStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the characteristic.  Active or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AdjustmentTypeKind">
+		<xs:annotation>
+			<xs:documentation>TBD - Enumeration of the types of manual adjustments.  Refer OpenBet 'Journal' types as an indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FreeBet">
+				<xs:annotation>
+					<xs:documentation>Free Bet - Bonus.
+
+'FBET' in Openbet </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Bonus">
+				<xs:annotation>
+					<xs:documentation>TBD - Bonus.
+
+'BONS' in Openbet </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RetailBetslipPayout">
+				<xs:annotation>
+					<xs:documentation>TBD (NEW) - Payout of a Retail Betslip into the online wallet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ManualCashMovement">
+				<xs:annotation>
+					<xs:documentation>Manual Cash Movement - TBD
+
+'MCM' in Openbet 
+
+Manual cash movement (standard generic Manual Adjustment for Customer Services)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BetCorrection">
+				<xs:annotation>
+					<xs:documentation>TBD - Bet Correction in OpenBet
+
+'BCOR' in Openbet 
+
+Manual cash movement (standard generic Manual Adjustment for Customer Services)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ChargeBack">
+				<xs:annotation>
+					<xs:documentation>Chargeback (to correct a payment that has been processed but bank have chargedback)
+
+CBAK</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ManualAdjustment">
+				<xs:annotation>
+					<xs:documentation>Misc Manual Adjustment (standard value used with Manual Adjustment uploads if no
+type is supplied)
+
+'MADJ' in Openbet 
+
+Manual cash movement (standard generic Manual Adjustment for Customer Services)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdjustmentSortKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the sort of the adjustment - the affect this adjustment type has on the customers wallet balance</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Debit">
+				<xs:annotation>
+					<xs:documentation>This will decrease the balance value e.g. 35 to 30 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Credit">
+				<xs:annotation>
+					<xs:documentation>This will increase the balance value e.g. 35 to 40 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DepositFunds" type="wal:DepositFunds"/>
+	<xs:complexType name="DepositFunds">
+		<xs:annotation>
+			<xs:documentation>A Wallet 'DepositFunds' transaction which results into a deposit of money, using a registered payment method, into the wallet, incrementing the wallet by the amount successfully deposited</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="isPaymentCompleted" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="paymentTransaction" type="pay:Payment" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GamePlayFunding" type="wal:GamePlayFunding"/>
+	<xs:complexType name="GamePlayFunding">
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="extJournalTransId" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>An external journal/transaction Id from the external provider for reconciliation</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="extJournalTransType" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>An external system journal/ledger type if applicable</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="funded" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount of money funded from the customers wallet for this game play</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="userId" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A user ID if the returns where human initiated (e.g: third party call centre)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="WalletTransactionStatusKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration of the possible wallet transaction status' - TBD</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Created">
+				<xs:annotation>
+					<xs:documentation>The transaction is in progress and has been persisted successfully</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pending">
+				<xs:annotation>
+					<xs:documentation>The transaction is valid but is pending confirmation from a Payment gateway.
+
+Could also be because of unavailability of a Payment gateway.
+
+Also could be batched ready to go?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Successful">
+				<xs:annotation>
+					<xs:documentation>The transaction has completed and was successful</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Rejected">
+				<xs:annotation>
+					<xs:documentation>The transaction has completed but was rejected by the provider or rejected by referral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Referral"/>
+			<xs:enumeration value="Approved">
+				<xs:annotation>
+					<xs:documentation>The transaction is in progress, but has been approved either automatically or after referral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Unknown">
+				<xs:annotation>
+					<xs:documentation>The transaction is in an unknown state (should be avoided)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="WalletTransactionType" type="wal:WalletTransactionType"/>
+	<xs:complexType name="WalletTransactionType">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a type of Wallet Transaction.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The name for the transaction type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="wal:WalletTransactionTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the wallet transaction type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description of the wallet transaction type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresPayment" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - This payment requires payment integration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0"/>
+			<xs:element name="walletTransactionTypeCharacteristics" type="wal:WalletTransactionTypeCharacteristics" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WalletTypeKind">
+		<xs:annotation>
+			<xs:documentation>TBD - Enumeration of the types of wallet </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Primary">
+				<xs:annotation>
+					<xs:documentation>A  'Primary' Wallet used for all customer facing transactions.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Secondary">
+				<xs:annotation>
+					<xs:documentation>A Secondary wallet = 'hidden' - use for 'per use' game play</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="System">
+				<xs:annotation>
+					<xs:documentation>TBD - System wallets have been mentioned that are 'non customer facing'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BatchAdjustFunds" type="wal:BatchAdjustFunds"/>
+	<xs:complexType name="BatchAdjustFunds">
+		<xs:annotation>
+			<xs:documentation>TBD - For Batch adjustments</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="batchKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Unique key for the batch number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numAdjustments" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The number of adjustments in the batch</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="adjustFunds" type="wal:AdjustFunds" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="WalletCharacteristicStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the status' of account characterisitcs</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Characteristic is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Characteristic is Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TransferFunds" type="wal:TransferFunds"/>
+	<xs:complexType name="TransferFunds">
+		<xs:annotation>
+			<xs:documentation>This class represents a wallet Transaction (of type Transfer funds ) with OpenBet . This class holds references to the Wallet information when funds are transferred between different wallets.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="amountToTransfer" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount to try and transfer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="amountTransferred" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount actually transferred</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="requiresConversion" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this require currency conversion?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currencyConverted" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this require currency conversion?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="fromWallet" type="wal:Wallet" minOccurs="0"/>
+					<xs:element name="toWallet" type="wal:Wallet" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AdjustmentType" type="wal:AdjustmentType"/>
+	<xs:complexType name="AdjustmentType">
+		<xs:annotation>
+			<xs:documentation>This class represents the type of adjustment being applied to the customers wallet.
+
+Refer to the Openbet  'Adjustment' types as an indicator.  These types will have an openbet cross reference.  
+
+External companies will also have cross references set up</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="wal:AdjustmentTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical code of the adjustment type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the adjustment type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of the type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="wal:AdjustmentTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this type active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adjustmentTypeKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WalletLockStatusKind">
+		<xs:annotation>
+			<xs:documentation>TBD - Enumeration of the status' for a Wallet Lock</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The lock is Active and no other transactions can occur on the Wallet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The lock is inactive as the wallet transaction this was associated with has completed and the lock 'relinquished'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="WalletStatus" type="wal:WalletStatus"/>
+	<xs:complexType name="WalletStatus">
+		<xs:annotation>
+			<xs:documentation>This class represents the status of a wallet.
+e.g: Active, Suspended, Retired</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="wal:WalletStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reason" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Supporting reason if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedBy" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Last updated by</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedDateTime" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the status was last updated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WalletHostKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the host values of the wallet.
+
+Internal
+External</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Internal">
+				<xs:annotation>
+					<xs:documentation>Internally hosted by Ladbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="External">
+				<xs:annotation>
+					<xs:documentation>Externally hosted outside</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SecondaryWallet" type="wal:SecondaryWallet"/>
+	<xs:complexType name="SecondaryWallet">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AvailablePromotions" type="wal:AvailablePromotions"/>
+	<xs:complexType name="AvailablePromotions">
+		<xs:annotation>
+			<xs:documentation>This class represents a container for available promotions that customer is entitled to redeem. Such promotions may expire if not used by the expiry date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="promotion" type="pro:Promotion" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RedeemedPromotions" type="wal:RedeemedPromotions"/>
+	<xs:complexType name="RedeemedPromotions">
+		<xs:annotation>
+			<xs:documentation>This class represents a container for REDEEMED promotions that customer is entitled to redeem.  Such promotions may expire if not used by the expiry date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="promotion" type="pro:Promotion" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletTransaction" type="wal:WalletTransaction"/>
+	<xs:complexType name="WalletTransaction" abstract="true">
+		<xs:annotation>
+			<xs:documentation>This class represents a financial transaction that has occured on a wallet. e.g:  DepositFunds, WithdrawFunds, Bet Returns
+
+A Wallet transaction is separated from Payment - A Payment will be required for deposit and withdrawal transaction, but NOT a transfer. A clear distiinction is made between the process (as a transaction) and the actual payment part.
+
+Payment is just part of the overall flow.  This becomes important when the ebanking project looks to externalise payments from openbet, and payments occur with a gateway provider.
+
+Wallet transaction processing will have a dependency on a set of Payment services in the future, and a resulting Payment gateway(s). But not all Wallet transaction will require Payment, so key to separate these concepts
+.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="txn:Transaction">
+				<xs:sequence>
+					<xs:element name="walletTransKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Unique canonical wallet transaction Identifier for the wallet transaction (potentially mastered in an external 'single wallet' system)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletTransactionKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+					<xs:element name="walletTransDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time of this wallet transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique canonical key for the Wallet that this transaction will be applied to.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+					<xs:element name="customerKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The canonical key of the owning customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="custReferenceCode" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Customer facing reference code, internally managed by Ladbrokes and can be used by Customers when contacting Ladbrokes about this transaction.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loyaltyCardNo" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The loyalty card number if used.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isAnonymous" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Can this transaction be attributed to a customer?  (e.g. retail betFunding would be anonymous if no loyalty card used.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletTransactionType" type="wal:WalletTransactionType" minOccurs="0"/>
+					<xs:element name="walletTransactionStatus" type="wal:WalletTransactionStatus" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="lastStatusChgDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time the status last changed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isCompleted" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is this transaction completed?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasErrors" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Has this wallet transaction errors?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productCategory" type="cat:CategoryTypeKind"  minOccurs="0"/>
+					<xs:element name="walletTransCharacteristics" type="wal:WalletTransactionCharacteristics" minOccurs="0"/>
+					<xs:element name="obtainedWalletLock" type="wal:WalletLock" minOccurs="0"/>
+					<xs:element name="walletTransactionError" type="wal:WalletTransactionError" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AdjustFunds" type="wal:AdjustFunds"/>
+	<xs:complexType name="AdjustFunds">
+		<xs:annotation>
+			<xs:documentation>A Manual Adjustment represents a change to a customer’s wallet balance that has not been directly been handled by specific OpenBet
+functionality, such as payments (initiated by customer) or bet placement.
+
+This particular adjustment would originate from a ladbrokes process rather then from a partner or expliciti from a customer
+
+The change will either be a Debit (Withdraw in OpenBet terms), or a Credit (Deposit in OpenBet terms).</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="adjustmentType" type="wal:AdjustmentType" minOccurs="0"/>
+					<xs:element name="adjustAmount" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount of money to adjust the wallet balance by</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="adjustmentSort" type="wal:AdjustmentSortKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The sort of the adjustment, Debit or Credit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="adjustmentMethod" type="wal:AdjustmentMethodKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Auto or Manual</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="openBetJournalType" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Legacy fromOpenBet journal codes?  Refer Openbet documentation.  cross reference class should be used rather.
+
+
+The j_op_type field on the tJrnl identifies (in conjunction with the j_op_ref_key, as described above) the specific type of transaction. The same j_op_type can be used for different j_op_ref_keys. For example BSTK represents a Bet stake, which could be Fixed Odds (i.e. j_op_ref_key = ‘ESB’), or Pools (i.e. j_op_ref_key = ‘TPB’).
+
+The table below lists all of the standard j_op_type values and a brief overview of what each type represents. Specific OpenBet implementations will contain additional j_op_types.
+
+Equally, there may well be entries below that are not used within specific customer implementations. Please refer to the appropriate contact at Orbis for information for details if necessary. Please refer to the appropriate contact at Orbis for information about these.
+j_op_type Description Notes
+RBAL Rolled-up balance
+This type would be used in circumstances where a
+number of transactions have been grouped together into
+a single item, e.g. for archiving.
+DEP Deposit
+Any Deposit into a customer's account via any payment
+method. Used for payments into any account types
+(excluding Debit customers in Telebet, please see
+DDEP below).
+WTD Withdrawal
+Use this for any Withdrawal out from a customer's
+account via any payment method. Used for payments
+out from any account types (excluding Cleardown
+payments, see DWTD below).
+RWTD Refunded withdrawal
+This represents the transaction to correct a customer's
+account balance subsequent to a failed withdrawal
+attempt. This implies that the customer's account had
+already been debited the equivalent amount.
+DDEP Draw-down deposit (telebetting)
+This type would be used to indicate an amount claimed
+from a Debit account customer's credit card to fund bet
+placement through Telebet.
+DWTD Clear-down withdrawal (telebetting)
+This type is used for payments made to Credit and Debit
+customers as part of Cleardown (automatic periodic
+winnings payment) functionality.
+DREF Deposit pending referral (telebetting)
+WREF Withdrawal pending referral
+(telebetting)
+DCAN Deposit cancellation (referral failed)
+DRES Deposit pending payment later
+(telebetting)
+WRES Withdrawal pending payment later
+(telebetting)
+WCAN Withdrawal cancellation
+BSTK Bet Stake
+This represents a standard betting stake, whether AP or
+standard. Used for both Fixed Odds and Pools Bets
+BSTL
+Bet settlement This represents a standard betting returns item (either
+winnings or refunds).
+BCAN
+Bet cancellation This represents an entry cancelling a Bet Stake.
+MAN
+Manual adjustment This type should be used for any miscellaneous
+transactions that aren't covered by any other listed
+transaction types.
+COMM
+Commission Payment This represents a commission amount charged on a
+Deposit or Withdrawal in or out of a customer's account.
+RCOM
+Reversed Commission Payment This is used to adjust a customer's account to cancel a
+commission payment associated with a refunded
+withdrawal.
+XFER
+Transfer to external system Used by some transfer mechanisms, but typically
+replaced by the XSIN, XSOT and XSRF types. Used by
+the standard OpenBet API reqAccountFundsTransfer
+call.
+XSIN
+External System transfer into
+OpenBet
+Used by the “failproof” OpenBet API
+reqAccountFundsTransfer call, as well as other 3rd party
+transfer mechanism
+XSOT
+External System transfer out of
+OpenBet
+Used by the “failproof” OpenBet API
+reqAccountFundsTransfer call, as well as other 3rd party
+transfer mechanism
+XSRF
+External System transfer refund Used by the “failproof” OpenBet API
+reqAccountFundsTransfer call, as well as other 3rd party
+transfer mechanism
+BUST
+Bet unsettlement
+As part of the unsettlement process, this item is created
+to cancel the original bet returns, before the bet is resettled.
+CGSK
+Games stake
+Customer stakes placed on games using the OpenBet
+Fixed Odds Games framework.
+CGWN
+Games winnings
+Customer winnings returned from games using the
+OpenBet Fixed Odds Games framework.
+CGPS
+Games progressive stake
+Customer stakes placed into progressive pools
+associated with games using the OpenBet Fixed Odds
+Games framework.
+CGPW
+Games progressive winnings
+Customer winnings from progressive pools associated
+with games using the OpenBet Fixed Odds Games
+framework.
+PSEE
+Games Progressive seed
+Represents funds placed into progressive pools
+associated with games using the OpenBet Fixed Odds
+Games framework in order to establish a pool value. Not
+from customer stakes.
+The OpenBet Database Transaction Types
+Confidential Copyright © Orbis Technology Ltd, 2006, The OpenBet Database (An Introduction), Draft, Version 0.3 72 of 75
+j_op_type Description Notes
+RSTK
+Rolled-up Games stake
+Archived summary of CGSK entries for a given
+customer.
+RGWN
+Rolled-up Games winnings
+Archived summary of CGWN entries for a given
+customer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="authorisedBy" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The authorising person id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="authorisedAt" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time that the adjustment was authorised</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="reason" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The Adjustment reason</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="batchKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The Batch ID this adjustment is apart of (if appropriate)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isWithdrawable" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Indicates whether the amount by which the customer&amp;rsquo;s account balance is adjustment should be withdrawable. 
+
+This affects whether the non-withdrawable balance.
+
+ Clearly, this is only relative for positive Manual
+Adjustments.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="businessProcess" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The business process name that resulted in this adjustment</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="otherInfo" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A placeholder for other info</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="adjustmentAmount" type="imy:Money" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="WalletStatusKind">
+		<xs:annotation>
+			<xs:documentation>TBD - The status of the wallet.
+
+May 'retired' some of these over the transitionary period</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The wallet type is 'Active'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>The wallet type is suspended (e.g. Fraud, Self Exclusion)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Closed">
+				<xs:annotation>
+					<xs:documentation>The wallet type is closed (e.g Customer closed)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Locked">
+				<xs:annotation>
+					<xs:documentation>The wallet is Locked.  This status could be crucial for supporting synchronsied/transactional updates to the wallet.  Many process could trigger adjustments to a Wallet and integrity needs to be preserved.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetFunding" type="wal:BetFunding"/>
+	<xs:complexType name="BetFunding">
+		<xs:annotation>
+			<xs:documentation>Wallet transaction representing the funding of a Betslip</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="betslipKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Canonical Betslip Key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Canonical Betslip Key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="funded" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The actual amount funded by the customer that resulted in a debit from their wallet balance.  This amount would exclude any freebet promotional amounts used to stake a bet.  This is the amount that gets recorded in the ledger or journal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betslipKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+					<xs:element name="betKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WalletTransactionTypeStatus" type="wal:WalletTransactionTypeStatus"/>
+	<xs:complexType name="WalletTransactionTypeStatus">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents the status of a wallet transaction type</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="wal:WalletTransactionStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the wallet transaction type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reason" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Supporting reason for the last update  if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedBy" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Last updated by</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdatedDateTime" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the status was last updated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AdjustmentMethodKind">
+		<xs:annotation>
+			<xs:documentation>The trigger type of the process that triggered the adjustment to be made to the wallet
+
+Manual (automated business process)
+Automatic (customer or Ladbrokes person initiated)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Automatic">
+				<xs:annotation>
+					<xs:documentation>An Automatic Adjustment to an account by a BAU Automated process (e.g. Bet Settlement)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Manual">
+				<xs:annotation>
+					<xs:documentation>A manual Adjustment to an account, initiated by process that was triggered manually by Ladbrokes (e.g. CSR discretionary points for service) or Customer (e.g. Retail betslip payout online)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="WalletTransactionTypeCharacteristics" type="wal:WalletTransactionTypeCharacteristics"/>
+	<xs:complexType name="WalletTransactionTypeCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class represents a general extensibility container for wallet characterisitcs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="walletTransTypeCharacteristic" type="wal:WalletTransactionTypeCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletSecurityProfile" type="wal:WalletSecurityProfile"/>
+	<xs:complexType name="WalletSecurityProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents the security settings that are applied to this wallet, configured by the customer</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="WalletAlerts" type="wal:WalletAlerts"/>
+	<xs:complexType name="WalletAlerts"/>
+	<xs:element name="WalletCharacteristics" type="wal:WalletCharacteristics"/>
+	<xs:complexType name="WalletCharacteristics">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a container of future extensibility characteristic elements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="walletCharacteristic" type="wal:WalletCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletTransactionError" type="wal:WalletTransactionError"/>
+	<xs:complexType name="WalletTransactionError">
+		<xs:annotation>
+			<xs:documentation>A Wallet transaction that originated from an external Partner company participating in a B2B transaction.  
+
+e.g. Suspension of funds due to Fraud on Poker
+
+TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="errorCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code for the error</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="errorDescription" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description of the error</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="errorDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time of the error</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetReturns" type="wal:BetReturns"/>
+	<xs:complexType name="BetReturns">
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="betKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Canonical Bet Key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betslipKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Canonical Betslip Key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="returns" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The actual amount won by the customer that resulted in a credit to their wallet balance.  This amount would exclude any freebet promotional amounts used to stake a bet, tax or withheld funds. This is the amount that gets recorded in the ledger or journal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+					<xs:element name="betslipKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SuspendFunds" type="wal:SuspendFunds"/>
+	<xs:complexType name="SuspendFunds">
+		<xs:annotation>
+			<xs:documentation>This Partner Transaction enables a partner (e.g.MGS) to suspend funds for reasons such as Fraud or a Dispute</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="suspendAll" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Suspend all funds</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="suspendReason" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The reason for suspending the funds e.g. Fraud</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="suspendAmount" type="imy:InternationalMoney" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="WalletTypeStatusKind">
+		<xs:annotation>
+			<xs:documentation>TBD - The status of the wallet type.
+
+May 'retired' some of these over the transitionary period</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>The wallet type is 'Active'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The wallet type is 'Inactive'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="WithdrawFunds" type="wal:WithdrawFunds"/>
+	<xs:complexType name="WithdrawFunds">
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="hasPaymentErrors" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="paymentTransaction" type="pay:Payment" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WalletTransactionCharacteristics" type="wal:WalletTransactionCharacteristics"/>
+	<xs:complexType name="WalletTransactionCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class represents a general extensibility container for wallet characterisitcs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="walletTransCharacteristic" type="wal:WalletTransactionCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletType" type="wal:WalletType"/>
+	<xs:complexType name="WalletType">
+		<xs:annotation>
+			<xs:documentation>This class represents a Wallet Type.  
+e.g. SportsWallet, PokerWallet, CasinoWallet, SystemWallet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="walletTypeKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique Identifier for the Wallet - TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The name of the type of wallet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="wal:WalletTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The code of the type of wallet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="wal:WalletTypeStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The status of the wallet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isHidden" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Is this Wallet Hidden?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="walletHosted" type="wal:WalletHostKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Is this wallet hosted internally or externally?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="productCategory" type="cat:ProductCategory" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletTransactionTypeCharacteristic" type="wal:WalletTransactionTypeCharacteristic"/>
+	<xs:complexType name="WalletTransactionTypeCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for transaction characteristics / properties - this aids in future extensibility of the account entity.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Customer characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the Customer characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the customer characteristic value (if known or applicable - default String)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WalletTransactionTypeKind">
+		<xs:annotation>
+			<xs:documentation>The type of the Wallet Transaction.  e.g. WalletDeposit, WalletTransfer, WalletWithdrawal</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DepositFunds">
+				<xs:annotation>
+					<xs:documentation>A deposit into a Wallet using a payment method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TransferFunds">
+				<xs:annotation>
+					<xs:documentation>A transfer of funds between wallets</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WithdrawFunds">
+				<xs:annotation>
+					<xs:documentation>A withdrawal from a wallet to a payment method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SuspendFunds">
+				<xs:annotation>
+					<xs:documentation>A suspenion of funds in wallet to a payment method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BetFunding">
+				<xs:annotation>
+					<xs:documentation>Funding of a Bet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BetReturns">
+				<xs:annotation>
+					<xs:documentation>Returns from bet settlement.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="GamePlayReturns" type="wal:GamePlayReturns"/>
+	<xs:complexType name="GamePlayReturns">
+		<xs:annotation>
+			<xs:documentation>This class represents returns from game play (e.g  leaving a cash poker table and returning chips to the balance)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="wal:WalletTransaction">
+				<xs:sequence>
+					<xs:element name="extJournalTransId" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>An external journal/transaction Id from the external provider for reconciliation</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="extJouralTransType" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>An external system journal/ledger type if applicable</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="returns" type="imy:InternationalMoney"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount of money returned to the customers wallet from the gameplay.  e.g. if I funded 100, returned 130 (this value), that is a 30 session win.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="userId" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A user ID if the returns where human initiated (e.g: third party call centre)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WalletBalance" type="wal:WalletBalance"/>
+	<xs:complexType name="WalletBalance">
+		<xs:annotation>
+			<xs:documentation>This class represents the 'Real Money' financial balance of a customers wallet.
+
+FreeBets and FreeMoney are modelled against the wallet itself, rather then as part of the 'WalletBalance'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="walletKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The key of the containing Wallet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The key of the owning customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="balance" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customers wallet balance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="availableFunds" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The available funds with which can be used to consume products.  This is equal to balance + credit limit.  Most customers are a 'debit' so the values equal each other.  
+
+However, some customers have a credit account, and this the available funds will be more then the balance - all depending on their credit limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="withdrawableFunds" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The amount of funds available at this point in time to withdraw (subject to withdrawal limits).  Will generally equal the balance, but depends if some funds are held/reserved as is the case with poker.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="heldFunds" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any funds held for various reasons (e.g. Poker quarantine)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bonusBarPercentage" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A bonus bar percentage - how much of bonus is used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="convertedBalanceCurrency" type="typ:CurrencyCodeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Only populated if conversion is required in terms of viewing the balance in a different currency to the default for the wallet.
+
+Will only be popualted within the 'convertedBalance' association</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Wallet" type="wal:Wallet"/>
+	<xs:complexType name="Wallet">
+		<xs:annotation>
+			<xs:documentation>A wallet is a customer facing entity for financial transactions that occur across the various Ladbrokes products the customer consumes (e..g Sports, Poker)
+
+Customers can generally:
+
+Deposit into a wallet
+Withdraw from a wallet
+Transfer between wallets
+Configure any settings
+
+A wallet is associated to a 'Product Category' (going forward, with eCommerce defining a product catalogue).
+
+A unified / single wallet would aggregate the various product based wallets.
+Currently, wallets are master in Openbet, however there is a single/unified Wallet programme of work being scoped at the moment to look at externalising wallets and adding future capabilities (Alerts, Security etc).  
+
+Unified Wallet project may result in changes to this.  Currently Wallets are modelled 'separately' at a product/sport level.
+
+This may be unifiied into a 'single wallet', or may support both individual and single, depending on the customer preferences?
+
+Maybe only a single 'aggregated' wallet will exist?  However it is likely both product and single versions would need to be maintained as 'transitionary' state
+
+This will undoubtly change and is just an first pass for now.
+
+There are aspects of Wallet (Alerts, Conf and Security) not touched on yet. As such, this model may change based on that.
+
+
+TBD:  MDM and Unified Wallet Project to agree a conceptual model for this.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="walletKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique canonical identifier for the wallet.  For Openbet, this would be a code string like 'SPORTS'.  In future, this may change to another key based on the unified Wallet project.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The key of the owning customer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletName" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The display name of the wallet (note:  localisation is needed)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletStatus" type="wal:WalletStatusKind"  minOccurs="0"/>
+					<xs:element name="walletCurrency" type="typ:CurrencyCodeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The default currency of this wallet.  All balances will be returned in this currency, unless a converted wallet is also asked for in a different currency.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="creditLimit" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>If the account type is credit, a customer may have a credit limit.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isLocked" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Is the Wallet locked by another process?
+
+Details in 'currentWalletLock'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletHost" type="wal:WalletHostKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Where is the wallet hosted?  Internal at Ladbrokes, or external</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletPromotions" type="wal:WalletPromotions" minOccurs="0"/>
+					<xs:element name="walletType" type="wal:WalletType" minOccurs="0"/>
+					<xs:element name="balance" type="wal:WalletBalance" minOccurs="0"/>
+					<xs:element name="convertedBalance" type="wal:WalletBalance" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="historicalWalletLock" type="wal:WalletLock" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="currentWalletLock" type="wal:WalletLock" minOccurs="0"/>
+					<xs:element name="walletTransaction" type="wal:WalletTransaction" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="walletCharacteristics" type="wal:WalletCharacteristics" minOccurs="0"/>
+					<xs:element name="walletAlerts" type="wal:WalletAlerts" minOccurs="0"/>
+					<xs:element name="walletSecurityProfile" type="wal:WalletSecurityProfile" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WalletTransactionStatus" type="wal:WalletTransactionStatus"/>
+	<xs:complexType name="WalletTransactionStatus">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents the status of a wallet transaction</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="wal:WalletTransactionStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the wallet transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Supporting reason for the last update  if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0"/>
+			<xs:element name="createdBy" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Actor that created this status through some business process or event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WalletPromotions" type="wal:WalletPromotions"/>
+	<xs:complexType name="WalletPromotions">
+		<xs:annotation>
+			<xs:documentation>This class will contain lists of any available promotions that customer is entitled to use at the point in time with their wallet transactions.
+
+Also contains a list of the historic promotions used</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hasAvailablePromotions" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Does the Customer have promotions that are available to redeem?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastRedemptionDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time the last promotion was redeeemed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="redeemedPromotions" type="wal:RedeemedPromotions" minOccurs="0"/>
+			<xs:element name="availablePromotions" type="wal:AvailablePromotions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

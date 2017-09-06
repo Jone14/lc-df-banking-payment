@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" xmlns:ret="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0" xmlns:txn="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0" schemaLocation="../../RetailShop/2.0/RetailShop.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" schemaLocation="../../Promotions/2.0/Promotions.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="TransactionSource" type="TransactionSource"/>
+	<xs:complexType name="TransactionSource">
+		<xs:annotation>
+			<xs:documentation>TBD - The source of the transaction</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel"  type="chn:Channel">
+				<xs:annotation>
+					<xs:documentation>TBD - The channel of the transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="telebetId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The ID of the telebet operator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ipAddress"  type="loc:IPAddress">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="retailShopKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The ID of the retail shop the generated this transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="POSReceiptLine" type="POSReceiptLine"/>
+	<xs:complexType name="POSReceiptLine">
+		<xs:annotation>
+			<xs:documentation>Represents a line of text, to be displayed in a particular order, on a POS receipt.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="order"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The display order of the line in relation to other lines of text.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="text"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A line of text, up to 40 characters, to be printed on the POS receipt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="IssueLoyaltyPoints" type="IssueLoyaltyPoints"/>
+	<xs:complexType name="IssueLoyaltyPoints">
+		<xs:annotation>
+			<xs:documentation>This type of LoyaltyTransaction, in relation to its use with the current Loyalty Business System (Givex), is used for issuing points as part of a loyalty program. The Points transaction references pre-defined formulas setup on the Givex host through the promotionCode specified. The formula will calculate the amount of points (pointsAdded) to issue based on the eligibleAmount and promotionCode provided.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LoyaltyTransaction">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eligibleAmount"  type="typ:Money">
+						<xs:annotation>
+							<xs:documentation>The amount of spend on the machines, for a given customer session, that is eligible for rewards.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="promotionCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>A numeric code defined by the merchant that affects the calculation from  amount to points. Promo codes will be created based on a four digit product code followed by a 2 digit multiplier. For example, if &amp;lsquo;1001&amp;rsquo; represents &amp;lsquo;Horses&amp;rsquo; product, and &amp;lsquo;01&amp;rsquo; represents 1:1 multiplier, then 100101 represents 1:1 multiplier on Horses bets. Other promo codes include 100201 (Greyhounds), 100301 (Football), 100401 (Numbers), 100501 (Sports).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="sessionEndDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The date/time that the customers session completed, from which the loyalty transaction is based.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="pointsAdded"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The number of points added to a customers loyaltyAccount pointsBalance based on the eligibleAmount and promotionCode</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CancelLoyaltyPoints" type="CancelLoyaltyPoints"/>
+	<xs:complexType name="CancelLoyaltyPoints">
+		<xs:annotation>
+			<xs:documentation>This type of LoyaltyTransaction, in relation to its use with the current Loyalty Business System (Givex), is used for cancelling a IssuePointsTransaction, cancelling or a RedeemPointsTransaction.  The same information specified in the original transaction being cancelled must be provided.     
+
+IssuePointsTransaction: When requesting a Points Cancel on a IssuePointsTransaction the LoyaltyReward field must be blank (as not applicable)
+
+RedeemPointsTransaction:  When requesting a Points Cancel on a RedeemPointsTransaction the LoyaltyReward field must be populated. The eligibleAmoun will be ignored in this case (as not applicable)
+
+Reversal:  This transaction can also be used for reversing a previous transaction based on a transaction code. If the originalTransactionReference is supplied, this will reverse a previous transaction based on the original clientReferenceCode.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LoyaltyTransaction">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eligibleAmount"  type="typ:Money"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="originalTransactionReference"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The 'clientTransactionReference' of the original transaction that is being cancelled. This is equivalent to the 'reverse' in the Givex business system, but is encapsulated in one transaction.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="pointsCancelled"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>This amount of points cancelled as a result of a CancelPointsTransaction.  This is always returned, regardless of the type of cancellation (which does affect the inputs as described in the class description)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="pointsToCancel"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>This amount of points to be cancelled if the client is controlling the input (e.g. OpenBet) and can supply this as well as the clientTransactionId.  This enables the use of adjustment in the cases where cancel cannot be fulfilled.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="originalTransactionDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The Date Time of the original transaction that is being cancelled. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPartialAdjustment"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Indicates if the client is making a partial negative adjustment to a points balance.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="loyaltyReward" type="pro:LoyaltyPointsReward"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoyaltyTransaction" type="LoyaltyTransaction"/>
+	<xs:complexType abstract="true" name="LoyaltyTransaction">
+		<xs:annotation>
+			<xs:documentation>Business entity representing a transaction affecting the points of a customers LoyaltyAccount.  Fo 'Retail Gaming', a LoyaltyTransaction occurs within a particular retail shop (RetailShop) where the machine is located and may produce detail for display the ePos receipt.  The types of LoyaltyTtransaction(s) include:
+
+1.  Issue Points Transaction
+2. Reduce Points Transaction
+3. Redeem Points Transaction
+4. Cancel Points Transaction
+5. Reverse Points Transaction</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Transaction">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="loyaltyTransactionKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for the loyalty transaction.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="loyaltyAccountKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The account key for the containing loyalty account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="clientTransactionReference"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>A client supplied reference for the transaction.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Date/Time the loyalty transaction was successfully processed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionStatus"  type="LoyaltyTransactionStatusKind">
+						<xs:annotation>
+							<xs:documentation>The status of the execution/processing of this loyalty transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="newPointsBalance"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The points balance after the completion of the transaction - this will only be populated if the transaction was a success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="product" type="cat:Product"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="posRecieptLine" type="POSReceiptLine"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="retailShop" type="ret:RetailShop"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ReduceLoyaltyPoints" type="ReduceLoyaltyPoints"/>
+	<xs:complexType name="ReduceLoyaltyPoints">
+		<xs:annotation>
+			<xs:documentation>This type of LoyaltyTransaction, in relation to its use with the current Loyalty Business System (Givex), reduces a loyalty account 'pointsBalance'. The Points transaction references pre-defined formulas setup on the Givex host through the promotionCode specified.  Based on the promotionCode provided, the formula will calculate and return the amount of points reduced (pointsToReduce) </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LoyaltyTransaction">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eligibleAmount"  type="typ:Money">
+						<xs:annotation>
+							<xs:documentation>The amount of spend on the machines, for a given customer session, that is eligible for reduction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="promotionCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>A numeric code defined by the merchant that affects the calculation from  amount to points. Promo codes will be created based on a four digit product code followed by a 2 digit multiplier. For example, if &amp;lsquo;1001&amp;rsquo; represents &amp;lsquo;Horses&amp;rsquo; product, and &amp;lsquo;01&amp;rsquo; represents 1:1 multiplier, then 100101 represents 1:1 multiplier on Horses bets. Other promo codes include 100201 (Greyhounds), 100301 (Football), 100401 (Numbers), 100501 (Sports).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="pointsReduced"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The number of points to reduce the LoyaltyAccount pointsBalance by.  The calculated output of the transaction, representing the points to reduce, based on the eligibleAmount and promotionCode</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransactionType" type="TransactionType"/>
+	<xs:complexType name="TransactionType">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="transactionKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The key for the TransactionType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="code"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The code of the TransactionType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The name of the TransactionType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The description of the TransactionType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The status of the TransactionType.  Active or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="subtype" type="TransactionSubtype"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AdjustLoyaltyPoints" type="AdjustLoyaltyPoints"/>
+	<xs:complexType name="AdjustLoyaltyPoints">
+		<xs:complexContent>
+			<xs:extension base="LoyaltyTransaction">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="adjustmentSign"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The sign '+' or '-' for the amount of points to TRY to adjust.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="adjustmentPoints"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The amount of points to TRY to adjust.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="adjustedSign"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The sign '+' or '-' for the amount of points that WERE actually adjusted</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="adjustedPoints"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The amount of points that WERE actually adjusted.  This may or may not be the same as the amount asked for, depending on business rules.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="LoyaltyTransactionStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success">
+				<xs:annotation>
+					<xs:documentation>The loyaltyTransaction completed successfully</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>The loyaltyTransaction completed, but there is a warning condition that the consumer may need to address as a result of a business failure/part failure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Failure">
+				<xs:annotation>
+					<xs:documentation>An error occurred and a call to 'CancelLoyaltyTransaction' may be required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TransactionSubtype" type="TransactionSubtype"/>
+	<xs:complexType name="TransactionSubtype">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="transactionSubtypeKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The key for the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="code"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The code for the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The name for the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The description of the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The status for the TransactionSubtype</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="parentTransactionKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - The parent TransactionType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RedeemLoyaltyPoints" type="RedeemLoyaltyPoints"/>
+	<xs:complexType name="RedeemLoyaltyPoints">
+		<xs:annotation>
+			<xs:documentation>This type of LoyaltyTransaction, in relation to its use with the current Loyalty Business System (Givex), is used for redeeming (decrementing) points as part of a loyalty program for an eligible customer reward based on the associated LoyaltyReward.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LoyaltyTransaction">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="loyaltyReward" type="pro:LoyaltyPointsReward"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransactionCharacteristics" type="TransactionCharacteristics"/>
+	<xs:complexType name="TransactionCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class represents a container for future generic extensibility characteristics</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="transactionCharacteristic" type="TransactionCharacteristic"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Transaction" type="Transaction"/>
+	<xs:complexType abstract="true" name="Transaction">
+		<xs:annotation>
+			<xs:documentation>An Abstract Transaction class which all transactions inherit from</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>TBD - Global Transaction ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="accountKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>TBD - Unique ID of the Account this transaction was applied to</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionType"  type="TransactionType">
+						<xs:annotation>
+							<xs:documentation>TBD - The Type of the transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionSubtype"  type="TransactionSubtype">
+						<xs:annotation>
+							<xs:documentation>TBD - The subType of the transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="requestedDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The date and time the transaction was requested</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="completedDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The date and time the transaction was completed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Ladbrokes global transaction code used for this transaction for auditing and transaction management.  This is not a customer facing code</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionCharacteristics" type="TransactionCharacteristics"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="transactionSource" type="TransactionSource"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransactionCharacteristic" type="TransactionCharacteristic"/>
+	<xs:complexType name="TransactionCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic name / value pair for future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the Betslip characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value of the Betslip characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="valueType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The type of the Betslip characteristic value (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Status of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

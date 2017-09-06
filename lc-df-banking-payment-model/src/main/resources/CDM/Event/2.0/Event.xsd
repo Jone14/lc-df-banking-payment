@@ -1,0 +1,2669 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/trading/Event/2.0" xmlns:bprc="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:cha="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:evt="http://cdm.ladbrokes.co.uk/trading/Event/2.0" xmlns:fed="http://cdm.ladbrokes.co.uk/trading/Feed/2.0" xmlns:grd="http://cdm.ladbrokes.co.uk/trading/Grade/2.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:mkt="http://cdm.ladbrokes.co.uk/trading/Market/2.0" xmlns:par="http://cdm.ladbrokes.co.uk/trading/Participant/2.0" xmlns:prc="http://cdm.ladbrokes.co.uk/trading/Price/2.0" xmlns:res="http://cdm.ladbrokes.co.uk/trading/Result/2.0" xmlns:sbk="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" xmlns:sel="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/trading/Event/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" schemaLocation="../../BasePrice/2.0/BasePrice.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" schemaLocation="../../Sportsbook/2.0/Sportsbook.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Market/2.0" schemaLocation="../../Market/2.0/Market.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" schemaLocation="../../Selection/2.0/Selection.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Price/2.0" schemaLocation="../../Price/2.0/Price.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Participant/2.0" schemaLocation="../../Participant/2.0/Participant.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Feed/2.0" schemaLocation="../../Feed/2.0/Feed.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Grade/2.0" schemaLocation="../../Grade/2.0/Grade.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0" schemaLocation="../../Characteristic/2.0/Characteristic.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="Statistic" type="Statistic"/>
+	<xs:complexType name="Statistic">
+		<xs:annotation>
+			<xs:documentation>Contains details of various statistics which need to be maintained for a sport
+Example for Tennis we can have 
+NoOfAces
+NoOfDoubleFaults
+
+For Football we can have 
+NoOfRedCards
+NoOfStrikes
+NoOfYellowCards</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="statisticId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for a statistic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="statisticName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the statistic Example. &amp;ldquo;No Of Aces&amp;rdquo; for tennis</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ClockStatusKind">
+		<xs:annotation>
+			<xs:documentation>Specifies clock status for an event</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="StartGame"/>
+			<xs:enumeration value="StopGame"/>
+			<xs:enumeration value="ResumeGame"/>
+			<xs:enumeration value="AdjClockPause"/>
+			<xs:enumeration value="AdjClockPlay"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeleteFlagKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Deleted"/>
+			<xs:enumeration value="NotDeleted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GameStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EndOfGame"/>
+			<xs:enumeration value="GameRetirement"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SetStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EndOfSet"/>
+			<xs:enumeration value="SetRetirement"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventClassSortKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Football"/>
+			<xs:enumeration value="Horses"/>
+			<xs:enumeration value="Dogs"/>
+			<xs:enumeration value="IceHockey"/>
+			<xs:enumeration value="Basketball"/>
+			<xs:enumeration value="Trotting"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventSettlementStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HoldSettle"/>
+			<xs:enumeration value="AllowSettle"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventSortKind">
+		<xs:annotation>
+			<xs:documentation>(&amp;ldquo;Match&amp;rdquo;, &amp;ldquo;Tournament&amp;rdquo;, &amp;ldquo;Group0&amp;rdquo;&amp;hellip;&amp;rdquo;Group9&amp;rdquo;), </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Match"/>
+			<xs:enumeration value="Tournament"/>
+			<xs:enumeration value="Round"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventFeedStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Inactive"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="FootballDecayedParameters" type="FootballDecayedParameters"/>
+	<xs:complexType name="FootballDecayedParameters">
+		<xs:annotation>
+			<xs:documentation>Contains details of the Football decayed parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="AwayExpGoals"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Away team expected goals</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="AwayStartProbability"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Start probability for home team to win</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="BookingPointsExpected"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Revised Booking Points expected in the match</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="CornersExpected"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Revised Corners Expected in the match</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="DrawStartProbability"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Start probability for Draw</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="GoalsExpectancy"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>RevisedGoals Expected in the match</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="GoalsSupremacy"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Revised Goals Supremacy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HomeExpGoals"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Home expected goals</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HomeExpTotalGoals"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Home team total expected goals</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HomeStartProbability"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Start probability for home team to win</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="AwayExpTotalGoals"  type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Away team total expected goals</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DecayedParameters" type="DecayedParameters"/>
+	<xs:complexType name="DecayedParameters">
+		<xs:annotation>
+			<xs:documentation>Specify the decay paremeters</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="FootballDecayedParameters">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Round" type="Round"/>
+	<xs:complexType name="Round">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="roundId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="roundName"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="abelsonName"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventSubtypeMarketSort" type="EventSubtypeMarketSort"/>
+	<xs:complexType name="EventSubtypeMarketSort">
+		<xs:annotation>
+			<xs:documentation>Maintains details of sorts at event Sub Type level</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeMarketSortId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The order in which the sort should be displayed for a event Sub Type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketSort" type="mkt:MarketSort"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Event" type="Event"/>
+	<xs:complexType name="Event">
+		<xs:annotation>
+			<xs:documentation>Maintains event details. Event is part of lowest level in the event hierarchies.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for event.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the event for which details would be captured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventShortName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Short name of the event for which details would be captured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventStartTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The time period for the event - startDateTime and endDateTime time for the event.  This was a 'timePeriod' type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventEndTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The time period for the event - startDateTime and endDateTime time for the event.  This is the estimated end time (finished time for the actual time finished)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventStatus"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies the status of event, without considering parent states</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventStatusDerived"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies the status of event, derived based on consideration for parents states as well</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSort"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies type of event. It will be used to prevent related contingencies.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Specifies the order in which it will be displayed to customer. Event with lowest display order goes first.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayStatus"  type="EventDisplayStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether the event is displayed or not.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isOff"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies whether the event will be off or not which is for downstream system.  This means 'isStarted'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="offDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Specifies actual date and time at which the event would start. if there is delay it would capture actual start time which would different from normal scheduled time.  This is the actual start time</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="suspendedDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Date and Time when the event should(has) be suspended.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="estimatedStartDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Estimated start data of the event (if different to start - e.g. match delayed?)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="spStartTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Any bet taken between from and to will be settled at Starting Price (used primarily for Greyhound).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="spEndTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Any bet taken between from and to will be settled at Starting Price (used primarily for Greyhound).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayDatetime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Date and time at which the event can be displayed at retail.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eachWayFactor"  type="xs:decimal">
+						<xs:annotation>
+							<xs:documentation>Each way factor for event, If a market is not set any E_W factor, then this would apply for that market. It this is not set then it will be inherited from type or sub type level.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTeamNotes"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Notes for event team.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="allowSettlement"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies whether to allow settlement</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="settlementState"  type="EventSettlementStateKind">
+						<xs:annotation>
+							<xs:documentation>Specifies the state of settlement for the event. indicates if the event can be settled, but result can be entered even if the settlement is not allowed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="hasBIRMarkets"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to indicate if the event has any running market.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="allResultsDeclared"  type="AllResultsStateKind">
+						<xs:annotation>
+							<xs:documentation>Indicates whether all the results for all the markets for the even have been declared.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isBettableEvent"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies if the event is bettable or not</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="roundId"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Specifies the round id for tournaments where there are rounds.
+Rounds can be 1,2&amp;hellip;</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="roundName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies the name of the round, as last round would be Final of a tournament, this is to identify the name of the round</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="bookMargin"  type="xs:decimal">
+						<xs:annotation>
+							<xs:documentation>Specifies percentage of the book prices at Event level</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether event has been deleted or not. There won't be any hard delete, all deletes are soft delete.  An event cannot be deleted if it has child entries or has been published.
+      Deleted
+      Not Deleted</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="parentEventKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies the parent event for the event. Parent event comes into picture when we something like for Tennis-&gt;Wimbeldon-&gt;MensSingles-&gt;Round1-&gt;ActualMatch
+Above EventClass=Tennis, EventType=Wimbeldon, EventSubType=MensSingles and Event=Round1, 
+As round one is event we maintain reference to this event for all the matched of round1, this can apply to other tournaments like world cup etc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="translatedEventName"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for Event Type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for event sub type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isUpdatedByFeed"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="publishDepth"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="birFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Does the event have bet in running markets?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="birDelay"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The delay in seconds for bet in running bets</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="leagueType"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The type of the league where appropriate.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventState"  type="EventStateTypeKind">
+						<xs:annotation>
+							<xs:documentation>The type of the league where appropriate.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="birRetailDelay"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to identify if inplay updates should be published to Retail</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventRaceNumber"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>eComm Addition for racing.  Will only be set for racing types events</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isEventFinished"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is the event finished?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="finishedDateTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isEventResulted"  type="xs:boolean"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="matchSession" type="MatchSession"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="matchResult" type="EventMatchState"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="matchStatistic" type="MatchStatistic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="matchDetail" type="MatchDetail"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="scoreboard" type="EventScoreboard"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventFeed" type="EventFeed"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="market" type="mkt:Market"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventPublication" type="EventPublication"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="EventCharacteristic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventFlag" type="EventFlag"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="historicalBettingConfig" type="EventBettingConfig"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="heldAtLocation" type="loc:Location"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="bettingConfig" type="EventBettingConfig"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventParticipant" type="EventParticipant"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="preMatchGrade" type="grd:Grade"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="inPlayGrade" type="grd:Grade"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroupPriceStreams" type="prc:CustomerGroupPriceStreams"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="productCategory" type="cat:ProductCategory"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventChannel" type="EventChannel"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventRacingForm" type="sbk:EventRacingForm"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventChannel" type="EventChannel"/>
+	<xs:complexType name="EventChannel">
+		<xs:annotation>
+			<xs:documentation>Channel level publication detail.  An event may not be published to all channels - this is the detail of the publication to a channel.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the user / system which published event to channel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time when the event was published to the channel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventFeed" type="EventFeed"/>
+	<xs:complexType name="EventFeed">
+		<xs:annotation>
+			<xs:documentation>Maintains details of various of feeds which can come for the event</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="primaryProvider"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the feed is the primary provider for the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="EventFeedStatusKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the feed is active which can set by feed provider or admin</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="liveFeed" type="fed:Feed"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventFlag" type="EventFlag"/>
+	<xs:complexType name="EventFlag">
+		<xs:annotation>
+			<xs:documentation>Maintains the event flags which have been selected for an event</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="entityType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The entity type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="flagCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The code of the flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="flagName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="flagValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value of the flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="flag" type="Flag"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventCharacteristic" type="EventCharacteristic"/>
+	<xs:complexType name="EventCharacteristic">
+		<xs:annotation>
+			<xs:documentation>Maintains the characteristics for event</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventCharacteristicId"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeCharacteristic" type="EventTypeCharacteristic"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeCharacteristic" type="EventSubtypeCharacteristic"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventGroup" type="EventGroup"/>
+	<xs:complexType name="EventGroup">
+		<xs:annotation>
+			<xs:documentation>Maintains details of event groups (sorts in event table) which indicates the group to which the event belongs, this is called event sort. this is used in matkeTypeGroup to identify if there are any default markets for the event belong to this group.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventGroupId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for event group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventGroupName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the name for the event group, which is unique. this is called event sort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventGroupDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies description of the event group(sort) if any.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="event" type="Event"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="marketTypeGroup" type="mkt:MarketTypeGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventBettingConfig" type="EventBettingConfig"/>
+	<xs:complexType name="EventBettingConfig">
+		<xs:annotation>
+			<xs:documentation>Contains the details of event betting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPayOut"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount that all winners can win cumulative. Maximum payout should be configurable in the system. This will be used as the default value when creating a event / Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPotentialWin"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies a maximum event which a single customer can win for this event. If a market is not set any maximum bet then this would apply for that market. It this is not set then it will be inherited from type or sub type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="minSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies minimum amount a winner can win. This will be used as the default value when creating a event Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount one can win in a single bet. This will be used as the default value when creating a event/Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxMultipleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum multiple bets which can accepted for a customer. This will be used as the default value when creating a event/Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="winAlertLevel"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the winner alert level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of betting config for an event.  The from date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of betting config for an event.  the to date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>is this active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventPublication" type="EventPublication"/>
+	<xs:complexType name="EventPublication">
+		<xs:annotation>
+			<xs:documentation>Maintains publication summary for Event.
+
+This is the 'Overall' state of publication.  Once you publish to one channel, it is considered 'published'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>User who has published the event.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Specifies date and time of publishing event.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publicationState"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>status of the publication.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="eventChannel" type="EventChannel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventParticipant" type="EventParticipant"/>
+	<xs:complexType name="EventParticipant">
+		<xs:annotation>
+			<xs:documentation>Maintains participant details for events.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantNo"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Numbering of participant for the event, i.e to specify if  it is player1 or player2 etc or team1 or team,2 etc, normally home team is team1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The Mercury unique Event key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant" type="par:Participant"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="duration" type="EventParticipantDuration"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="EventParticipantCharacteristic"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventParticipantCharacteristic" type="EventParticipantCharacteristic"/>
+	<xs:complexType name="EventParticipantCharacteristic">
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeCharacteristic" type="EventTypeCharacteristic"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeCharacteristic" type="EventSubtypeCharacteristic"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventMatchState" type="EventMatchState"/>
+	<xs:complexType abstract="true" name="EventMatchState">
+		<xs:annotation>
+			<xs:documentation>Maintains match winner details of events, across all the sports be it a team match or between two players.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="startDateTime"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="endDateTime"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="matchStatus"  type="MatchStateKind"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="winner" type="EventParticipant"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="detail" type="EventMatchStateDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventCategory" type="EventCategory"/>
+	<xs:complexType name="EventCategory">
+		<xs:annotation>
+			<xs:documentation>Maintains all event category details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventCategoryId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Name of the event category.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the event category.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryCode"  type="EventCategoryCodeKind">
+				<xs:annotation>
+					<xs:documentation>Code to identify event category which would be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="marketSort" type="mkt:MarketSort"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClass" type="EventClass"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventClass" type="EventClass"/>
+	<xs:complexType name="EventClass">
+		<xs:annotation>
+			<xs:documentation>Maintains event class details, Event class is part of event hierarchy.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for event class.  This shall only be the Mercury ID. Other keys stored in the CrossRefEntityKeys' element</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="className"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the event class.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="classCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique code for event class.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="classSort"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies which one should be displayed first.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="onlineBetAcceptance"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to indicate online bet acceptance.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="winAlertLevel"  type="typ:Money">
+						<xs:annotation>
+							<xs:documentation>Specifies the winner alert level.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="classStatus"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Status of the event class.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="classStatusDerived"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Status of the event class, considering parent</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayStatus"  type="EventDisplayStatusKind">
+						<xs:annotation>
+							<xs:documentation>Flag to specify whether event class is to be displayed or not in the LHE.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Specifies the order in which the class is displayed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="blurb"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Blurb text</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventCategoryId"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isMercuryManaged"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean flag indicating if the event class is mercury managed. Mercury rolls out 'Sports' (aka eventClasses) over time</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassMarketType" type="EventClassMarketType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassSelectionType" type="EventClassSelectionType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="session" type="Session"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="sportCharacteristic" type="SportCharacteristic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassMarketSort" type="EventClassMarketSort"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassChannel" type="EventClassChannel"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="feedSetting" type="EventClassFeed"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="EventClassCharacteristic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availablePlayer" type="par:Player"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventType" type="EventType"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventPublication" type="EventPublication"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="statistic" type="Statistic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availableTeam" type="par:Team"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroupPriceStreams" type="prc:CustomerGroupPriceStreams"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="productCategory" type="cat:ProductCategory"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassFlag" type="EventFlag"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventClassChannel" type="EventClassChannel"/>
+	<xs:complexType name="EventClassChannel">
+		<xs:annotation>
+			<xs:documentation>Maintains the channels for the event class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassChannelId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="resultCoolingPeriod"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Cooling period for changes publishing to down-stream channel after the selection(s) result are published for the first time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventClassFeed" type="EventClassFeed"/>
+	<xs:complexType name="EventClassFeed">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="primaryProvider"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate whether the feed is the primary feed of the feed type for the event class.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="availableFeed" type="fed:Feed"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="forType" type="fed:FeedType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventClassCharacteristic" type="EventClassCharacteristic"/>
+	<xs:complexType name="EventClassCharacteristic">
+		<xs:annotation>
+			<xs:documentation>Maintains the characteristics for the event class.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassCharacteristicId"  type="xs:integer"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventClassMarketSort" type="EventClassMarketSort"/>
+	<xs:complexType name="EventClassMarketSort">
+		<xs:annotation>
+			<xs:documentation>Maintains details of sorts at event class level.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketSortId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The order in which the sort should be displayed for a event class.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketSort" type="mkt:MarketSort"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventClassMarketType" type="EventClassMarketType"/>
+	<xs:complexType name="EventClassMarketType">
+		<xs:annotation>
+			<xs:documentation>Maintains the market list which a sport can have. all the market type's would created from this list.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketTypeId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketTypeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the market for the class</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketBlurb"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isManualMarket"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Required to identify whether a market is manual or auto that can be priced by pricing algorithms</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassMarketSelectionType" type="EventClassMarketSelectionType"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketSort" type="mkt:MarketSort"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="marketType" type="mkt:MarketType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventClassSelectionType" type="EventClassSelectionType"/>
+	<xs:complexType name="EventClassSelectionType">
+		<xs:annotation>
+			<xs:documentation>Maintains the list of selection which are applicable for each of the sport like Tennis would have &amp;ldquo;Set Score&amp;rdquo;, &amp;ldquo;Game Score&amp;rdquo; etc</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassSelectionTypeId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventSelectionTypeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the selection type like &#8220;Game Score&#8221;, Double Result&#8221; etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="eventClassMarketSelectionType" type="EventClassMarketSelectionType"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="selectionSort" type="sel:SeletionSort"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventClassMarketSelectionType" type="EventClassMarketSelectionType"/>
+	<xs:complexType name="EventClassMarketSelectionType">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketSelectionTypeId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketSelectionTypeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the selection for the market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant1Flag"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate whether a participant is applicable for the selection, for example for &amp;ldquo;Match betting&amp;rdquo; of football two selection would have participant and one selection won&amp;rsquo;t have participant
+1 &amp;ndash; selection would one participant
+0 &amp;ndash; selection will not have any participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant2Flag"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Flag to specify if the selection has 2nd participant. For some market two participants are required for the selection. For example &amp;ldquo;double result&amp;rdquo; market can have two participants associated with the selection. Most of selections won&amp;rsquo;t require two participants.
+1 &amp;ndash; selection would 2nd participant
+0 &amp;ndash; selection will not have 2nd participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadata1"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Flag which specifies the first data value which is required for selection if any, like for &amp;ldquo;Team Score&amp;rdquo;, market you have this value populated for each of the selection which is &amp;lsquo;HT&amp;rsquo; for home team and &amp;lsquo;AT&amp;rsquo; away team for away Team.
+1 &amp;ndash; selection would have one value
+0 &amp;ndash; selection will not have any value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadata2"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Flag to specify the 2nd data value which is required for selection if any, like for &amp;ldquo;HT Total Goals&amp;rdquo; market, you have the 2nd value also populated, which is the goals scored for based on the value in metadata 1. This can even exist without metadata 1 for example &amp;ldquo;Total Goals for match&amp;rdquo;, where it would specify the value
+1 &amp;ndash; selection will have 2nd value 
+0 &amp;ndash; selection will not have 2nd value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadata3"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Flag to specify the 3nd data value which is required for selection if any, like for &amp;ldquo;Correct Score&amp;rdquo; market, you have the 2nd value also populated for away team also where home team score is populated in metadata 1.
+1 &amp;ndash; selection will have 3rd value 
+0 &amp;ndash; selection will not have 3rd  value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadata4"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Flag to specify the 4th data value which is required for selection if any.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadata5"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Flag to specify the 5th data value which is required for selection if any.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventType" type="EventType"/>
+	<xs:complexType name="EventType">
+		<xs:annotation>
+			<xs:documentation>Maintains various event types of event hierarchies.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for Event Type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the Event Type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeStatus"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Status of the Event Type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeStatusDerived"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Status of the Event Type, considering the parent states</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayStatus"  type="EventDisplayStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether Event Type is displayed or not (not considering parents)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Specifies the display order (sort) , example order with lowest value is displayed on the top.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="blurb"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Blurb text</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether event type has been deleted or not. There won't be any hard delete, all deletes are soft delete.  An event type cannot be deleted if it has child entries or has been published.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassKey"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="birRetailFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to identify if inplay updates should be published to Retail</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventTypeMarketSort" type="EventTypeMarketSort"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="EventTypeCharacteristic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventSubtype" type="EventSubtype"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="feedSetting" type="EventTypeFeed"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="defaultEventBettingConfig" type="EventTypeBettingConfig"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventPublication" type="EventPublication"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventTypeChannel" type="EventTypeChannel"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availableParticipant" type="par:Participant"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availableMarketType" type="mkt:MarketType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="event" type="Event"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroupPriceStreams" type="prc:CustomerGroupPriceStreams"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="productCategory" type="cat:ProductCategory"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventTypeFlag" type="EventFlag"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventTypeChannel" type="EventTypeChannel"/>
+	<xs:complexType name="EventTypeChannel">
+		<xs:annotation>
+			<xs:documentation>Maintains the channels for the event type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventTypeCharacteristic" type="EventTypeCharacteristic"/>
+	<xs:complexType name="EventTypeCharacteristic">
+		<xs:annotation>
+			<xs:documentation>Maintains the characteristics for the event type</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeCharacteristicId"  type="xs:integer"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventTypeBettingConfig" type="EventTypeBettingConfig"/>
+	<xs:complexType name="EventTypeBettingConfig">
+		<xs:annotation>
+			<xs:documentation>Contains the details of event betting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPayOut"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount that all winners can win cumulative. Maximum payout should be configurable in the system. This will be used as the default value when creating a event / Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPotentialWin"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies a maximum event which a single customer can win for this event. If a market is not set any maximum bet then this would apply for that market. It this is not set then it will be inherited from type or sub type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="minSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies minimum amount a winner can win. This will be used as the default value when creating a event Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount one can win in a single bet. This will be used as the default value when creating a event/Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxMultipleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum multiple bets which can accepted for a customer. This will be used as the default value when creating a event/Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="winAlertLevel"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the winner alert level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of betting config for an event.  The from date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of betting config for an event.  the to date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this record Active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventTypeFeed" type="EventTypeFeed"/>
+	<xs:complexType name="EventTypeFeed">
+		<xs:annotation>
+			<xs:documentation>Maintains details of various of feeds which can come for the event class.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="primaryProvider"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate whether the feed is the primary feed of the feed type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="forType" type="fed:FeedType"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="availableFeed" type="fed:Feed"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventTypeMarketSort" type="EventTypeMarketSort"/>
+	<xs:complexType name="EventTypeMarketSort">
+		<xs:annotation>
+			<xs:documentation>Maintains details of sorts at event Type level</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventTypeMarketSortId"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The order in which the sort should be displayed for a event Type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketSort" type="mkt:MarketSort"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EventStateTypeKind">
+		<xs:annotation>
+			<xs:documentation>The running state of the event</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Not Started">
+				<xs:annotation>
+					<xs:documentation>The event has NOT started</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="In Progress">
+				<xs:annotation>
+					<xs:documentation>The event is ended</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ended">
+				<xs:annotation>
+					<xs:documentation>The event is In Progress</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MatchStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EndOfMatch"/>
+			<xs:enumeration value="MatchRetirement"/>
+			<xs:enumeration value="MatchWalkover"/>
+			<xs:enumeration value="MatchDefaulted"/>
+			<xs:enumeration value="MatchAbandoned"/>
+			<xs:enumeration value="NormalFinish"/>
+			<xs:enumeration value="GameCanceled"/>
+			<xs:enumeration value="GameSuspended"/>
+			<xs:enumeration value="GamePostponedByMoreThan36Hours"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PointStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Awarded"/>
+			<xs:enumeration value="Reverted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PublicationStateKind">
+		<xs:annotation>
+			<xs:documentation>Specifies whether event class has been published or not.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Published"/>
+			<xs:enumeration value="ReadyToPublish"/>
+			<xs:enumeration value="NotPublished"/>
+			<xs:enumeration value="Warning"/>
+			<xs:enumeration value="Failed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SessionStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="Progressing"/>
+			<xs:enumeration value="NotStarted"/>
+			<xs:enumeration value="Abandoned"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventStatusKind">
+		<xs:annotation>
+			<xs:documentation>Specifies status of an event.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Suspended"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventDisplayStatusKind">
+		<xs:annotation>
+			<xs:documentation>Specify whether event class is to be displayed or not in the LHE</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Displayed"/>
+			<xs:enumeration value="NotDisplayed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventClassCodeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Football"/>
+			<xs:enumeration value="Tennis"/>
+			<xs:enumeration value="Volleyball"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventCategoryCodeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Sport"/>
+			<xs:enumeration value="Racing"/>
+			<xs:enumeration value="Special"/>
+			<xs:enumeration value="Soccer"/>
+			<xs:enumeration value="VirtualRacing"/>
+			<xs:enumeration value="Virtual"/>
+			<xs:enumeration value="Number"/>
+			<xs:enumeration value="Lottery"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AllResultsStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Declared"/>
+			<xs:enumeration value="NotDeclared"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="FootballUpdate" type="FootballUpdate"/>
+	<xs:complexType name="FootballUpdate">
+		<xs:complexContent>
+			<xs:extension base="MatchUpdate">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPenaltyGoal"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isYellowToRedCard"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="penaltyRound"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="matchEventTime"  type="typ:Duration"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="goalDetails" type="GoalDetails"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="substitutionDetails" type="SubstitutionDetails"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GoalDetail" type="GoalDetail"/>
+	<xs:complexType name="GoalDetail">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="goalType"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="howGoalScored"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="whereGoalScored"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GoalDetails" type="GoalDetails"/>
+	<xs:complexType name="GoalDetails">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="numGoals"  type="xs:integer"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="goalDetail" type="GoalDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MatchUpdate" type="MatchUpdate"/>
+	<xs:complexType name="MatchUpdate">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="matchUpdateID"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamID"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="playerID"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="typeID"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="updateTime"  type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SubstitutionDetail" type="SubstitutionDetail"/>
+	<xs:complexType name="SubstitutionDetail">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="substitutionId"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantIn"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantOut"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SubstitutionDetails" type="SubstitutionDetails"/>
+	<xs:complexType name="SubstitutionDetails">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="numSubstitutions"  type="xs:integer"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="substitutionDetail" type="SubstitutionDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MatchSession" type="MatchSession"/>
+	<xs:complexType name="MatchSession">
+		<xs:annotation>
+			<xs:documentation>Maintains details of sessions for a match,  like status, start time and end time for a session.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionStatus"  type="SessionStateKind">
+				<xs:annotation>
+					<xs:documentation>Status of session
+C &amp;ndash; Completed
+P &amp;ndash; Progressing
+N &amp;ndash; Not started
+A &amp;ndash; Abandoned
+Default session status would be N</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>validity of the session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="session" type="Session"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionStatistic" type="SessionStatistic"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MatchStatistic" type="MatchStatistic"/>
+	<xs:complexType name="MatchStatistic">
+		<xs:annotation>
+			<xs:documentation>Captures where statistics for event like For football
+NoOfGoals scored by each team
+NoOfRedCards for each team
+
+For Tennis
+NoOfSets for each player
+NoOfAces for each player
+NoOfDoubleFaults for each player</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="team"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Team (is also a participant for event)if it is team game and players if it is between two players. Team or player against which the statistic is being captured. Example when England scores a goal against Argentina, then you would one row for England where value would be 1, this would get updated to 2 if England again scores a goal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="statisticValue"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Value for the statistic, example if England has scored 2 goals then it would have 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="statistic" type="Statistic"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputControl" type="InputControl"/>
+	<xs:complexType name="InputControl">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventKey"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TennisParticipantInputControl" type="TennisParticipantInputControl"/>
+	<xs:complexType name="TennisParticipantInputControl">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="serve"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="accelerator"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="sets"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="futureSet"  type="FutureSet"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="aces"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="doubleFaults"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="tieBreak"  type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TennisScoreboard" type="TennisScoreboard"/>
+	<xs:complexType name="TennisScoreboard">
+		<xs:complexContent>
+			<xs:extension base="EventScoreboard">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1DisplayName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The display name of participant 1</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2DisplayName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The display name of participant 2</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1Points"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 1 Points</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1PointsDisplayName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>e.g. 30</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2Points"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 2 Points</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2PointsDisplayName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>e.g. 15</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1NoS"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Sets won by Player 1</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2NoS"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Sets won by Player 2</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1NoA"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 1 Number of Aces</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2NoA"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 2 Number of Aces</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1DF"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 1 Number of Double Faults</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2DF"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 2 Number of Double Faults</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalSets"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Total Sets of in this match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="tieBreakLastSet"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Will there be Tie Break Last Set</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="currentSet"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Current set number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="currentGame"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Current game number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endOfMatch"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>End Of Match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participantServing"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Participant who is serving</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participant1ID"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Participant1 Identifier.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participant2ID"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Participant1 Identifier.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participant1BS"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Participant 1 Serve Break Count</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participant2BS"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Participant 2 Serve Break Count</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isTiebreak"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is it a Tie Break</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="setDecreased"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to indicate set decrease</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isCreateGameIndexMarket"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isCreateSetIndexMarket"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isBIP"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="currentServer"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isGDR"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="timeUpdated"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="bipmarketsStatus"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="dynamicData" type="TennisDynamicData"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="set" type="SetDetail"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TennisGameDetail" type="TennisGameDetail"/>
+	<xs:complexType name="TennisGameDetail">
+		<xs:annotation>
+			<xs:documentation>Game details are maintained here. The details which are maintained are score-line for game and other statistics like no of aces, no of first serves, no of double faults for the game</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="gameNo"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Game for which score-line and statistical details are being captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gameType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>This would specify if the game is tie-breaker.
+It can have following values
+N - Normal      : for normal games this would the value
+T - TieBreaker: for tiebreaker game which decides the set, this would be value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantServing"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Participant who is serving for the game</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantReceiving"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Participant who is receiving the serve in the game</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant1Score"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Score for the serving participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant2Score"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Score of the receiving participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="noOfAces"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>No of aces served by the serving participant in the game</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="noOfDoubleFaults"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>No of double faults committed by the serving participant in the game</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceBreak"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the service was broken in for the game.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gameWinner"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Winner (Participant id)  of the game, it would be one of the participants.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gameStatus"  type="GameStateKind">
+				<xs:annotation>
+					<xs:documentation>Defines the status of the Game,
+Following are the statuses for the Game
+E - End of Game
+R - Game Retirement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Validity of the game</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="point" type="TennisPointDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TennisInputControl" type="TennisInputControl"/>
+	<xs:complexType name="TennisInputControl">
+		<xs:complexContent>
+			<xs:extension base="InputControl">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="participant" type="TennisParticipantInputControl"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TennisPointDetail" type="TennisPointDetail"/>
+	<xs:complexType name="TennisPointDetail">
+		<xs:annotation>
+			<xs:documentation>Captures all the point details for a game. i.e when there was server who got the point, was there a fault, has it resulted in ace, has it resulted in double fault etc</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointNo"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>No of the point in the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantServing"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>participants which has been selected for the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantReceiving"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>participants which has been selected for the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="fault"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the server was fault
+1 - Fault Serve
+0 - Proper Serve</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ace"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the serve is an Ace
+1 - Ace
+0 - Not an Ace</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="doubleFault"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the serve resulted in double fault as the previous server was also fault
+1- Double Fault
+0 - Not a Double Fault</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointStatus"  type="PointStateKind">
+				<xs:annotation>
+					<xs:documentation>Specified whether the point was awarded which is normal or reversed which would happen when there was some error.
+A - Awarded
+R - Reverted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointWinner"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Participant(id) who won the point would be one of the participants of the match</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointDatetime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time point (server) was played</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventMatchStateDetail" type="EventMatchStateDetail"/>
+	<xs:complexType name="EventMatchStateDetail">
+		<xs:annotation>
+			<xs:documentation>Captures details of actions and data time when they occurred during the course of the match. we also capture player who was responsible for the action. some of the actions for footballs are 
+goal scored, red card issued, yellow card issued.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Event for which winner details are being captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="statisticId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for a statistic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>participants which has been selected for the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="actionDatetime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time at which the action was performed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventScoreboard" type="EventScoreboard"/>
+	<xs:complexType name="EventScoreboard">
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="startDateTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="endDateTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="matchStatus"  type="MatchStateKind"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The Mercury unique Event key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPreviousSessionGDR"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="winner" type="EventParticipant"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventScoreboardChannel" type="EventScoreboardChannel"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventScoreboardChannel" type="EventScoreboardChannel"/>
+	<xs:complexType name="EventScoreboardChannel">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TennisMatchState" type="TennisMatchState"/>
+	<xs:complexType name="TennisMatchState">
+		<xs:annotation>
+			<xs:documentation>Captures where statistics for match event
+For Tennis
+NoOfSets for each player
+NoOfAces for each player
+NoOfDoubleFaults for each player</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventMatchState">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="set" type="TennisSetDetail"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TennisSetDetail" type="TennisSetDetail"/>
+	<xs:complexType name="TennisSetDetail">
+		<xs:annotation>
+			<xs:documentation>Set details of a match are maintained here. the details which are maintained are score-line for set, who won the set and duration of the set etc are maintained.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="setNo"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Set for which the details are being captured.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant1Score"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Score of number of games/points for first participant in the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant2Score"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Score of number of games/points for second participant in the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setWinner"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Participant(id) who has won the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setStatus"  type="SetStateKind">
+				<xs:annotation>
+					<xs:documentation>Defines the status of the Set,
+Following are the statuses for the Set
+E - End of Set
+R - Set Retirement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setConfirmed"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the set result has been confirmed or not.
+Y - Confirmed
+N - Not confirmed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Validity of the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="game" type="TennisGameDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="VolleyballScoreboard" type="VolleyballScoreboard"/>
+	<xs:complexType name="VolleyballScoreboard">
+		<xs:complexContent>
+			<xs:extension base="EventScoreboard">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1Points"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 1 Points</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2Points"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Player 2 Points</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1NoS"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Sets won by Player 1</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2NoS"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Sets won by Player 2</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalSets"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Total Sets in this match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="currentSet"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Current set number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="serveNumber"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Current Serve</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endOfMatch"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>End Of Match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participant1ID"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Participant 1 ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="participant2ID"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Participant 2 ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="currentServer"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="isGDR"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="timeUpdated"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="player1DisplayName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Player 1 Points</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="player2DisplayName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Player 1 Points</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="volleyballSet" type="VolleyballAllSetDetail"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VolleyballParticipantInputControl" type="VolleyballParticipantInputControl"/>
+	<xs:complexType name="VolleyballParticipantInputControl">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="participantId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="serve"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="futureSet"  type="FutureSet"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="setPoints"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="auto"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="serverCalculator"  type="ServerCalculator"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="VolleyballInputControl" type="VolleyballInputControl"/>
+	<xs:complexType name="VolleyballInputControl">
+		<xs:complexContent>
+			<xs:extension base="InputControl">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="participant" type="VolleyballParticipantInputControl"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VolleyballAllSetDetail" type="VolleyballAllSetDetail"/>
+	<xs:complexType name="VolleyballAllSetDetail">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="setNumber"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="team1NoP"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="team2NoP"  type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="VolleyballPointDetail" type="VolleyballPointDetail"/>
+	<xs:complexType name="VolleyballPointDetail">
+		<xs:annotation>
+			<xs:documentation>Maintains details of scoring for each set for volleyball. details which are maintained are server, point won on the serve, time of the server</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="serveNo"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="server"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Participant who is serving</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointWon"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies Whether point is won or service lost
+1- Point Won
+0 &amp;ndash; No point Won</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointStatus"  type="PointStateKind"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceBreak"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the service was broken, if broken we also know how many points have been won before the service was broken.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceDatetime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Data and time at which the participant started the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="VolleyballMatchState" type="VolleyballMatchState"/>
+	<xs:complexType name="VolleyballMatchState">
+		<xs:complexContent>
+			<xs:extension base="EventMatchState">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="set" type="VolleyballSetDetail"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VolleyballSetDetail" type="VolleyballSetDetail"/>
+	<xs:complexType name="VolleyballSetDetail">
+		<xs:annotation>
+			<xs:documentation>Set details of a match are maintained here. the details which are maintained are score-line for set, who won the set and duration of the set etc are maintained.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="setNo"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Set for which the details are being captured.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant1Score"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Score of number of games/points for first participant in the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="participant2Score"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Score of number of games/points for second participant in the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setWinner"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Participant(id) who has won the set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setStatus"  type="SetStateKind">
+				<xs:annotation>
+					<xs:documentation>Defines the status of the Set,
+Following are the statuses for the Set
+E - End of Set
+R - Set Retirement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setConfirmed"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the set result has been confirmed or not.
+1 - Confirmed
+0 - Not confirmed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="point" type="VolleyballPointDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FootballScoreboard" type="FootballScoreboard"/>
+	<xs:complexType name="FootballScoreboard">
+		<xs:complexContent>
+			<xs:extension base="EventScoreboard">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="clockTime"  type="typ:Duration"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="clockStatus"  type="ClockStatusKind"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="currentSession"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="endOfMatch"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="runningBallEventCode"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="HomeTeamID"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Home Team ID ,Team 1 ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="AwayTeamID"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Away Team ID ,Team 2 ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoG"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home Team number of Full time goals, in a given match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoG"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away Team number of Full time goals, in a given match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home Team number of Full time corners, in a given match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away Team number of Full time corners, in a given match</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoYC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home team Total number of Yellow cards assigned to Home Team ,First Team</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoYC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away team Total number of Yellow cards assigned to Home Team ,First Team</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoRC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Total number of Red cards assigned to Home Team ,First Team ,non negative integer. 
+					This also contains the scenario where second Yellow card is directly gets converted to yellow</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoRC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Total number of Red cards assigned to Away Team ,First Team.
+This also contains the scenario where second Yellow card is directly gets converted to yellow</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoP"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home team no of penalties</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoP"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away team no of penalties</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoTI"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home team no of throwIn</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoTI"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away team no of throwIn</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoFK"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home team no of free kicks</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoFK"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away team no of free kicks</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="HTNoYRC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Home team no of yellow red card.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ATNoYRC"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Away team no of yellow red card.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="sessionDetails" type="SessionDetails"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FootballMatchState" type="FootballMatchState"/>
+	<xs:complexType name="FootballMatchState">
+		<xs:annotation>
+			<xs:documentation>Captures where statistics for football event like
+NoOfGoals scored by each team
+NoOfRedCards for each team</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EventMatchState">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="goal" type="FootballGoalDetail"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FootballGoalDetail" type="FootballGoalDetail"/>
+	<xs:complexType name="FootballGoalDetail">
+		<xs:annotation>
+			<xs:documentation>Maintains details of goals scored in football. Details are maintained session wise i.e. what was the score line in 1st half, 2nd half etc. this also maintains details like when the session started and when the session ended.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="team1"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>First team for the event, which is usually home team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="team2"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Second team for the event, which is usually away team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="team1Score"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Number of goals scored by the first team in that session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="team2Score"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Number of goals scored by the second team in that session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionStatus"  type="SessionStateKind">
+				<xs:annotation>
+					<xs:documentation>Status of session
+C &amp;ndash; Completed
+P &amp;ndash; Progressing
+N &amp;ndash; Not started
+A &amp;ndash; Abandoned
+Default session status would be N</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MatchDetail" type="MatchDetail"/>
+	<xs:complexType name="MatchDetail">
+		<xs:annotation>
+			<xs:documentation>Captures details of actions and data time when they occurred during the course of the match. we also capture player who was responsible for the action. some of the actions for footballs are 
+goal scored, red card issued, yellow card issued.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="player"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>player( participant) who was responsible for the action like scoring a goal, a red card being issued etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="actionMinuteSecond"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Time when the action took place in terms of minutes and seconds mentioned as mi:ss i.e if the action took place at 35th minute and 20th second, it would be 35:20</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="actionDatetime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time at which the action was performed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="session" type="Session"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="matchDetailCharacteristic" type="MatchDetailCharacter"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="statistic" type="Statistic"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TennisDynamicData" type="TennisDynamicData"/>
+	<xs:complexType name="TennisDynamicData">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="noWinningSets"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of Winning Sets</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="gameChanged"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Game Changed Flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="setChanged"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Set Changed Flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="aceChanged"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Ace Count Changed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="doubleFaultChanged"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Double Fault Count Changed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="pointChanged"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Point Changed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="totalAces"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total Number of Aces</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="totalDF"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total Number of Double Faults</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MatchDetailCharacter" type="MatchDetailCharacter"/>
+	<xs:complexType name="MatchDetailCharacter">
+		<xs:annotation>
+			<xs:documentation>Specifies characteristics for a match action details.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SetDetail" type="SetDetail"/>
+	<xs:complexType name="SetDetail">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="setNumber"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="player1NoG"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Player 1 Game Count</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="player2NoG"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Player 2 Game Count</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FutureSet" type="FutureSet"/>
+	<xs:complexType name="FutureSet">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="setId"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SportCharacteristic" type="SportCharacteristic"/>
+	<xs:complexType name="SportCharacteristic">
+		<xs:annotation>
+			<xs:documentation>Maintains detail of all possible characteristics for a sport.
+For Example: football will have following scoring characteristics
+Out of Box
+From the Box
+Left Leg
+Right Leg
+Penalty
+Own Goal
+etc</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SessionDetails" type="SessionDetails"/>
+	<xs:complexType name="SessionDetails">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="numSessions"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionDetail" type="SessionDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServerCalculator" type="ServerCalculator"/>
+	<xs:complexType name="ServerCalculator">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="line"  type="xs:double"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="price"  type="bprc:Price"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Session" type="Session"/>
+	<xs:complexType name="Session">
+		<xs:annotation>
+			<xs:documentation>Maintains details of sessions of play which a particular sport can have. For example football will have &#8216;1st Half&#8221;, &#8220;2nd Half&#8221;,&#8221;1st Half Extra Time&#8221;, &#8220;2nd Half Extra Time&#8221;, &#8220;Penalty Shootout&#8221;</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique Identification for Session.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the session. Example &amp;ldquo;1st Half&amp;rdquo; for football</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventSubtypeCharacteristic" type="EventSubtypeCharacteristic"/>
+	<xs:complexType name="EventSubtypeCharacteristic">
+		<xs:annotation>
+			<xs:documentation>Maintains the characteristics for the event sub type.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeCharacteristicId"  type="xs:integer"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Flag" type="Flag"/>
+	<xs:complexType name="Flag">
+		<xs:annotation>
+			<xs:documentation>Maintains flags used to broadcasting etc for events</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="flagCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Flag which has been selected for the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="flagName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MatchUpdates" type="MatchUpdates"/>
+	<xs:complexType name="MatchUpdates">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="numUpdates"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="matchUpdate" type="MatchUpdate"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SessionDetail" type="SessionDetail"/>
+	<xs:complexType name="SessionDetail">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionNumber"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The session number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="injuryTime"  type="typ:Duration">
+				<xs:annotation>
+					<xs:documentation>The time period for the perticular match session - startDateTime and endDateTime time for the session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="teamToKickOff"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Team id, team received the First Kick</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="homeTeamScore"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>First Team Score , AwayTeam Score, non negative integer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="AwayTeamScore"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>First Team Score , Home Team Score, non negative integer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HTNoC"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of Cornors by Home Team,First Team ,non negative integer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ATNoC"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of Cornors by Home Team,First Team ,non negative integer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HTNoYC"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of Yellow cards assigned to Home Team ,First Team ,non negative integer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ATNoYC"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of Yellow cards assigned to Away Team ,First Team ,non negative integer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HTNoRC"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of Red cards assigned to Home Team ,First Team ,non negative integer. 
+			This also contains the scenario where second Yellow card is directly gets converted to yellow</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ATNoRC"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of Red cards assigned to Home Team ,First Team ,non negative integer. 
+			This also contains the scenario where second Yellow card is directly gets converted to yellow</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HTNoP"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Home team no of penalties</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ATNoP"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Away team no of penalties</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HTNoTI"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Home team no of throw In</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ATNoTI"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Home team no of throw In</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HTNoFK"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Home team no of free kick</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="ATNoFK"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Away team no of free kick</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionStartDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Session start date / time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionEndDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Session start date / time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="endOfsession"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="matchUpdates" type="MatchUpdates"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SessionStatistic" type="SessionStatistic"/>
+	<xs:complexType name="SessionStatistic">
+		<xs:annotation>
+			<xs:documentation>Maintains details of statistics for each of the sessions like goals scored in in 1st half by team 1 in football. Details are maintained session wise i.e. what was the statistic score for 1st half, 2nd half etc. this also maintains details like when the session started and when the session ended.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="team1"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>First team for the event, which is usually home team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="team2"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Second team for the event, which is usually away team</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="team1Score"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of goals scored by the first team in that session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="team2Score"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of goals scored by the second team in that session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="statistic" type="Statistic"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="sessionId" type="Session"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventSubtype" type="EventSubtype"/>
+	<xs:complexType name="EventSubtype">
+		<xs:annotation>
+			<xs:documentation>Maintains various event sub types of event hierarchies..</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for event sub type.  This should be the master Mercury ID only.  Other Ids available in the CrossRefEntityKeys</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the event sub type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeStatus"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Status of the event subtype.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeStatusDerived"  type="EventStatusKind">
+						<xs:annotation>
+							<xs:documentation>Derived Status of the event subtype, considering the parents</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayStatus"  type="EventDisplayStatusKind">
+						<xs:annotation>
+							<xs:documentation>Display Status of the event subtype.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Specifies the display order (sort) , example order with lowest value is displayed on the top.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="blurb"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Blurb text</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKey"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="birRetailFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to identify if inplay updates should be published to Retail</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="event" type="Event"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="feedSetting" type="EventSubtypeFeed"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventSubtypeMarketSort" type="EventSubtypeMarketSort"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="defaultEventBettingConfig" type="EventSubtypeBettingConfig"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="EventSubtypeCharacteristic"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventPublication" type="EventPublication"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventSubtypeChannel" type="EventSubtypeChannel"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availableParticipant" type="par:Participant"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availableMarketType" type="mkt:MarketType"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="productCategory" type="cat:ProductCategory"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="eventSubtypeFlag" type="EventFlag"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EventSubtypeChannel" type="EventSubtypeChannel"/>
+	<xs:complexType name="EventSubtypeChannel">
+		<xs:annotation>
+			<xs:documentation>Maintains the channels for the event sub type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeChannelId"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventSubtypeFeed" type="EventSubtypeFeed"/>
+	<xs:complexType name="EventSubtypeFeed">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="primaryProvider"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate whether the feed is the primary feed of the feed type for the event sub type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="forType" type="fed:FeedType"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="availableFeed" type="fed:Feed"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventSubtypeBettingConfig" type="EventSubtypeBettingConfig"/>
+	<xs:complexType name="EventSubtypeBettingConfig">
+		<xs:annotation>
+			<xs:documentation>Contains the details of event betting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPayOut"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount that all winners can win cumulative. Maximum payout should be configurable in the system. This will be used as the default value when creating a event / Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPotentialWin"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies a maximum event which a single customer can win for this event. If a market is not set any maximum bet then this would apply for that market. It this is not set then it will be inherited from type or sub type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="minSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies minimum amount a winner can win. This will be used as the default value when creating a event Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount one can win in a single bet. This will be used as the default value when creating a event/Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxMultipleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum multiple bets which can accepted for a customer. This will be used as the default value when creating a event/Sub Type, where it can be modified. While displaying any Sub type/event this value will be displayed in brackets on right side of the value set in sub type/event, so as to indicate that default value at event type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="winAlertLevel"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the winner alert level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of betting config for an event.  The from date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of betting config for an event.  the to date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is active</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EventParticipantDuration" type="EventParticipantDuration"/>
+	<xs:complexType name="EventParticipantDuration">
+		<xs:annotation>
+			<xs:documentation>Maintains detail of when a participant came in and when he went out and if he can come again to play, for example in American football on issuing yellow card a player will go out for 10 mnts and would come back again</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="duration"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Specifies the duration when the player is played for event.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="startMinuteSecond"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the time from when the player is playing for event in terms of minutes and seconds as mi:ss</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="endMinuteSecond"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the time from when the player is playing for event in terms of minutes and seconds as mi:ss</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

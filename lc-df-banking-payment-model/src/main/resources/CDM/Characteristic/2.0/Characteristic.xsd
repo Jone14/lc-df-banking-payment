@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0" xmlns:cha="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="Characteristic" type="Characteristic"/>
+	<xs:complexType abstract="true" name="Characteristic">
+		<xs:annotation>
+			<xs:documentation>Maintains various characteristic. Every event or participants have characteristics.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="characteristicKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for characteristic.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="characteristicName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the characteristic.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Description for the characteristic.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isUpdateable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Some characteristics may not be changed and are static, others could be updated by a system.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="value" type="CharacteristicValue"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="historicalValue" type="CharacteristicValue"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="type" type="CharacteristicType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CharacteristicGroup" type="CharacteristicGroup"/>
+	<xs:complexType name="CharacteristicGroup">
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="groupId"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for characteristic group.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="groupName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the characteristic group.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="groupDescription"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Description of the characteristic group.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="characteristic" type="Characteristic"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CharacteristicType" type="CharacteristicType"/>
+	<xs:complexType abstract="true" name="CharacteristicType">
+		<xs:annotation>
+			<xs:documentation>Maintains various characteristic types. Every event or participants have characteristics and the characteristics are divided into characteristic type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="characteristicType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for Characteristic type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="characteristicTypeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the characteristic type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CharacteristicValue" type="CharacteristicValue"/>
+	<xs:complexType abstract="true" name="CharacteristicValue">
+		<xs:annotation>
+			<xs:documentation>Contains value for characteristic</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>value of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

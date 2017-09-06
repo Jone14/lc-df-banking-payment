@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/product/Games/2.0"
+	 xmlns:gam="http://cdm.ladbrokes.co.uk/product/Games/2.0"
+	 xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/product/Games/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:element name="GamesProduct" type="gam:GamesProduct"/>
+	<xs:complexType name="GamesProduct">
+		<xs:complexContent>
+			<xs:extension base="cat:Product"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GamesCategory" type="gam:GamesCategory"/>
+	<xs:complexType name="GamesCategory">
+		<xs:annotation>
+			<xs:documentation>A category used to classify part of the  'Games' hierarchy structure</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat:ProductCategory"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfGamesProduct">
+		<xs:sequence>
+			<xs:element name="gamesProduct" type="GamesProduct" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

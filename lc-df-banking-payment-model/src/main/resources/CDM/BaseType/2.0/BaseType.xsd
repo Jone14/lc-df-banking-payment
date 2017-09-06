@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0">
+	<xs:annotation>
+		<xs:documentation>21-09-2011 - SNorris - Changed version (and tagged value namespace version) to 1.2 due to changes in the Money type.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="Percentage" type="Percentage"/>
+	<xs:complexType name="Percentage">
+		<xs:complexContent>
+			<xs:extension base="Quantity">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Interval" type="Interval"/>
+	<xs:complexType name="Interval">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="startDate"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="length"  type="Duration"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="DeleteFlagKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Deleted"/>
+			<xs:enumeration value="NotDeleted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Password" type="Password"/>
+	<xs:complexType name="Password">
+		<xs:complexContent>
+			<xs:extension base="Text">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Range" type="Range"/>
+	<xs:complexType name="Range">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="upperValue" type="Quantity"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="lowerValue" type="Quantity"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Quantity" type="Quantity"/>
+	<xs:complexType name="Quantity">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="amount"  type="xs:decimal"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="amountString"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Temporary - This is added for Mercury as they have an issue with BE and Decimal type???  This should not be here though</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Number" type="Number"/>
+	<xs:complexType name="Number">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:integer"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Money" type="Money"/>
+	<xs:complexType name="Money">
+		<xs:annotation>
+			<xs:documentation>21-09-2011 - SNorris -  Changed currency datatype from CurrencyCodeKind to Currency. Changed version to 1.1</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Quantity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="currency"  type="CurrencyCodeKind"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyCodeKind">
+		<xs:annotation>
+			<xs:documentation>A code identifying a currency.
+
+The ISO 4217 currency code is usually composed of the country's two-character ISO 3166 country code, plus a one-character currency designator. For example, the code for Australian Dollars is simply Australia's two-character ISO 3166 code (AU) plus a one-character currency designator (D).
+
+This enumeration is not a complete list of the ISO4271 Codes.
+
+The codes in this enumeration were taken from http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AED">
+				<xs:annotation>
+					<xs:documentation>Entity:  United Arab Emirates
+Currency:  EUA Dirham
+Numeric Code:  784</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AUD">
+				<xs:annotation>
+					<xs:documentation>Entity: Australia
+Currency: Australian Dolar
+Numeric Code: 036</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BAM">
+				<xs:annotation>
+					<xs:documentation>Entity: Boznia and Herzegovina
+Currency: Convertible Marks
+Numeric Code: 977</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BGN">
+				<xs:annotation>
+					<xs:documentation>Entity: Bulgaria
+Currency: Bulgarian Lev
+Numeric Code: 975</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BRL">
+				<xs:annotation>
+					<xs:documentation>Entity:  Brazil
+Currency:  Brazilian Real
+Numeric Code:  986</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CAD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Canada
+Currency: Canadian Dollar
+Numeric Code: 124</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHF">
+				<xs:annotation>
+					<xs:documentation>Entity:  Liechtenstein, Switzerland
+Currency:  Swiss Franc
+Numeric Code:  756</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CLP">
+				<xs:annotation>
+					<xs:documentation>Entity: Chile
+Currency:  Chilean Peso
+Numeric Code:  152</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CNY">
+				<xs:annotation>
+					<xs:documentation>Entity:  China
+Currency:  Yuan Renminbi
+Numeric Code: 156</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Colombia
+Currency:  Columbian Peso
+Numeric Code:  170</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CRC">
+				<xs:annotation>
+					<xs:documentation>Entity:  Costa Rica
+Currency: Costa Rican Colon
+Numeric Code: 188</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CSD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Serbia and Montenegro
+Currency:  Serbian Dinar
+Numeric Code:  891</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CUP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Cuba
+Currency:  Cuban Peso
+Numeric Code:  192</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CYP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Cyprus
+Currency:  Cyprus Pound
+Numeric Code:  196</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CZK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Czech Republic
+Currency:  Czech Koruna
+Numeric Code:  203</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DKK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Denmark
+Currency:  Danish Krone
+Numeric Code:  208</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EGP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Egypt
+Currency:  Egyptian Pound
+Numeric Code:  818</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EEK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Estonia
+Currency:  Kroon
+Numeric Code:  233</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EUR">
+				<xs:annotation>
+					<xs:documentation>Entity: (many)
+Currency: Euro
+Numeric Code: 978</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GEL">
+				<xs:annotation>
+					<xs:documentation>Entity:  Georgia
+Currency:  Lari
+Numeric Code:  981</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GIP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Gilbraltar
+Currency:  Gibraltar Pound
+Numeric Code:  292</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GBP">
+				<xs:annotation>
+					<xs:documentation>Entity: United Kindom
+Currency: Pound Sterling
+Numeric Code: 826</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HKD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Hong Kong
+Currency:  Hong Kong Dollar
+Numeric Code:  344</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HRK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Croatia
+Currency:  Croatian Kuna
+Numeric Code:  191</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HUF">
+				<xs:annotation>
+					<xs:documentation>Entity:  Hungary
+Currency:  Forint
+Numeric Code:  348</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IDR">
+				<xs:annotation>
+					<xs:documentation>Entity:  Indonesia
+Currency:  Rupiah
+Numeric Code:  360</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ILS">
+				<xs:annotation>
+					<xs:documentation>Entity:  Israel
+Currency:  New Israeli Sheqel
+Numeric Code:  376</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INR">
+				<xs:annotation>
+					<xs:documentation>Entity:  India
+Currency:  Rupee
+Numeric Code:  356</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IQD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Iraq
+Currency:  Iraqi Dinar
+Numeric Code:  368</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IRR">
+				<xs:annotation>
+					<xs:documentation>Entity:  Iran (Islamic Republic of)
+Currency:  Iranian Rial
+Numeric Code:  364</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ISK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Iceland
+Currency:  Iceland Krona
+Numeric Code:  352</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KPW">
+				<xs:annotation>
+					<xs:documentation>Entity:  Korea, Deomcratic People's Republic of
+Currency:  North Korean Won
+Numeric Code:  408</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KRW">
+				<xs:annotation>
+					<xs:documentation>Entity:  Korea, Republic of
+Currency:  Won
+Numeric Code:  410</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Lebanon
+Currency:  Lebanese Pound
+Numeric Code:  422</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LKR">
+				<xs:annotation>
+					<xs:documentation>Entity:  Sri Lanka
+Currency:  Sri Lanka Rupee
+Numeric Code:  144</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LTL">
+				<xs:annotation>
+					<xs:documentation>Entity:  Lithuania
+Currency:  Lithuanian Litas
+Numeric Code:  440</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LVL">
+				<xs:annotation>
+					<xs:documentation>Entity:  Latvia
+Currency:  Latvian Lats
+Numeric Code:  428</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MKD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Macedonia, The Former Yugoslav Republic of
+Currency:  Denar
+Numeric Code:  807</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MTL">
+				<xs:annotation>
+					<xs:documentation>Entity:  Malta
+Currency:  Maltese Lira
+Numeric Code:  470</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MXN">
+				<xs:annotation>
+					<xs:documentation>Entity:  Mexico
+Currency:  Mexican Peso
+Numeric Code:  484</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Norway
+Currency:  Norwegian Krone
+Numeric Code:  578</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NZD">
+				<xs:annotation>
+					<xs:documentation>Entity:  New Zealand
+Currency:  New Zealand Dollar
+Numeric Code:  554</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PHP">
+				<xs:annotation>
+					<xs:documentation>Entity:  Phillipines
+Currency:  Pillippine Peso
+Numeric Code:  608</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PKR">
+				<xs:annotation>
+					<xs:documentation>Entity:  Pakistan
+Currency:  Pakistan Rupee
+Numeric Code:  586</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PLN">
+				<xs:annotation>
+					<xs:documentation>Entity:  Poland
+Currency:  Zloty
+Numeric Code:  985</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RUB">
+				<xs:annotation>
+					<xs:documentation>Entity:  Russian Federation
+Currency:  Russian Ruble
+Numeric Code:  643</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SAR">
+				<xs:annotation>
+					<xs:documentation>Entity:  Saudi Arabia
+Currency:  Saudi Riyal
+Numeric Code:  682</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SEK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Sweden
+Currency:  Swedish Krona
+Numeric Code:  752</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SGD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Singapore
+Currency:  Singapore Dollar
+Numeric Code:  702</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SKK">
+				<xs:annotation>
+					<xs:documentation>Entity:  Slovakia
+Currency:  Slovak Koruna
+Numeric Code:  703</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SIT">
+				<xs:annotation>
+					<xs:documentation>Entity:  Slovenia
+Currency:  Tolar
+Numeric Code:  705</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="THB">
+				<xs:annotation>
+					<xs:documentation>Entity:  Thailand
+Currency:  Baht
+Numeric Code:  764</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TRY">
+				<xs:annotation>
+					<xs:documentation>Entity:  Turkey
+Currency:  New Turkish Lira
+Numeric Code:  949</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TWD">
+				<xs:annotation>
+					<xs:documentation>Entity:  Tawan, Province of Chian
+Currency:  New Taiwan Dollar
+Numeric Code:  TWD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UAH">
+				<xs:annotation>
+					<xs:documentation>Entity:  Ukraine
+Currency:  Hryvnia
+Numeric Code:  980</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZAR">
+				<xs:annotation>
+					<xs:documentation>Entity:  South Africa
+Currency:  Rand
+Numeric Code:  710</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="USD">
+				<xs:annotation>
+					<xs:documentation>Entity:  United States
+Currency: US Dollar
+Numeric Code: 840</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Text" type="Text"/>
+	<xs:complexType name="Text">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="text"  type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="BaseType" type="BaseType"/>
+	<xs:complexType name="BaseType">
+		<xs:annotation>
+			<xs:documentation>Used a an abstract class to represent any base unit values.  e.g. 'CharacteristicsValues' can be of such a type as this enables a more flexible way of describing a value.  Such types have no 'identity' and are value types</xs:documentation>
+		</xs:annotation>
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="Duration" type="Duration"/>
+	<xs:complexType name="Duration">
+		<xs:complexContent>
+			<xs:extension base="Quantity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="timeUnitType"  type="TimeUnitTypeKind"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TimePeriod" type="TimePeriod"/>
+	<xs:complexType name="TimePeriod">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="startDateTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="endDateTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="TimeUnitTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Second">
+				<xs:annotation>
+					<xs:documentation>A second is the  basic unit of measurement of time.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Minute">
+				<xs:annotation>
+					<xs:documentation>One minute is a duration of 60 seconds.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Hour">
+				<xs:annotation>
+					<xs:documentation>One hour is a duration of 60 minutes.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Day">
+				<xs:annotation>
+					<xs:documentation>One day is a duration of 24 hours.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Week">
+				<xs:annotation>
+					<xs:documentation>One week is a duration of 7 days.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Year">
+				<xs:annotation>
+					<xs:documentation>One year is a duration of 365 days (common years) or 366 (leap years).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Month">
+				<xs:annotation>
+					<xs:documentation>A month is a duration resulting from the division of a calendar year in twelve sequential periods, each with a specific name and containing a specified number of days.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

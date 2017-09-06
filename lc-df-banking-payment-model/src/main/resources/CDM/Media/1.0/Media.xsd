@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/common/Media/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/common/Media/1.0" xmlns:med="http://cdm.ladbrokes.co.uk/common/Media/1.0" xmlns:dev="http://cdm.ladbrokes.co.uk/common/Device/1.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Device/1.0" schemaLocation="../../Device/1.0/Device.xsd"/>
+	<xs:element name="Media" type="Media"/>
+	<xs:complexType name="Media">
+		<xs:sequence>
+			<xs:element name="mediaYype" type="MediaTypeKind" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mimeType" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="totalBitRate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="restrictions" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="dimensions" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="kiloBytes" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="caption" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="audioBitRate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="videoBitRate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="resolution" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="aspectRatio" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="codec" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mediaFormatId" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Media Format Id
+431 - Andriod Low
+430 - Andriod Very Low
+432 - Andriod Medium
+433 - Andriod High
+330 - iPhone
+331 - iPhone3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="streamUrl" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mediaQuality" type="MediaQuality" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="protocol" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mediaPlayer" type="dev:Device" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MediaQuality">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="high"/>
+			<xs:enumeration value="low"/>
+			<xs:enumeration value="medium"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="liveVideoStream"/>
+			<xs:enumeration value="archivedVideoStream"/>
+			<xs:enumeration value="image"/>
+			<xs:enumeration value="hyperlink"/>
+			<xs:enumeration value="audioStream"/>
+			<xs:enumeration value="download"/>
+			<xs:enumeration value="document"/>
+			<xs:enumeration value="dataStream"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

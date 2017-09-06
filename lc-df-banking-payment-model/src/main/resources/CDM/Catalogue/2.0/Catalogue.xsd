@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:element name="ProductCatalogue" type="ProductCatalogue"/>
+	<xs:complexType name="ProductCatalogue">
+		<xs:annotation>
+			<xs:documentation>The catalogue entity represents a collection of 'domain' product categories and product offerings, available for customers to purchase/transact.
+
+Example catalogues could be 'Online' and 'Mobile' (Sportsbook)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="productCatalogueKey"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="productCatalogueName"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="productCatalogueState"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="category" type="ProductCategory"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ProductCategory" type="ProductCategory"/>
+	<xs:complexType name="ProductCategory">
+		<xs:annotation>
+			<xs:documentation>A Category represents a generic, static level in a product hierarchy.  This enables a structured classification of products classes.
+
+This enables a nested hierarchy - a parent child relationship as required to represent the domain specific catalogue.  
+
+Knows types include 'SportsbookCategory' and 'GamesCategory'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The unique identifier/key for the product category as managed by the Product Master - Hybris.  This is different to the openBetRefKey and tradingRefKey - these are master ID's for OpenBet and Mercury respectively.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The code of the product category as managed by the Product Master - Hybris.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the product category as managed by the Product Master - Hybris.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFromDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time this category is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validToDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time this category is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryType"  type="CategoryTypeKind">
+				<xs:annotation>
+					<xs:documentation>The specialised subtype of the category.  Refer to CategoryTypeKind enumeration for possible list. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="subCategoryType"  type="SubCategoryTypeKind">
+				<xs:annotation>
+					<xs:documentation>The subtype (e..g EventClass, EventType) for SportsbookCategory type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isVirtual"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this category a virtual one?  Virtual categories are managed within Hybris and NOT by trading.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="product" type="Product"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Product" type="Product"/>
+	<xs:complexType name="Product">
+		<xs:annotation>
+			<xs:documentation>An instance of a product specificaiton, that is classified by its category hierarchy.  Subclasses include:
+
+SportsbookMarket
+GamesProduce</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="productKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The unique identifier/key for the product as managed by the Product Master - Hybris.  
+
+This is different to the openBetRefKey and tradingRefKey (Market Keys) - these are master ID's for OpenBet and Mercury respectively.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The unique code for the product as managed by the Product Master - Hybris.  
+
+This is different to the openBetRefKey and tradingRefKey (Market Keys) - these are master ID's for OpenBet and Mercury respectively.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the product</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The description of the product</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productVersion"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version of the product (not - used in Global Draw for game versions)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productType"  type="ProductTypeKind">
+				<xs:annotation>
+					<xs:documentation>The specialised subtype of the product.  Known subtypes:
+
+SportsbookMarket
+GamesProduct
+
+More will be built over time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFromDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time this product is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validToDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time this product is valid to</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="productVariant" type="ProductVariant"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="priceRow" type="PriceRow"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ProductVariant" type="ProductVariant"/>
+	<xs:complexType name="ProductVariant">
+		<xs:annotation>
+			<xs:documentation>A product variant is a of product that is related to another product in that it is a variant of it - possible a newer version, possible just an associated component</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Product">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="productVariantKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The unique key for the product variant.  A type of variant would for example be a 'selection'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="parentProductKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The parent product this is a variant of</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="variantType"  type="ProductVariantTypeKind"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PriceRow" type="PriceRow"/>
+	<xs:complexType name="PriceRow">
+		<xs:annotation>
+			<xs:documentation>Represents a price, per unit, for a product.  Know subclasses include:
+
+SportsbookPrice (odds for a selection)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceRowKey"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFromDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time the price row is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validToDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time the price row is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="productKey"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="productVariantKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>If parent is a productVariant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceRowType"  type="PriceRowTypeKind">
+				<xs:annotation>
+					<xs:documentation>The type of the price row</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PriceRowTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SelectionPrice">
+				<xs:annotation>
+					<xs:documentation>A selection price type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GamePlayPrice">
+				<xs:annotation>
+					<xs:documentation>GamePlayPrice</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LottoLinePrice">
+				<xs:annotation>
+					<xs:documentation>GamePlayPrice</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PokerBlindsPrice">
+				<xs:annotation>
+					<xs:documentation>Buy in cost for a Poker Cash Game (Big and Small Blinds)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PokerBuyInPrice">
+				<xs:annotation>
+					<xs:documentation>Buy in cost for a Poker Tournament (Single one off buy in)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CategoryTypeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the specialisations of a base product category - indicating the type of subclass</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SportsbookCategory">
+				<xs:annotation>
+					<xs:documentation>A Sportsbook Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GamesCategory">
+				<xs:annotation>
+					<xs:documentation>A Games Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PokerCategory">
+				<xs:annotation>
+					<xs:documentation>A Poker Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LottosCategory">
+				<xs:annotation>
+					<xs:documentation>A Lottos Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CasinoCategory">
+				<xs:annotation>
+					<xs:documentation>A Casino Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LiveCasinoCategory">
+				<xs:annotation>
+					<xs:documentation>A Live Casino Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FinancialsCategory">
+				<xs:annotation>
+					<xs:documentation>AFinancials Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BackgammonCategory">
+				<xs:annotation>
+					<xs:documentation>A Backgammon Product Category</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubCategoryTypeKind">
+		<xs:annotation>
+			<xs:documentation>Subcategory types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EventClass">
+				<xs:annotation>
+					<xs:documentation>Subtype of SportsbookCategory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EventType">
+				<xs:annotation>
+					<xs:documentation>Subtype of SportsbookCategory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EventSubtype">
+				<xs:annotation>
+					<xs:documentation>Subtype of SportsbookCategory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Event">
+				<xs:annotation>
+					<xs:documentation>Subtype of SportsbookCategory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductTypeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the specialisations of a base product type- indicating the type of subclass</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SportsbookMarket">
+				<xs:annotation>
+					<xs:documentation>Sportsbook markets are modelled as Products</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GamesProduct">
+				<xs:annotation>
+					<xs:documentation>Games are modelled as GamesProducts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductVariantTypeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the specialisations of a base product variant - indicating the type of subclass</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SportsbookSelection"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

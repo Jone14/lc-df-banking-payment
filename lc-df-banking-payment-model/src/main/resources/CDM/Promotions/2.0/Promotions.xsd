@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0"
+	 xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0"
+	 xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0"
+	 xmlns:gam="http://cdm.ladbrokes.co.uk/product/Games/2.0"
+	 xmlns:ccy="http://cdm.ladbrokes.co.uk/common/Currency/2.0"
+	 xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0"
+	 xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0"
+	 xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Currency/2.0" schemaLocation="../../Currency/2.0/Currency.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Games/2.0" schemaLocation="../../Games/2.0/Games.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="LoyaltyBonus" type="pro:LoyaltyBonus"/>
+	<xs:complexType name="LoyaltyBonus">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic 'Bonus' promotion that can be used, primarily mastered by Givex Retail. 
+
+Examples include free loyalty points or a percentage bonus and bonus money.
+
+These often have no restrictions, so are treated separately to say Free Money
+
+Free Money is separate from this as it often needs a 'number of cycles' in terms of how it can be used and is managed by the wallet.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="pro:Promotion">
+				<xs:sequence>
+					<xs:element name="loyaltyBonusKind" type="pro:LoyaltyBonusKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The kind of bonus as can only be one - Points, StakePercentage or Money</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bonusMoney" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of bonus money used on this promotion</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bonusPoints" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of the bonus points given/used with this promotion. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bonusStakePerc" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The percentage of stake used on this promotion</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currency" type="ccy:Currency" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PromotionRestriction" type="pro:PromotionRestriction"/>
+	<xs:complexType name="PromotionRestriction">
+		<xs:annotation>
+			<xs:documentation>This class represents instances of a restriction that exists on this promotion instance</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="restrictionType" type="pro:PromotionRestrictionTypeKind"  minOccurs="0"/>
+			<xs:element name="restrictionValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - probably need subclasses for each type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time this restriction is valid from?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time this restriction is valid to (if expired)?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this restriction active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PromotionRewardTypeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the types of promotions supported.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FreeMoney">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FreeBet">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LoyaltyReward">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LoyaltyBonus">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LoyaltyBonusKind">
+		<xs:annotation>
+			<xs:documentation>This class is an enumeration of 'bet class'.  </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Points">
+				<xs:annotation>
+					<xs:documentation>Points bonus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="StakePercentage">
+				<xs:annotation>
+					<xs:documentation>Bonus of a stake percentage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Money">
+				<xs:annotation>
+					<xs:documentation>Money Bonus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="LoyaltyPointsReward" type="pro:LoyaltyPointsReward"/>
+	<xs:complexType name="LoyaltyPointsReward">
+		<xs:annotation>
+			<xs:documentation>This class represents an individual LoyaltyPointsReward that a customer is eligible for (if any), and can be associated to individual loyalty transactions.
+
+This promotion is a SPECIFIC entitlement of points to money - which can be exercised, if the points are available.  A customer does not have to exercise it though, and can only according to the rules of the reward.  x point for x money for instance (unlike a loyalty bonus)
+
+Note: This is used for Global Draw gaming transactions (exercised for points to money)- this is RENAMED from LoyaltyReward</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="pro:Promotion">
+				<xs:sequence>
+					<xs:element name="pointsRequired" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The points required to redeem the reward amount</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="displayText" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Text to display on the machines related to this promotion</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rewardAmount" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The reward amount gained when the pointsRequired are deducted from the points balance.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rewardPoints" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>points awarded as reward</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isPromo" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Givex boolean, is this still needed?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="balanceOnMachine" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="exactTurnover" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="excludedGameList" type="pro:ArrayOfGamesProduct"  minOccurs="0"/>
+					<xs:element name="includedGameList" type="pro:ArrayOfGamesProduct"  minOccurs="0"/>
+					<xs:element name="link" type="xs:string"  minOccurs="0"/>
+					<xs:element name="maxPayout" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="minCashIn" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="minTurnover" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="offerAmount" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="offerMessage" type="xs:string"  minOccurs="0"/>
+					<xs:element name="rewardDesc" type="xs:string"  minOccurs="0"/>
+					<xs:element name="rewardKey" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="rewardType" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="sourceGameKey" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="targetGameKey" type="xs:integer"  minOccurs="0"/>
+					<xs:element name="voucherCode" type="xs:string"  minOccurs="0"/>
+					<xs:element name="winAmount" type="xs:decimal"  minOccurs="0"/>
+					<xs:element name="winAmtMultiple" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="currency" type="ccy:Currency" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PromotionRestrictionTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BetLevel">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to being used a bet level</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BetType">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to bet type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BetIdentifier">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to being used by a particular bet identifier</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Channel">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to being used in a particular channel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WinOnly">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to being used by win only sports bets (Might fall under BetRestriction)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SingleOnly">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to being used by win only sports bets (Might fall under BetRestriction)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Product">
+				<xs:annotation>
+					<xs:documentation>The promotion is restricted to being used with a particular product</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PromotionType" type="pro:PromotionType"/>
+	<xs:complexType name="PromotionType">
+		<xs:annotation>
+			<xs:documentation>This class represents the definition of the various promotion types available. Promotion types can have restirctions</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="code" type="pro:PromotionRewardTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The code value of the promotion type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="name" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name of the promotion type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="description" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A description of the promotion type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is this promotion type active?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time the promotion type is valid from</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time the promotion type is valid from</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasRestrictions" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this promo type have restrictions?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isPointsBased" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is this promotion points based?  Has a points requriement that is deducted from the points balance to gain a reward amount?  e.g LoyaltyPointsReward</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isWalletManaged" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is this promotion type managed by a particular wallet type?  (e.g. freeBets)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="walletType" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Wallet type that managed this promotion</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="masterSystem" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The system that masters this promotion, while there is no central promo engine.  eg.. Givex, OpenBet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="promotionRestriction" type="pro:PromotionTypeRestriction" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FreeBet" type="pro:FreeBet"/>
+	<xs:complexType name="FreeBet">
+		<xs:annotation>
+			<xs:documentation>This class represents a 'Free Bet' promotion, provisioned to a customer.  These can be used when consuming Ladbrokes products - e.g. placing Bets to reduce the staking requirements of the customer</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="pro:Promotion">
+				<xs:sequence>
+					<xs:element name="freeBetOfferId" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The freeBetOfferid.
+
+'Deprecate' - use the promotionKey in future.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="freeBetAmount" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of the free bet that CAN be redeemed (as defined by the type)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isFOBTBet" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is this free bet for a fixed odds betting machine</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currency" type="ccy:Currency" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FreeMoney" type="pro:FreeMoney"/>
+	<xs:complexType name="FreeMoney">
+		<xs:annotation>
+			<xs:documentation>Promotional Free Money can be used by the customer to bet with (cant be withdrawn until certain rules are met).  This class is more for digital promotions where the money needs to be subject to recycling and withdrawal rules due to Fraud.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="pro:Promotion">
+				<xs:sequence>
+					<xs:element name="freeMoneyAmount" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount of free money entitlement</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numOfCyclesRequired" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of successful cycles required this free bet must complete to be withdrawable cash</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numOfCyclesCompleted" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of successful cycles this free bet has completed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currency" type="ccy:Currency" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ArrayOfGamesProduct" type="pro:ArrayOfGamesProduct"/>
+	<xs:complexType name="ArrayOfGamesProduct">
+		<xs:annotation>
+			<xs:documentation>An entity for holding unbounded list of game product.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="gamesProduct" type="gam:GamesProduct" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Promotion" type="pro:Promotion"/>
+	<xs:complexType name="Promotion" abstract="true">
+		<xs:annotation>
+			<xs:documentation>This class represents an abstract 'Promotion'.
+
+A promotion of a particular type that has been provisioned to a customer.  This is an instance of a promotion type that has been allocated to a customer</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="promotionKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The global canonical for the customers promotion</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="token" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The promotion token value</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="name" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name of the promotion (May be redundant now there is a promotion type)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="description" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The description of the promotion (promotion message or additional data )</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="promotionRewardType" type="pro:PromotionRewardTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The type of promotion like FreeBet, FreeMoney or LoyaltyPoints</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rewardValue" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The numeric value of the reward</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="pro:PromotionStatusKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The current status of the promotion (available, redeemed, expired, canceled) - possibly an enumeration?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isRedeemed" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is the promotion been redeemed at least once, if in part yet?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isFullRedeemed" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is the promotion fully redeemed yet?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="amountRedeemed" type="xs:decimal"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The amount currently redeemed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastRedemptionDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time that the promotion was LAST redeemed. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="redemptionDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time that the promotion was FULLY redeemed. (Can be part redeemed)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isExpired" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is the promotion fully redeemed yet?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="expiryDateTime" type="xs:dateTime"  minOccurs="0"/>
+					<xs:element name="otherInfo" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Placeholder for other information - reward amount, balance etc</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productCategory" type="cat:CategoryTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The product category this promotion is redeemed on.
+enum:  SportsbookCategory, PokerCategory, CasinoCategory, LottosCategory, FinancialsCategory</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="promotionRestriction" type="pro:PromotionRestriction" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="promotionType" type="pro:PromotionType" minOccurs="0"/>
+					<xs:element name="promotionKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+					<xs:element name="customerKeys" type="xref:CrossRefEntityKeys" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PromotionTypeRestriction" type="pro:PromotionTypeRestriction"/>
+	<xs:complexType name="PromotionTypeRestriction">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a restriction that exists on a promotion type (e.g. should this type only be used with a particular product, like POKER)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="restrictionType" type="xs:string"  minOccurs="0"/>
+			<xs:element name="restrictionValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - probably need subclasses for each type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFrom" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time this restriction is valid from?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time this restriction is valid to (if expired)?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this restriction active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PromotionStatusKind">
+		<xs:annotation>
+			<xs:documentation>TBD - Shows the current status of the promotion</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Available">
+				<xs:annotation>
+					<xs:documentation>The customers promotion is available for consumption and has not being redeemed at all.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FullRedeemed">
+				<xs:annotation>
+					<xs:documentation>The customers promotion is fully redeemed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartRedeemed">
+				<xs:annotation>
+					<xs:documentation>The customers promotion is fully redeemed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cancelled">
+				<xs:annotation>
+					<xs:documentation>The customers promotion has been canceled explicitly</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Expired">
+				<xs:annotation>
+					<xs:documentation>The customers promotion has expired</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>The customers promotion is suspended</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>The customers promotion is inactive (e.g. archived after use)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

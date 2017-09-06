@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/content/VideoContent/2.0"
+	 xmlns:vdc="http://cdm.ladbrokes.co.uk/content/VideoContent/2.0"
+	 xmlns:cnt="http://cdm.ladbrokes.co.uk/content/Content/1.0"
+	 xmlns:intl="http://cdm.ladbrokes.co.uk/common/Internationalisation/1.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/content/VideoContent/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Internationalisation/1.0" schemaLocation="../../Internationalisation/1.0/Internationalisation.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/content/Content/1.0" schemaLocation="../../Content/1.0/Content.xsd"/>
+	<xs:element name="VideoStreamDetail" type="vdc:VideoStreamDetail"/>
+	<xs:complexType name="VideoStreamDetail">
+		<xs:annotation>
+			<xs:documentation>VideoStreamDetail: - This entity stores event video streaming information provided from  OpenBet for an event.  The entity has following attribute:
+
+
+	- eventId for an event for which video streaming is provided. 
+
+
+
+	- The start time and end time for video feed. 
+
+
+
+	- The entity has Video Provider attribute as an enumeration whose values are available from VideoProvider Entity.
+
+
+
+	- The entity has URLType attribute as an enumeration whose values are available from URLType.
+
+
+
+	- isAccesKey is a boolean whose value determine if it is tight integration or loose integration.
+
+
+
+	- accessKey URL stores video provider access URL that will be used to negotiate for obtaining streaming URL of video provider.
+
+
+
+	- StreamURL will store video provider streaming URL.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="eventID" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>OpenBet event Id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="typeID" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type Id for the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Video Streaming start time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Video Stream end time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="videoProvider" type="vdc:VideoProvider"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the video provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="urlType" type="vdc:URLType"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URL type states the mode of streaming i.e. direct streaming from video provider (direct), use access key to negotiate with video provider or using activex component. the value will depend on video provider and isAccessKey value. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isAccesKey" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>"N" - default value. if accesskey is not used.
+"Y" - if accessKey URL to be use to negotiate with video provider to obtain streaming URL to stream video</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acessKeyURL" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains a access URL to negotiate with video provider to obtaining a streaming URL </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="streamURL" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains the video provider's streaming URL to be opened / sourced in a window / iframe</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mediaFormatId" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Media Format Id
+431 - Andriod Low
+430 - Andriod Very Low
+432 - Andriod Medium
+433 - Andriod High
+330 - iPhone
+331 - iPhone3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="playerAlias" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Player Alias
+androidlortmp - Andriod Low 
+androidvlortmp - Andriod Very Low
+androidmedrtmp - Andriod Medium
+androidhirtmp - Andriod High
+iPhone 
+iPhone3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ActiveXDetail" type="vdc:ActiveXDetail" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="VideoProvider">
+		<xs:annotation>
+			<xs:documentation>This enumeration will store Video providers available for streaming video.
+	- PERFORM (UK horse racing) 
+	- PERF_VOD - Perform Video-On-Demand (VOD; UK horse racing) 
+	- COBAIN  - (South African horse racing) 
+	- GOTTO -  (UK greyhound racing) 
+	- TRNI (US racing) 
+	- IBN (Virtual racing-horse and greyhound racing)
+	</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PERFORM"/>
+			<xs:enumeration value="PERF_VOD"/>
+			<xs:enumeration value="COBAIN"/>
+			<xs:enumeration value="GOTTO"/>
+			<xs:enumeration value="TRNI"/>
+			<xs:enumeration value="IBN"/>
+			<xs:enumeration value="ATR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ActiveXDetail" type="vdc:ActiveXDetail"/>
+	<xs:complexType name="ActiveXDetail">
+		<xs:annotation>
+			<xs:documentation>This entity stores activeX details if VideoStreamDetail --&gt; URLType is "ActiveX". 
+
+The activeX will be applicable if video provider is IBN (for virtual horse /greyhound racing)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="nextRaces" type="xs:string"  minOccurs="0"/>
+			<xs:element name="nextRaceId" type="xs:string"  minOccurs="0"/>
+			<xs:element name="resultServer" type="xs:string"  minOccurs="0"/>
+			<xs:element name="assetServer" type="xs:string"  minOccurs="0"/>
+			<xs:element name="pollTime" type="xs:string"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="URLType">
+		<xs:annotation>
+			<xs:documentation>
+	- Direct  -  For Opening a URL in a browser window / iframe: OpenBet makes a WS call to the video provider (where relevant) and builds a URL (URL points to video provider website); this URL is launched in a browser window / iframe. Used for provider(s): Perform, Perform VOD, Cobain, Gotto, TRNI
+
+
+
+	- AccessKey  - Launching a local application (e.g. a flash application) that uses a URL to negotiate with the video provider: OpenBet makes a WS call to the video provider and obtains an access key URL; the access key URL is used to negotiate with the video provider to obtain a streaming URL .Used for provider(s): Perform 
+
+
+ActiveX  -  Opening a HTML page with an embedded ActiveX object with dynamic parameters specified:  The customer maybe prompted to download a Window binary file, when run, installs an ActiveX control. Installation only happens once. When the customer clicks to view a video, OpenBet embeds an ActiveX object with dynamically-generated parameters in a HTML page. Used for provider(s): IBN </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="direct">
+				<xs:annotation>
+					<xs:documentation>This enumeration will store URL Type available for streaming video:
+
+
+	- Direct  -  For Opening a URL in a browser window / iframe: OpenBet makes a WS call to the video provider (where relevant) and builds a URL (URL points to video provider website); this URL is launched in a browser window / iframe. Used for provider(s): Perform, Perform VOD, Cobain, Gotto, TRNI
+
+
+
+	- AccessKey  - Launching a local application (e.g. a flash application) that uses a URL to negotiate with the video provider: OpenBet makes a WS call to the video provider and obtains an access key URL; the access key URL is used to negotiate with the video provider to obtain a streaming URL .Used for provider(s): Perform 
+
+
+
+	- ActiveX  -  Opening a HTML page with an embedded ActiveX object with dynamic parameters specified:  The customer maybe prompted to download a Window binary file, when run, installs an ActiveX control. Installation only happens once. When the customer clicks to view a video, OpenBet embeds an ActiveX object with dynamically-generated parameters in a HTML page. Used for provider(s): IBN </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="accesskey"/>
+			<xs:enumeration value="activex"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="VideoStream" type="vdc:VideoStream"/>
+	<xs:complexType name="VideoStream">
+		<xs:annotation>
+			<xs:documentation>VideoStreamDetail: - This entity stores event video streaming information.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cnt:Content">
+				<xs:sequence>
+					<xs:element name="startTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Video Streaming start time</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="endTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Video Stream end time</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="videoProvider" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Name of the video provider</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="urlType" type="vdc:URLType"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL type states the mode of streaming i.e. direct streaming from video provider (direct), use access key to negotiate with video provider or using activex component. the value will depend on video provider and isAccessKey value. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isAccesKey" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>"N" - default value. if accesskey is not used.
+"Y" - if accessKey URL to be use to negotiate with video provider to obtain streaming URL to stream video</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="acessKeyURL" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>This contains a access URL to negotiate with video provider to obtaining a streaming URL </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="videoStreamURL" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>This contains the video provider's streaming URL to be opened / sourced in a window / iframe</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="version" type="xs:int"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>video stream content version</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isChargeable" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Implies certain restriction applies and hence content is chargeable.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="audioLanguageSupport" type="intl:Language" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

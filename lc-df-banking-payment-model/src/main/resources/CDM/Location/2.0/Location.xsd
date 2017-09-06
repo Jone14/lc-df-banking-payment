@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:element name="Uri" type="Uri"/>
+	<xs:complexType name="Uri">
+		<xs:sequence>
+			<xs:element name="uri" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="uriName" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Directions" type="Directions"/>
+	<xs:complexType name="Directions">
+		<xs:annotation>
+			<xs:documentation>Directions to find an address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="transportType" type="DirectionTransportTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>BUS,TRAIN,WALK,AIR,TRAM,DRIVE,BOAT,TUBE</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="directions" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DirectionTransportTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Bus"/>
+			<xs:enumeration value="Road"/>
+			<xs:enumeration value="Air"/>
+			<xs:enumeration value="Tube"/>
+			<xs:enumeration value="Train"/>
+			<xs:enumeration value="Walk"/>
+			<xs:enumeration value="River"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Location" type="Location"/>
+	<xs:complexType name="Location">
+		<xs:annotation>
+			<xs:documentation>Maintains various location details.  A location can be made of a combination of physical address, geographical co-ordinates and/or IP address.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="locationId" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Unique identification(Surrogate key) for Location</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="locationName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Name of the location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="locationType" type="LocationTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Type of the location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="containsAddress" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Does the location have a geographicCoordinate?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="containsGeoCoordinate" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Does the location have a geographicCoordinate?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="containsIPAddress" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Does the location have an IP Address?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ipAddress" type="IPAddress" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="geographicCoordinate" type="GeographicCoordinate" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="address" type="Address" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="uri" type="Uri" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Address" type="Address"/>
+	<xs:complexType name="Address">
+		<xs:annotation>
+			<xs:documentation>Maintains the details of an address for a location.  Depending on the completeness of a source, some or all parts may be populated.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="addressId" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Unique identifier of a address if it is persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unformattedAddress" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>An unformatted version of the address, as one string</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="addressLine" type="AddressLine" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="postcode" type="PostCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="cityName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the city the address is located in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="country" type="cty:Country" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="county" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the city the address is located in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="state" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The state that the address is located in.  This may not be pertinent for some countries, but will be populated if available.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The region of the country the address is located in.  Not always pertinent and may not be available.  If avai</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="continent" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The continent that the address is located in.  Will be populated if available.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="timezone" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The timezone that the address is located in.  Will be populated if known.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="travelDirections" type="Directions" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:element name="AddressLine" type="AddressLine"/>
+	<xs:complexType name="AddressLine">
+		<xs:sequence>
+			<xs:element name="lineNo" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="PostalAddressLineKind" minOccurs="0" maxOccurs="1" />
+			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PostalAddressLineKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BuildingName"/>
+			<xs:enumeration value="BuildingNumber"/>
+			<xs:enumeration value="PropertyName"/>
+			<xs:enumeration value="PropertyNumber"/>
+			<xs:enumeration value="PoBox"/>
+			<xs:enumeration value="Street"/>
+			<xs:enumeration value="Suburb"/>
+			<xs:enumeration value="Locality"/>
+			<xs:enumeration value="Town"/>
+			<xs:enumeration value="City"/>
+			<xs:enumeration value="County"/>
+			<xs:enumeration value="State"/>
+			<xs:enumeration value="Region"/>
+			<xs:enumeration value="Provence"/>
+			<xs:enumeration value="Country"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="LocationTypeKind">
+		<xs:annotation>
+			<xs:documentation>Maintains various location types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Stadium">
+				<xs:annotation>
+					<xs:documentation>Location is a sporting stadium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Court">
+				<xs:annotation>
+					<xs:documentation>Location is a court</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="City">
+				<xs:annotation>
+					<xs:documentation>Location is a city.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Country">
+				<xs:annotation>
+					<xs:documentation>Location is a city.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Racecourse">
+				<xs:annotation>
+					<xs:documentation>Location is a race course</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Track">
+				<xs:annotation>
+					<xs:documentation>Location a track?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Field">
+				<xs:annotation>
+					<xs:documentation>Location is a field</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ground">
+				<xs:annotation>
+					<xs:documentation>Location is a sporting ground</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Town">
+				<xs:annotation>
+					<xs:documentation>is the location a town?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerAddress">
+				<xs:annotation>
+					<xs:documentation>The Location is a Customer address</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerDevice">
+				<xs:annotation>
+					<xs:documentation>Customer device location used for betting?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RAD">
+				<xs:annotation>
+					<xs:documentation>Retail Area Location</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RetailShop">
+				<xs:annotation>
+					<xs:documentation>Retail Store Location</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ShopServer">
+				<xs:annotation>
+					<xs:documentation>Retail Store Location</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ShopTill">
+				<xs:annotation>
+					<xs:documentation>Retail Store Location</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FBOT">
+				<xs:annotation>
+					<xs:documentation>Fixed Odds Betting Terminal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SSBT">
+				<xs:annotation>
+					<xs:documentation>Self Service Betting Terminal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Course"/>
+			<xs:enumeration value="Venue"/>
+			<xs:enumeration value="Veladrome"/>
+			<xs:enumeration value="Ring"/>
+			<xs:enumeration value="Uri"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PostCode" type="PostCode"/>
+	<xs:complexType name="PostCode">
+		<xs:sequence>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>value of the post code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="compliantPostCode" type="CompliantPostcode" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:element name="CompliantPostcode" type="CompliantPostcode"/>
+	<xs:complexType name="CompliantPostcode">
+		<xs:sequence>
+			<xs:element name="area" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>One or two letters.  This is the postcode area and it identifies the main Royal Mail sorting office which will process the mail. In this case EC would go to the Mount Pleasant sorting office in London</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="district" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>One or two numbers but for some parts of London it can be a number and a letter. This is the postcode district and tells the sorting office which delivery office the mail should go to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sector" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Usually just one number. This tells the delivery office which local area or neighbourhood the mail should go</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The unit code for the postcode.  This is always two letters. This identifies a group of up to 80 addresses and tells the delivery office which postal route (or walk) will deliver the item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GeographicCoordinate" type="GeographicCoordinate"/>
+	<xs:complexType name="GeographicCoordinate">
+		<xs:annotation>
+			<xs:documentation>A class representing a geographical co-ordinate consisting of a latitude and longtitude</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="latitude" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The latitude of the Geographic Coordinate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="longitude" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The longitude of the Geographic Coordinate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="IPAddress" type="IPAddress"/>
+	<xs:complexType name="IPAddress">
+		<xs:annotation>
+			<xs:documentation>A class representing an IP Address.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ipVersion" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>IPV4 or V6 - so 4 or 6</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ipAddressValue" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The IP Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ipAddressType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the IP address (add examples AJIT)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

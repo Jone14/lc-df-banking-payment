@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" xmlns:imy="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" xmlns:ccy="http://cdm.ladbrokes.co.uk/common/Currency/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Currency/2.0" schemaLocation="../../Currency/2.0/Currency.xsd"/>
+	<xs:element name="InternationalMoney" type="InternationalMoney"/>
+	<xs:complexType name="InternationalMoney">
+		<xs:sequence>
+			<xs:element name="indexNo" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Client defined sequence value (e.g. 1..n) used to identify an InternationalMoney element in the scope of a list of these. Transient only.  This facilitates correlating original elements in the list to converted ones, rather then making assumptions about order</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresCurrencyConversion" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Transient - Does this element requrie conversion?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasConvertedCurrency" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Has this money been converted using an exchange rate to other currencies?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="convertedDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time this conversion occurred</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="spotExchangeRate" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The spot exchange rate used in this conversion</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="targetCurrency" type="ccy:Currency" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="sourceMoney" type="Money" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="convertedMoney" type="Money" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Money" type="Money"/>
+	<xs:complexType name="Money">
+		<xs:sequence>
+			<xs:element name="amount" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The amount of the currency</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currencyCode" type="typ:CurrencyCodeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The currency code.  Either this or a link to the reference data 'Currency' Class should exist.  This attribute is a 'shortcut' and should really be deprecated - however, old 'money' has this, so leaving in for now</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currency" type="ccy:Currency" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

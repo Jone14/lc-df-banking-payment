@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://services.ladbrokes.co.uk/service/technical/ims/IMSPaymentWrapper/1.0"
+	 xmlns:imspw="http://services.ladbrokes.co.uk/service/technical/ims/IMSPaymentWrapper/1.0"
+	 xmlns:wal="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0"
+	 xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0"
+	 xmlns:cmnMsg="http://services.ladbrokes.co.uk/service/CommonMessage/2.0"
+	 xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0"
+	 xmlns:pay="http://cdm.ladbrokes.co.uk/banking/Payment/2.0"
+	 xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0"
+	 xmlns:pty="http://cdm.ladbrokes.co.uk/party/Party/2.0"
+	 xmlns:ptr="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0"
+	 xmlns:imy="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0"
+	 targetNamespace="http://services.ladbrokes.co.uk/service/technical/ims/IMSPaymentWrapper/1.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" schemaLocation="../../../../../CDM/PartyRole/2.0/PartyRole.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/Party/2.0" schemaLocation="../../../../../CDM/Party/2.0/Party.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../../../../CDM/Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/banking/Payment/2.0" schemaLocation="../../../../../CDM/Payment/2.0/Payment.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" schemaLocation="../../../../../CDM/Customer/2.0/Customer.xsd"/>
+	<xs:import namespace="http://services.ladbrokes.co.uk/service/CommonMessage/2.0" schemaLocation="../../../../../CDM/CommonMessage/2.0/CommonMessage.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" schemaLocation="../../../../../CDM/Promotions/2.0/Promotions.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0" schemaLocation="../../../../../CDM/Wallet/2.0/Wallet.xsd"/>
+	<xs:element name="ConfirmPaymentResponse" type="imspw:ConfirmPaymentResponse"/>
+	<xs:complexType name="ConfirmPaymentResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceResponse">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="transactionCode" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>code of transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>status of transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="amount" type="xs:decimal" minOccurs="0" maxOccurs="1" nillable="true">
+						<xs:annotation>
+							<xs:documentation>amount of transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CancelPaymentRequest" type="imspw:CancelPaymentRequest"/>
+	<xs:complexType name="CancelPaymentRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionRequest">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="payment" type="pay:Payment" nillable="true" minOccurs="0"/>
+					<xs:element name="reason" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="paymentType" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CancelPaymentResponse" type="imspw:CancelPaymentResponse"/>
+	<xs:complexType name="CancelPaymentResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionResponse">
+				<xs:sequence>
+					<xs:element name="transactionCode" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+					<xs:element name="status" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+					<xs:element name="amount" type="xs:decimal" minOccurs="0" maxOccurs="1" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DepositRequest" type="imspw:DepositRequest"/>
+	<xs:complexType name="DepositRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionRequest">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="password" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="ipAddress" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="location" type="loc:Location" nillable="true" minOccurs="0"/>
+					<xs:element name="deposit" type="wal:DepositFunds" minOccurs="0"/>
+					<xs:element name="Promotion" type="pro:Promotion" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DepositResponse" type="imspw:DepositResponse"/>
+	<xs:complexType name="DepositResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionResponse">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="deposit" type="wal:DepositFunds" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FundsTransferRequest" type="imspw:FundsTransferRequest"/>
+	<xs:complexType name="FundsTransferRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionRequest">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="password" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="ipAddress" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="location" type="loc:Location" nillable="true" minOccurs="0"/>
+					<xs:element name="transfer" type="wal:TransferFunds" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FundsTransferResponse" type="imspw:FundsTransferResponse"/>
+	<xs:complexType name="FundsTransferResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionResponse">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="transfer" type="wal:TransferFunds" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WithdrawRequest" type="imspw:WithdrawRequest"/>
+	<xs:complexType name="WithdrawRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionRequest">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="password" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="ipAddress" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="location" type="loc:Location" nillable="true" minOccurs="0"/>
+					<xs:element name="withdraw" type="wal:WithdrawFunds" minOccurs="0"/>
+					<xs:element name="loseBonus" type="xs:boolean" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="WithdrawResponse" type="imspw:WithdrawResponse"/>
+	<xs:complexType name="WithdrawResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ActionResponse">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="withdraw" type="wal:WithdrawFunds" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ConfirmPaymentRequest" type="imspw:ConfirmPaymentRequest"/>
+	<xs:complexType name="ConfirmPaymentRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceRequest">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+					<xs:element name="uuid" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>unique identifier used in the original deposit request</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentSort" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="trasactionCode" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>code of withdraw transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="methodCode" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Code of the payment method </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetPaymentHistoryResponse" type="imspw:GetPaymentHistoryResponse"/>
+	<xs:complexType name="GetPaymentHistoryResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:GetResponse">
+				<xs:sequence>
+					<xs:element name="ArrayOfPaymentHistories" type="imspw:ArrayOfPaymentHistories" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaymentHistory" type="imspw:PaymentHistory"/>
+	<xs:complexType name="PaymentHistory">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier of transaction or transfer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subId" type="xs:string" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>sub identifier of the transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="group" type="xs:string" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sort" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="status" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="source" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="currency" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="amount" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="balance" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="date" type="xs:dateTime" nillable="true" minOccurs="0"/>
+			<xs:element name="settledDate" type="xs:dateTime" nillable="true" minOccurs="0"/>
+			<xs:element name="processedAt" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="ipAddr" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="callId" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="remoteAction" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="remoteReference" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="remoteAccount" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="remoteUniqueId" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="description" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="pagingToken" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="fromWallet" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="toWallet" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="paymentMethodCode" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="paymentAccountCode" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="paymentAccountId" type="xs:string" nillable="true" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InitiateQuickRegistrationRequest" type="imspw:InitiateQuickRegistrationRequest"/>
+	<xs:complexType name="InitiateQuickRegistrationRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceRequest">
+				<xs:sequence>
+					<xs:element name="languageCode" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Player&amp;rsquo;s language code. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currencyCode" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Player&amp;rsquo;s currency code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="amount" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Deposit amount.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="methodcode" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Method code. Currently only PayPal supported. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="successUrl" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL where the player browser session is redirected to for continuing with the registration after confirming the deposit on PayPal side. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="cancelUrl" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>URL where the player browser session is redirected if player decides not to proceed with PayPal quick registration</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InitiateQuickRegistrationResponse" type="imspw:InitiateQuickRegistrationResponse"/>
+	<xs:complexType name="InitiateQuickRegistrationResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceResponse">
+				<xs:sequence>
+					<xs:element name="successUrl" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="cancelUrl" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetQuickRegistrationDetailsRequest" type="imspw:GetQuickRegistrationDetailsRequest"/>
+	<xs:complexType name="GetQuickRegistrationDetailsRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceRequest">
+				<xs:sequence>
+					<xs:element name="token" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Unique ID of the transaction in PayPal database.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetQuickRegistrationDetailsResponse" type="imspw:GetQuickRegistrationDetailsResponse"/>
+	<xs:complexType name="GetQuickRegistrationDetailsResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceResponse">
+				<xs:sequence>
+					<xs:element name="token" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Unique ID of the transaction in PayPal database.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="payerId" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>PayPal account identifier</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="playerDetails" type="pty:Party" nillable="true" minOccurs="0"/>
+					<xs:element name="playerContactProfile" type="ptr:PartyRoleContactProfile" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ArrayOfPaymentHistories" type="imspw:ArrayOfPaymentHistories"/>
+	<xs:complexType name="ArrayOfPaymentHistories">
+		<xs:sequence>
+			<xs:element name="paymentHistory" type="imspw:PaymentHistory" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FinalizeQuickRegistrationDepositRequest" type="imspw:FinalizeQuickRegistrationDepositRequest"/>
+	<xs:complexType name="FinalizeQuickRegistrationDepositRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceRequest">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="payerId" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="token" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="walletName" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="amount" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="customerKey" type="cus:CustomerKey" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FinalizeQuickRegistrationDepositResponse" type="imspw:FinalizeQuickRegistrationDepositResponse"/>
+	<xs:complexType name="FinalizeQuickRegistrationDepositResponse">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:ServiceResponse">
+				<xs:sequence>
+					<xs:element name="transactionCode" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="amount" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetPaymentHistoryRequest" type="imspw:GetPaymentHistoryRequest"/>
+	<xs:complexType name="GetPaymentHistoryRequest">
+		<xs:complexContent>
+			<xs:extension base="cmnMsg:GetRequest">
+				<xs:sequence>
+					<xs:element name="sessionToken" type="xs:string" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Session Token </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="walletname" type="xs:string"/>
+</xs:schema>

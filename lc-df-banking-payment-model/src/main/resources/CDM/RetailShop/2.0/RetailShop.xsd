@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0"
+	 xmlns:ret="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0"
+	 xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0"
+	 xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:element name="Region" type="ret:Region"/>
+	<xs:complexType name="Region">
+		<xs:annotation>
+			<xs:documentation>A geographic area defining a cluster of retail shops (used to be called 'RAD')</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="regionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique ID for the RAD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regionNo" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number for the Region (RAD)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regionName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Region (RAD)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="orgUnitId" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The Organisation Unit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - AA description of the RAD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numShops" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The number of shops contained in the RAD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this Region Active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailShop" type="ret:RetailShop" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="location" type="loc:Location" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Division" type="ret:Division"/>
+	<xs:complexType name="Division">
+		<xs:annotation>
+			<xs:documentation>This class represents a District (previously called 'Region') in the retail estate</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="divisionKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique identifier for the division</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="divisionName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the division</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The description of the district</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numRegions" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of regions in the district</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region" type="ret:Region" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="country" type="cty:Country" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ShopServer" type="ret:ShopServer"/>
+	<xs:complexType name="ShopServer">
+		<xs:annotation>
+			<xs:documentation>TBD - Details of the shop server</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serverName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The name pf the server (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serverDescription" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The name pf the server (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serverURL" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The URL of a server located in the RetailShop</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serverPort" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Port of a server located in the RetailShop</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IPAddress" type="loc:IPAddress"  minOccurs="0"/>
+			<xs:element name="authenticationRequired" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - is Authentication required?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="authenticationType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The current status of server (e.g. online, offline etc)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GamingMachine" type="ret:GamingMachine"/>
+	<xs:complexType name="GamingMachine">
+		<xs:sequence>
+			<xs:element name="gamingMachineKey" type="xs:string"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ShopTill" type="ret:ShopTill"/>
+	<xs:complexType name="ShopTill">
+		<xs:annotation>
+			<xs:documentation>This class represents a shopTil.  TBD more detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="shopTillKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>UniqueID for the shopTill</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shopTillName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name for the shopTill</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shopTillType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of the shop Till</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SSBT" type="ret:SSBT"/>
+	<xs:complexType name="SSBT">
+		<xs:annotation>
+			<xs:documentation>This class represents a Self Service betting Terminal.  TBD more detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ret:GamingMachine"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FOBT" type="ret:FOBT"/>
+	<xs:complexType name="FOBT">
+		<xs:annotation>
+			<xs:documentation>This class rerpesents a Fixed Odds Betting Terminal.   TBD more detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ret:GamingMachine"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RetailShop" type="ret:RetailShop"/>
+	<xs:complexType name="RetailShop">
+		<xs:annotation>
+			<xs:documentation>THis class represents a Ladbrokes Retail Shop.  These shops are contained in a RAD which is a broader Geographic area and may be on course</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="shopNo" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for a particular Ladbrokes retail shop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shopName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name (if one exists) that the shop is known by - </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isOnCourse" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this shop 'onCourse'?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="openDate" type="xs:date"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Date that the shop was opened.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="closedDate" type="xs:date"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Date that the shop was opened.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="orgUnitId" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The Organisation Id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inUse" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is the shop in use?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="telephone" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The telephone extension of the shop</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="location" type="loc:Location" minOccurs="0"/>
+			<xs:element name="shopTill" type="ret:ShopTill" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gamingMachine" type="ret:GamingMachine" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="shopServer" type="ret:ShopServer" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="openingHours" type="ret:ShopOpeningHours" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ShopOpeningHours" type="ret:ShopOpeningHours"/>
+	<xs:complexType name="ShopOpeningHours">
+		<xs:sequence>
+			<xs:element name="weekdayOpeningTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="weekdayClosingTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="saturdayOpeningTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="saturdayClosingTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="sundayOpeningTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="sundayClosingTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="bankHolidayOpeningTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="bankHolidayClosingTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="todaysOpeningTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="todaysClosingTime" type="xs:dateTime"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TerminalTypeKind">
+		<xs:annotation>
+			<xs:documentation>Type of the terminal.
+
+ShopTill, SSBT, FBOT</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ShopTill">
+				<xs:annotation>
+					<xs:documentation>ShopTill</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SSBT">
+				<xs:annotation>
+					<xs:documentation>Self Service Betting Terminal
+
+CBAK</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FBOT">
+				<xs:annotation>
+					<xs:documentation>ShopTill</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

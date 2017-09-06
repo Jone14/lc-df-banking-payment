@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" xmlns:bprc="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0">
+	<xs:simpleType name="PriceStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Historical"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Price" type="Price"/>
+	<xs:complexType name="Price">
+		<xs:annotation>
+			<xs:documentation>A price 'value' object which can be used to represent a logical price, which can have up to 3 representations - Decimal, Fractional, American.
+
+A price does not necessarily need to be associated to a selection, this is why it is modelled on its own and as such can be reused where needed.
+
+e.g it can be used in a coupling strategy mapping as well</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for a price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceType"  type="PriceTypeKind">
+				<xs:annotation>
+					<xs:documentation>Type of a price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceStatus"  type="PriceStateKind">
+				<xs:annotation>
+					<xs:documentation>Status of a price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of a price - The 'to' date and time.  This will be set if this is not the most active record.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of a price - The 'from' date and time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceSource"  type="PriceSourceKind">
+				<xs:annotation>
+					<xs:documentation>Source of a price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="fractional" type="FractionalPrice"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="decimal" type="DecimalPrice"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="american" type="AmericanPrice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PriceTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Selection"/>
+			<xs:enumeration value="PriceCoupling"/>
+			<xs:enumeration value="Competitor"/>
+			<xs:enumeration value="Statistical"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="FractionalPrice" type="FractionalPrice"/>
+	<xs:complexType name="FractionalPrice">
+		<xs:annotation>
+			<xs:documentation>Fractional price details of a selection are maintained in this entity.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="numerator"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the numerator of the faction price, this is only used for capturing faction price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="denominator"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the denominator of the faction price, this is only used for capturing faction price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AmericanPrice" type="AmericanPrice"/>
+	<xs:complexType name="AmericanPrice">
+		<xs:annotation>
+			<xs:documentation>American price details of a selection are maintained in this entity.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="sign"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the sign whether it is positive or negative. this is only used for capturing faction price. Following are the possible values
++ : for positive
+-  : for negative</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies the numeric value of the American price,  has to be interpreted in conjunction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DecimalPrice" type="DecimalPrice"/>
+	<xs:complexType name="DecimalPrice">
+		<xs:annotation>
+			<xs:documentation>Decimal price details of a selection are maintained in this entity.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>value of the decimal price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PriceSourceKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Algorithm"/>
+			<xs:enumeration value="Manual"/>
+			<xs:enumeration value="System"/>
+			<xs:enumeration value="Lookup"/>
+			<xs:enumeration value="FeedProvider"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

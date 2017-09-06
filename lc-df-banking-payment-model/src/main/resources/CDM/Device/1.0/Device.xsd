@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/common/Device/1.0" xmlns:dev="http://cdm.ladbrokes.co.uk/common/Device/1.0" xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0" targetNamespace="http://cdm.ladbrokes.co.uk/common/Device/1.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:element name="Device" type="Device"/>
+	<xs:complexType name="Device">
+		<xs:sequence>
+			<xs:element name="familyName" type="xs:string"  minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>e.g. iPhone</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="identifier" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="isMobile" type="xs:boolean"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="isSpider" type="xs:boolean"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="nickname" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="operatingSystem" type="OperatingSystem" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="userAgent" type="UserAgent" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="location" type="loc:Location" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="connection" type="NetworkConnection" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NetworkConnection" type="NetworkConnection"/>
+	<xs:complexType name="NetworkConnection">
+		<xs:sequence>
+			<xs:element name="speed" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="protocol" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="OperatingSystem" type="OperatingSystem"/>
+	<xs:complexType name="OperatingSystem">
+		<xs:sequence>
+			<xs:element name="familyName" type="xs:string"  minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>e.g. iOS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="majorVersion" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="minorVersion" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="patchVersion" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserAgent" type="UserAgent"/>
+	<xs:complexType name="UserAgent">
+		<xs:sequence>
+			<xs:element name="familyName" type="xs:string"  minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>e.g. Mobile Safari</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="majorVersion" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="minorVersion" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="patchVersion" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:element name="ChannelGroup" type="ChannelGroup"/>
+	<xs:complexType name="ChannelGroup">
+		<xs:annotation>
+			<xs:documentation>Maintains details of the channel group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelGroupCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The code for the channel group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelGroupName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name for the channel group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The description of the channel group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is Active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ChannelSubgroup" type="ChannelSubgroup"/>
+	<xs:complexType name="ChannelSubgroup">
+		<xs:annotation>
+			<xs:documentation>Maintains details of the channel sub group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelSubgroupCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The subgroup code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelSubgroupName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The sub group name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is Active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Channel" type="Channel"/>
+	<xs:complexType name="Channel">
+		<xs:annotation>
+			<xs:documentation>Maintains details of channels used. All events and the hierarchies are published to downstream systems which are called channels.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for channel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Code of the channel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the channel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isSelected"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="parentChannelId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The parent channel id for nested channels</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="requiresCrossRef"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="hasCrossRef"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Whether this type has a cross reference associated to it?   This value is persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelType" type="ChannelType"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelKeys" type="xref:CrossRefEntityKeys"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelGroup" type="ChannelGroup"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelSubgroup" type="ChannelSubgroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CompositeChannel" type="CompositeChannel"/>
+	<xs:complexType name="CompositeChannel">
+		<xs:complexContent>
+			<xs:extension base="Channel">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="numberOfSubchannels"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>No of subchannels a composite channel have.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isParent"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Whether composite channel is parent or not.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="subchannel" type="Channel"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="ChannelTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Country"/>
+			<xs:enumeration value="Regional"/>
+			<xs:enumeration value="LineOfBusiness"/>
+			<xs:enumeration value="DownstreamSystem"/>
+			<xs:enumeration value="eCommerce"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ComponentChannel" type="ComponentChannel"/>
+	<xs:complexType name="ComponentChannel">
+		<xs:annotation>
+			<xs:documentation>Maintains details of sub channels which a channel can have or sub channels.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Channel">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="hasParent"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>whether component channel has a parent or not.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ChannelType" type="ChannelType"/>
+	<xs:complexType name="ChannelType">
+		<xs:annotation>
+			<xs:documentation>Maintains details of various channel types available.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the type of channel like TV, etc and will unique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channelTypeDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the description for the channel type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/Notification/2.0" xmlns:bin="http://cdm.ladbrokes.co.uk/common/BusinessInteraction/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:not="http://cdm.ladbrokes.co.uk/common/Notification/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/Notification/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BusinessInteraction/2.0" schemaLocation="../../BusinessInteraction/2.0/BusinessInteraction.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="ActionType" type="ActionType"/>
+	<xs:complexType name="ActionType">
+		<xs:annotation>
+			<xs:documentation>Contains type of notifiable action.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="type"  type="bin:BusinessInteractionSubtypeKind">
+				<xs:annotation>
+					<xs:documentation>type of notifiable action.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="other"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Other than the specified notifiable action type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContentParameter" type="ContentParameter"/>
+	<xs:complexType name="ContentParameter">
+		<xs:annotation>
+			<xs:documentation>Parameter of the notification content.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="parameterName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the parameter.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="parameterValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Value of the parameter.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeliveryOption" type="DeliveryOption"/>
+	<xs:complexType name="DeliveryOption">
+		<xs:annotation>
+			<xs:documentation>Contains the delivery option for the notification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the delivery option.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Value of the delivery option.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deliveryOptionType"  type="DeliveryOptionKind">
+				<xs:annotation>
+					<xs:documentation>Type of the delivery option.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="DeliveryOption" type="DeliveryOption"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FreeTextContent" type="FreeTextContent"/>
+	<xs:complexType name="FreeTextContent">
+		<xs:annotation>
+			<xs:documentation>Free text Content</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="content"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Free text content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MessageContent" type="MessageContent"/>
+	<xs:complexType name="MessageContent">
+		<xs:annotation>
+			<xs:documentation>Used where content management systems have message templates and name/value pairs for parameters</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="messageId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Message id of the notification content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="param" type="ContentParameter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NonTextContent" type="NonTextContent"/>
+	<xs:complexType name="NonTextContent">
+		<xs:annotation>
+			<xs:documentation>Non text content.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="content"  type="typ:BaseType">
+				<xs:annotation>
+					<xs:documentation>Non text content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NotifiableAction" type="NotifiableAction"/>
+	<xs:complexType name="NotifiableAction">
+		<xs:annotation>
+			<xs:documentation>A Notificaton Item may involve a 'Manageable Entity'.e.g. so if a Event, Market, Party, Business Interaction etc is related in some to an business event that requires notification, this can be the subject of a notification item through the 'relatedTo' association.
+
+The action relates to a 'Business Interaction' that has occured within ladbrokes business</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="entityType"  type="man:ManagedEntityTypeKind">
+				<xs:annotation>
+					<xs:documentation>Type of the managed entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="entityName"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="actionDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and Time of notifiable action.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="index"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="parentEntityKey"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventClass"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventType"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventSubtype"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="updatedPrice"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="entity" type="man:ManagedEntity"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="status" type="ActionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Notification" type="Notification"/>
+	<xs:complexType name="Notification">
+		<xs:annotation>
+			<xs:documentation>This is a notification component receives xml message over JMS. It does not reply to the client. It does not follow the ESB standard Request/ Response model. 
+
+
+A Notification that can be sent to multiple destinations, containing detail about an event (business/technical) that the party wishes to be notifiied about.
+
+A Notification has at least 1 item, which contains the 'business detail' about the notification (e.g. Event/Market changes). 
+
+Notification is a container for this detail, plus contains the delivery information for the whole notification (recipients etc)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="notificationKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for Notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="notificationType"  type="NotificationTypeKind">
+				<xs:annotation>
+					<xs:documentation>Type of Notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="notificationStatus"  type="NotificationStatusKind">
+				<xs:annotation>
+					<xs:documentation>Status of the Notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sentDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and Time when  notification sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and Time when error occured.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="itemCount"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of items.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="source"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Source of the notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deliveryFailureCount"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of times notification failed to deliver.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="importance"  type="ImportanceKind">
+				<xs:annotation>
+					<xs:documentation>Importance/Severity of the notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="summary"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Summary of the notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="recipient" type="NotificationRecipient"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="item" type="NotificationItem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NotificationContent" type="NotificationContent"/>
+	<xs:complexType name="NotificationContent">
+		<xs:annotation>
+			<xs:documentation>Content can be structure or unstructured.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="content"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Content of the notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="freeText" type="FreeTextContent"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="message" type="MessageContent"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="nonText" type="NonTextContent"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NotificationItem" type="NotificationItem"/>
+	<xs:complexType name="NotificationItem">
+		<xs:annotation>
+			<xs:documentation>Notification items are the actual 'business data' of the notification.  We may want to group notifiable actions/content into a single notification send.
+
+e.g. if a number of markets are changed (e.g. resulted), we can send each as an item but only have to send the notification once, improving performance and bandwidth.
+
+The Notifiable Actions relate to a managed
+
+A notification must at least have a single item and a single recipient.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="notificationItemKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the notification item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="itemSummary"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Summary of the notification item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="relatedTo" type="NotifiableAction"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="content" type="NotificationContent"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NotificationRecipient" type="NotificationRecipient"/>
+	<xs:complexType name="NotificationRecipient">
+		<xs:annotation>
+			<xs:documentation>A Notification can be sent to multiple recipients.  Each recipient will have specific delivery options required to deliver the notification</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="recipientKind"  type="NotificationRecipientKind">
+				<xs:annotation>
+					<xs:documentation>Recipient of the notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="deliveryOption" type="DeliveryOption"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NotificationFormatKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Email"/>
+			<xs:enumeration value="JmsQueue"/>
+			<xs:enumeration value="Webservice"/>
+			<xs:enumeration value="Pager"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeliveryOptionKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DeliveryMechanism"/>
+			<xs:enumeration value="DestinationEndpoint"/>
+			<xs:enumeration value="Timeout"/>
+			<xs:enumeration value="Format"/>
+			<xs:enumeration value="AcknowledgeDelivery"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImportanceKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="High"/>
+			<xs:enumeration value="Medium"/>
+			<xs:enumeration value="Low"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotificationRecipientKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TraderApplication"/>
+			<xs:enumeration value="Person"/>
+			<xs:enumeration value="System"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotificationStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Created"/>
+			<xs:enumeration value="Queued"/>
+			<xs:enumeration value="DeliveredToAllRecipients"/>
+			<xs:enumeration value="DeliveredToNoRecipients"/>
+			<xs:enumeration value="DeliveredToSomeRecipients"/>
+			<xs:enumeration value="InternalError"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotificationTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Business"/>
+			<xs:enumeration value="Technical"/>
+			<xs:enumeration value="Informational"/>
+			<xs:enumeration value="ProductionIssue"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

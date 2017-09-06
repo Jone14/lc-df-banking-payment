@@ -1,0 +1,1339 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://services.ladbrokes.co.uk/service/CommonMessage/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:cmnMsg="http://services.ladbrokes.co.uk/service/CommonMessage/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://services.ladbrokes.co.uk/service/CommonMessage/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:element name="FindRequest" type="FindRequest"/>
+	<xs:complexType abstract="true" name="FindRequest">
+		<xs:annotation>
+			<xs:documentation>Find &amp;ndash; The find operation gives the requester the opportunity to retrieve the identifiers for a number of master records from the store given the parameters of the search in the request message. This endpoint must have the following configuration:
+Pattern: Request-Reply
+Input Message: Find&lt;Noun&gt;Request
+Output Message: Find&lt;Noun&gt;Response
+	The key difference here is that only the key of matching records are returned, rather then full 		set of data as is the case with the &amp;lsquo;Search&amp;rsquo;.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="NameValuePair" type="NameValuePair"/>
+	<xs:complexType name="NameValuePair">
+		<xs:annotation>
+			<xs:documentation>Name / Value pair container</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="valueType"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Notify" type="Notify"/>
+	<xs:complexType abstract="true" name="Notify">
+		<xs:annotation>
+			<xs:documentation>Notify &amp;ndash; The notify operation enables the publishing service to let a set of consumers know that there has been an update to one or more master data records. The notify operation knows which consumers require notification either through metadata associated with a previous subscription or it has pre-knowledge [in-built]. This endpoint must have the following configuration:
+
+Pattern: Notification
+Output Message: Notify</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ProcessResponse" type="ProcessResponse"/>
+	<xs:complexType abstract="true" name="ProcessResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PublishRequest" type="PublishRequest"/>
+	<xs:complexType abstract="true" name="PublishRequest">
+		<xs:annotation>
+			<xs:documentation>Publish &amp;ndash; The publish operation allows the service to push full master data records to a number of consumers, this may include either bulk data transfer or real-time synchronisation. This endpoint must have the following configuration:
+
+Pattern: Solicit-Response
+Input Message: Publish&lt;Noun&gt;Request
+Output Message: Publish&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="sequenceId"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>A sequence Id to be used for tracking and order management of publish requests</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="messageId"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>A unique Id to be used for tracking and order management of publish requests</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ServiceWarning" type="ServiceWarning"/>
+	<xs:complexType name="ServiceWarning">
+		<xs:annotation>
+			<xs:documentation>This class represents a single Service Warning, which indicates to the consumer (composer) that a 'non-critical' issue has occurred during service execution/composition which may indicate the described post-condition does not completely hold; however the issue is not critical enough that the resulting post condition cannot not be worked with, at the discretion of the consumer.
+
+An example may be as part of a service composition (Customer.getCustomer - composing numerous entity services to create a 'view'), one underlying service errors (e.g. CustomerMessages.getMessages), but is deemed not critical.  Such an error from this (CustomerMessage) service would be transformed into a ServiceWarning by the composing service (Customer).  All other services completed fine, and the resulting response can be worked with by the consumer.  
+  
+Service Warnings will be explicitly detailed in the services contract document, and the possible scenarios to attempt to achieve the capability by other means (e.g. direct service invocation of the service that was composed that caused the warning), if the consumer chooses to do so.
+
+This will be present when the serviceStatus='Warning' and there can be 1..* of these.  
+
+Generally, either a ServiceError or the collection of ServiceWarnings will be present - it is possible for both these to be present, in such a case serviceStatus='Failure' given there is a single service error which takes precedence and means the service completely failed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="componentError"  type="ServiceError">
+				<xs:annotation>
+					<xs:documentation>The original serviceError correlating to this serviceWarning, if applicable.  Not all Warnings will be created as a result of a ServiceError.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="correlationId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - Correlation field for future use (note: ServiceError will contain this if present)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The operation of the service that generated this ServiceWarning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="otherInfo"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Placeholder value for free text.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The service that generated this ServiceWarning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="warningCategory"  type="WarningCategoryKind">
+				<xs:annotation>
+					<xs:documentation>The category of service warning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="warningCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A unique code for the warning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="warningDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time the warning was generated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="warningDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A description of the warning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="validationDetail"  type="ValidationDetail">
+				<xs:annotation>
+					<xs:documentation>This will be present if the WarningCategory is 'ValidationWarning', with details of the individual validation instances.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceWarnings" type="ServiceWarnings"/>
+	<xs:complexType name="ServiceWarnings">
+		<xs:annotation>
+			<xs:documentation>This class represents a collection of Service Warnings returned by the invocation of a Service operation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="numWarnings"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The number of warnings in the collection. Will be &gt;=1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="serviceWarning" type="ServiceWarning"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SubscribeRequest" type="SubscribeRequest"/>
+	<xs:complexType abstract="true" name="SubscribeRequest">
+		<xs:annotation>
+			<xs:documentation>Subscribe &amp;ndash; The subscribe operation provides a means from which an interested party, i.e. one that needs to consume master data records, can register that interest. The distribution of data will occur at some later time based on either an internally generated trigger, as would be the case for real-time delta synchronisation or as a result of an external trigger. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Subscribe&lt;Noun&gt;Request
+Output Message: Subscribe&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SubscribeResponse" type="SubscribeResponse"/>
+	<xs:complexType abstract="true" name="SubscribeResponse">
+		<xs:annotation>
+			<xs:documentation>Subscribe &amp;ndash; The subscribe operation provides a means from which an interested party, i.e. one that needs to consume master data records, can register that interest. The distribution of data will occur at some later time based on either an internally generated trigger, as would be the case for real-time delta synchronisation or as a result of an external trigger. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Subscribe&lt;Noun&gt;Request
+Output Message: Subscribe&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SyncRequest" type="SyncRequest"/>
+	<xs:complexType abstract="true" name="SyncRequest">
+		<xs:annotation>
+			<xs:documentation>Sync &amp;ndash; The sync operation provides a means for an enterprise services to take part in a real-time synchronisation of data from a publisher. The data being supplied may be full records or deltas depending on the needs of the collaboration, however with each record metadata should be included indicating the action to take, i.e. the reason for the delta on the publishing store, the consumer should then take the appropriate action. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Sync&lt;Noun&gt;Request
+Output Message: Sync&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Property" type="Property"/>
+	<xs:complexType name="Property">
+		<xs:annotation>
+			<xs:documentation>Property represents a container for name value pairs to be used to convey more detail around the error if appropriate.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of a name/value pair</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="value"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value of a name/value pair</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="valueType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The type of the value for the name value pair</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetRequest" type="SetRequest"/>
+	<xs:complexType abstract="true" name="SetRequest">
+		<xs:annotation>
+			<xs:documentation>Set &amp;ndash; The set operation like the get deals with multiple resources at a time and encapsulates the capability of both an update and create. It accepts a representation of the resources as input, generally the representation of each must be the same within the set to  gain some ease of use. If the individual resource does not exist then it is created, if however, the resource exists then it must be modified with the new version1
+
+Pattern: Request-Reply
+Input Message: Set&lt;Nouns&gt;Request
+Output Message: Set&lt;Nouns&gt;Response
+-------------------------
+1 This places certain requirements on the definition of the resource in that it must have an &amp;lsquo;KEY&amp;rsquo;, this must be a business identifier rather than an artificial surrogate key as exposing surrogates other than at the document level is not considered best practice.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SearchRequest" type="SearchRequest"/>
+	<xs:complexType abstract="true" name="SearchRequest">
+		<xs:annotation>
+			<xs:documentation>A second level, abstract request class specific to operations that are a 'search', which could potentially return an unbounded array of entities that match the search.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="key"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Key to begin searching from.  This would be blank for an initial search on the first call, however if there were more results to search from (response.more=true), the key in the response would become the key in the subsequent request.  It essentially says begin the search from this key (note assumed natural ordering or result set say a search by date) within the result set.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="howMany"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Defines how many entities to return from an unbounded search.  Each search service will have a defined 'max' to throttle a client and restrict a denial of service attack and excess bandwidth consumption.  A consumer could also request less then the max.  </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="includeHistorical"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean to indicate if historical information should be returned.  e.g. searchSelections could return a number of selections,  of which they have a price.  This boolean would control if all the price history was returned, or just the current.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="condition"  type="ConditionKind">
+						<xs:annotation>
+							<xs:documentation>Condition to apply between supplied search parameters (e.g.. x AND y)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="dataFilters"  type="DataFilters">
+						<xs:annotation>
+							<xs:documentation>A Set of custom data filters used to control the segmets of data to return.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="DeleteKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Soft"/>
+			<xs:enumeration value="Hard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceErrorKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration represents the different types of service error that can occur.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Business">
+				<xs:annotation>
+					<xs:documentation>A Business Error is one where the semantics of the business process fail due to the violation of business rules governing the process/logic.  Examples would be 'Account is Suspended' Error</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Technical">
+				<xs:annotation>
+					<xs:documentation>A Technical Error is one where some technical element of the provisioning of service logic fails.  Examples could be timeouts, invalid requests.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration rerpesenting the possible status values</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success"/>
+			<xs:enumeration value="Failure"/>
+			<xs:enumeration value="Warning"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success"/>
+			<xs:enumeration value="Failure"/>
+			<xs:enumeration value="Warning"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ApplyRequest" type="ApplyRequest"/>
+	<xs:complexType abstract="true" name="ApplyRequest">
+		<xs:annotation>
+			<xs:documentation>Apply &amp;ndash; The apply operation takes a business document and applies a set of rules and/or policies to it. The rules for processing against the document may be held by the enterprise service where the Apply interface has been associated or they may be injected, either by value or by reference. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Apply&lt;Noun&gt;Request
+Output Message: Apply&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ApplyResponse" type="ApplyResponse"/>
+	<xs:complexType abstract="true" name="ApplyResponse">
+		<xs:annotation>
+			<xs:documentation>Apply &amp;ndash; The apply operation takes a business document and applies a set of rules and/or policies to it. The rules for processing against the document may be held by the enterprise service where the Apply interface has been associated or they may be injected, either by value or by reference. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Apply&lt;Noun&gt;Request
+Output Message: Apply&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="BusinessEvent" type="BusinessEvent"/>
+	<xs:complexType name="BusinessEvent">
+		<xs:annotation>
+			<xs:documentation>TBD - Encapsulates a generic business event</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="name"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="code"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="dateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="trigger"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Business Process (or otherwise) that triggered the BusinessEvent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="type"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="subType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="context"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD - Context Info like Payload etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="contextFormat"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>e.g. XML and JSON</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priority"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel"  type="chn:Channel">
+				<xs:annotation>
+					<xs:documentation>The channel the event came from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ControlParams" type="ControlParams"/>
+	<xs:complexType name="ControlParams">
+		<xs:annotation>
+			<xs:documentation>A container for generic operation control parameters represented as name/Value pairs.  These need definition in a Service Contract if used.
+
+An example is the 'Retry Count' used for retry scenarios, or a 'Sports Specific' queue name for Mercury.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="nameValuePair" type="NameValuePair"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DataFilter" type="DataFilter"/>
+	<xs:complexType name="DataFilter">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="filterName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the filter (service spec should define the allowable list)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="filterValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value of the filter variable (service spec should define the allowable list)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DataFilters" type="DataFilters"/>
+	<xs:complexType name="DataFilters">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="dataFilter" type="DataFilter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExtractRequest" type="ExtractRequest"/>
+	<xs:complexType abstract="true" name="ExtractRequest">
+		<xs:annotation>
+			<xs:documentation>Extract &amp;ndash; The extract operation allows a service requester to get from the parent service the set of records matching the criteria it supplied, the operation then returns the set of records to the requester, i.e. the full master record rather than the set of identifiers, as is the case in a Find operation. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Extract&lt;Noun&gt;Request
+Output Message: Extract&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ExtractResponse" type="ExtractResponse"/>
+	<xs:complexType abstract="true" name="ExtractResponse">
+		<xs:annotation>
+			<xs:documentation>Extract &amp;ndash; The extract operation allows a service requester to get from the parent service the set of records matching the criteria it supplied, the operation then returns the set of records to the requester, i.e. the full master record rather than the set of identifiers, as is the case in a Find operation. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Extract&lt;Noun&gt;Request
+Output Message: Extract&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoadRequest" type="LoadRequest"/>
+	<xs:complexType abstract="true" name="LoadRequest">
+		<xs:annotation>
+			<xs:documentation>Load &amp;ndash; The load operation provides a means for an enterprise service to receive a large, bulk update of master data records from a publisher as might be the case on an initial or nightly upload. The load operation will create a new record, update an existing one or delete the record from the store if it does not appear in the load data. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Load&lt;Noun&gt;Request
+Output Message: Load&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoadResponse" type="LoadResponse"/>
+	<xs:complexType abstract="true" name="LoadResponse">
+		<xs:annotation>
+			<xs:documentation>Load &amp;ndash; The load operation provides a means for an enterprise service to receive a large, bulk update of master data records from a publisher as might be the case on an initial or nightly upload. The load operation will create a new record, update an existing one or delete the record from the store if it does not appear in the load data. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Load&lt;Noun&gt;Request
+Output Message: Load&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SearchResponse" type="SearchResponse"/>
+	<xs:complexType abstract="true" name="SearchResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="key"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The key of the NEXT entity in the result set to begin from.  This would be blank if the result set contains all matching entities (no subsequent call needed).  It is equivalent to the key of the entity one AFTER the last entity returned from the previous result set.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="howMany"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The number of records actually returned.  May or may not be the same as those asked for.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="moreRecords"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Indicates if more records exist in the result set to process.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SecurityDetail" type="SecurityDetail"/>
+	<xs:complexType name="SecurityDetail">
+		<xs:annotation>
+			<xs:documentation>Security detail where required.  Note:  Plaintext Id/Pwd to be used with caution and only within trusted domain.  Certificates and asymetric keys are preferred, however this class provides provision for scenarios where this may be ok.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="authenticationId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The id to be used as part of authentication</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="authenticationPassword"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>the password to be used as part of authentication</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="token"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>the token to be used as part of authentication.  This will be base 64 encoded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="tokenType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The type of the token</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceAcknowledgement" type="ServiceAcknowledgement"/>
+	<xs:complexType name="ServiceAcknowledgement">
+		<xs:annotation>
+			<xs:documentation>This enables a 'Functional Acknowledgment' to be returned by a service operation that may implement an async (or partly async)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="ackCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>A specific acknowledgement code for the operation - this should be defined in the service contract.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ackDescription"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>An accompanying description</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ServiceDetail" type="ServiceDetail"/>
+	<xs:complexType name="ServiceDetail">
+		<xs:annotation>
+			<xs:documentation>A class encapsulating the details of the Enterprise Service being invoked by the client detailed in 'ClientDetail'.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the service being invoked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The identifier of the service being invoked.  This will be the unique identifier as defined in the catalogue</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceVersion"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version of the service being invoked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the operation being invoked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The identifier of the operation being invoked.  This will be the unique identifier as defined in the catalogue</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationVersion"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version of the service being invoked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="requestDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The timestamp of the when the request was sent by the client/consumer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="expiryDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The time-to-live for the request if required.  Will expire on this time if not processed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="busScenario"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The business scenario that has triggered in operation invocation  .e.g. Bet Placement - BIR Check</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceHeader" type="ServiceHeader"/>
+	<xs:complexType name="ServiceHeader">
+		<xs:annotation>
+			<xs:documentation>The Service header class containing all the meta data related to the Service Invocation.  This includes:
+
+ClientDetail:  The Client or Service invoking a provider service.
+ServiceDetail:  The target service/operation for invocation
+SecurityDetail: Any security detail required for the service invocation
+ControlParams:  A generic container for inputs to control the invocation logic
+Channel:  The channel that the request was received form.
+
+A header is MANDATORY for every enterprise service request.  Not all elements/attributes are required.
+
+Such details ensure every message across the service layer can be properly audited/traced, and facilitates error management and non-repudiation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="clientDetail" type="ClientDetail"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="securityDetail" type="SecurityDetail"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceDetail" type="ServiceDetail"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="controlParams" type="ControlParams"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceRequest" type="ServiceRequest"/>
+	<xs:complexType abstract="true" name="ServiceRequest">
+		<xs:annotation>
+			<xs:documentation>This abstract class represents a generic parent from which all enterprise service requests inherit from. This enables each request to have a consistent amount and format of data and enables rapid creation of new requests and insulates children in the model from changes at this level.  A new request simply inherits from this class.  Further specialisations can be created as has been done with trading.
+
+A Service Request MUST have a ServiceHeader element, with the appropriate details filled in.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="header" type="ServiceHeader"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceResponse" type="ServiceResponse"/>
+	<xs:complexType abstract="true" name="ServiceResponse">
+		<xs:annotation>
+			<xs:documentation>This abstract class represents a generic parent from which all enterprise service responses inherit from. This enables each response to have a consistent amount and format of data and enables rapid creation of new responses and insulates children in the model from changes at this level.  A new response simply inherits from this class.  Further specialisations can be created as has been done with trading.
+
+A Service Request MAY have a ServiceError element, with the appropriate details filled in, in the advent of an error.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceStatus"  type="ServiceStatusKind">
+				<xs:annotation>
+					<xs:documentation>The resulting status of the service operation invocation.  This can be one of three values:
+
+'Success' - The unit of work, represented by the operation invoked, was fully completed as per the contractual agreement.  The documented post-condition holds.
+
+'Warning' - Some elements of the unit of work completed successfully, others may not have, or may not have satisfied some part of the contract.  
+
+Warnings require explicit documentation in the Service Contract as to what warnings are possible and how to react and are specific for each operation.  e.g. 'Bet Validation' failure from Openbet of one of a number of bets in a betSlip
+
+'Error' - The unit of work, represented by the operation invoked, could not fulfil its contractual obligation and returned the state of the systems to the pre-condition.
+
+Depending on the definition of the operation, and the resulting 'action' in the 'Service Error', it may be retryable.  An Error state WILL ALWAYS result in 'ServiceError' entity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="clientTransactionId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The unique transaction id, that was supplied in the original request by the client and can be used for correlation/tracking if required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="responseDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time that the response was generated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="controlParams"  type="ControlParams">
+				<xs:annotation>
+					<xs:documentation>Control parameters used as a flexible way to respond with specific control values (e.g. retry variables).  If these are returned by a service, the API documentation MUST define these explicitly.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceError" type="ServiceError"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceWarnings" type="ServiceWarnings"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceError" type="ServiceError"/>
+	<xs:complexType name="ServiceError">
+		<xs:annotation>
+			<xs:documentation>The ServiceError class represents an error that has occurred as the result of the failed execution of a services operation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The short name of the error.  e.g. InsufficientFunds</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The fully qualified error code for the error returned.  This must be the unique namespace, relative to the service  
+
+e.g.
+
+http://ladbrokes.com/service/betting/acceptance/BetPlacement/1.0/Errors/InsufficientFunds</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorType"  type="ServiceErrorKind">
+				<xs:annotation>
+					<xs:documentation>The type of the error, 'Business' or 'Technical'.
+
+A 'Business Error'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time that the error was generated by the application / service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A description of the error.  For a business error, this shall NOT be a system specific description - rather one that is agnostic and represents a business scenario that has been violated. Technical errors may have technical descriptions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorSeverity"  type="ErrorSeverityKind">
+				<xs:annotation>
+					<xs:documentation>The severity of the error - Fatal, Error, Warning, Info.  The level can determine actions for services to take (e.g. Notification)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="service"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The short name of the service responsible for generating the error e.g. Bet Placement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceVersion"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version of the service responsible for generating the error e.g. 1.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The fully qualified unique identifier of the service responsible for generating the error e.g. 
+
+http://ladbrokes.com/service/betting/acceptance/Bet Placement/1.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operation"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The operation responsible for generating the error e.g. createEvent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationVersion"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version of the operation responsible for generating the error e.g. 1.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The fully qualified unique identifier of the operation responsible for generating the error e.g. 
+
+http://ladbrokes.com/service/betting/acceptance/Bet Placement/1.0/checkBetslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="component"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The backend component responsible for generating the error if known (e.g. Business Events, Service Grid, Central Data Store, OpenBet, SportsDB).  Such detail should not be exposed to public consumers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="errorTransactionId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The unique clientTransactionId if one is attached to the original request flow, or it may also be generated if NOT present for error analysis. 
+
+Will enable the Error Handler service to better correlate the error to the original request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="action"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A defined action to be taken as a result of this error.  These will be specific and defined in the service contract for the operation.
+
+e.g. RETRY</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="stackTrace"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Stack trace of the failed component, if it is available.  
+
+Note:  This MUST be part of the payload that goes to the 'Error Handler' service if it is available, however MUST NOT be sent to the consumer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="Property"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StatusRecord" type="StatusRecord"/>
+	<xs:complexType name="StatusRecord">
+		<xs:annotation>
+			<xs:documentation>Status record of a 'step' within the processing of an operation performs a number of steps on the same list of entities.
+
+e.g. createEvents(ArrayOfEvent)
+
+A status record is needed for each event that is attempted to be created.  
+
+This StatusRecord class contains the details of an attempt to process one of entities in the collection.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="entityKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique key for the entity that the status record relates to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="parentEntityKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique key for the parent entity that the status record relates to.  This can be needed in an example such as 'createMarkets' where a list of markets are created, however it is required under some circumstances to indicate the parent entity that contains this entity of interest.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="message"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A message related to the status of the processing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="status"  type="RecordStatusKind">
+				<xs:annotation>
+					<xs:documentation>The status of the processing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceError" type="ServiceError"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateRequest" type="UpdateRequest"/>
+	<xs:complexType abstract="true" name="UpdateRequest">
+		<xs:annotation>
+			<xs:documentation>A second level, abstract request class specific to operations that are an update</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="responseRequired"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean indicating if a response is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="notificationRequired"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean indicating if a notification is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="UpdateResponse" type="UpdateResponse"/>
+	<xs:complexType abstract="true" name="UpdateResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="completedDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>The date time that the update completed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="UserDetail" type="UserDetail"/>
+	<xs:complexType name="UserDetail">
+		<xs:annotation>
+			<xs:documentation>Details of a user if an action initiated the service call.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="userId"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="userName"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="userRole"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="userPassword"  type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WrapperServiceResponse" type="WrapperServiceResponse"/>
+	<xs:complexType name="WrapperServiceResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="ErrorSeverityKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Fatal">
+				<xs:annotation>
+					<xs:documentation>A fatal error has occured which indicates enterprise wide service issues (e.g. OutOfMemory)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Error">
+				<xs:annotation>
+					<xs:documentation>A Business or Technical error that may or may not be recovrable/ retryable</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Warning">
+				<xs:annotation>
+					<xs:documentation>Some elements of the processing were successful, while others may not have (or is unknown) but could be handled gracefully or is not considered critical.  
+
+A Service contract shall detail all such 'Warning' type scenarios and how to respond. </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Info">
+				<xs:annotation>
+					<xs:documentation>For information only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventClassIdentifierKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Football"/>
+			<xs:enumeration value="Tennis"/>
+			<xs:enumeration value="Volleyball"/>
+			<xs:enumeration value="IceHockey"/>
+			<xs:enumeration value="Basketball"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConditionKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="And"/>
+			<xs:enumeration value="Or"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PublishResponse" type="PublishResponse"/>
+	<xs:complexType abstract="true" name="PublishResponse">
+		<xs:annotation>
+			<xs:documentation>Publish &amp;ndash; The publish operation allows the service to push full master data records to a number of consumers, this may include either bulk data transfer or real-time synchronisation. This endpoint must have the following configuration:
+
+Pattern: Solicit-Response
+Input Message: Publish&lt;Noun&gt;Request
+Output Message: Publish&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RequestRequest" type="RequestRequest"/>
+	<xs:complexType abstract="true" name="RequestRequest">
+		<xs:annotation>
+			<xs:documentation>Request &amp;ndash; The request operation on this interface allows a service to get the set of data records that match the search criteria given. Therefore this operation is the counterpart to the Publish interface&amp;rsquo;s Extract. This endpoint must have the following configuration:
+    
+    Pattern: Solicit-Response
+    Input Message: Request&lt;Noun&gt;Request
+    Output Message: Request&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RequestResponse" type="RequestResponse"/>
+	<xs:complexType abstract="true" name="RequestResponse">
+		<xs:annotation>
+			<xs:documentation>Request &amp;ndash; The request operation on this interface allows a service to get the set of data records that match the search criteria given. Therefore this operation is the counterpart to the Publish interface&amp;rsquo;s Extract. This endpoint must have the following configuration:
+    
+    Pattern: Solicit-Response
+    Input Message: Request&lt;Noun&gt;Request
+    Output Message: Request&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Payload" type="Payload"/>
+	<xs:complexType name="Payload">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="message"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>This is the Message body payload, without the headers which should have already been extracted into the requestHeader and responseHeader elements</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidationDetail" type="ValidationDetail"/>
+	<xs:complexType name="ValidationDetail">
+		<xs:annotation>
+			<xs:documentation>This class represents any validation warning detail encountered by a service, as represented by its single ServiceWarning (for WarningCategoryKind = 'ValidationWarning')
+
+There can be 1..* of these, depending on the number of individual validation failures, will only be present in a when WarningCategoryKind = 'ValidationWarning')</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="entity"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The entity that failed validation if known.  Could be an attribute or a more complex rule?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="code"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A code if defined to identify the warning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="description"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A description of the validation warning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SyncResponse" type="SyncResponse"/>
+	<xs:complexType abstract="true" name="SyncResponse">
+		<xs:annotation>
+			<xs:documentation>Sync &amp;ndash; The sync operation provides a means for an enterprise services to take part in a real-time synchronisation of data from a publisher. The data being supplied may be full records or deltas depending on the needs of the collaboration, however with each record metadata should be included indicating the action to take, i.e. the reason for the delta on the publishing store, the consumer should then take the appropriate action. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Sync&lt;Noun&gt;Request
+Output Message: Sync&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TriggerRequest" type="TriggerRequest"/>
+	<xs:complexType abstract="true" name="TriggerRequest">
+		<xs:annotation>
+			<xs:documentation>Trigger &amp;ndash; The trigger operation provides a capability for an external service [requester] to initiate the publication of master data records to one or more interested parties. The trigger is expected to contain metadata specifying the type of publication, i.e. either bulk or transactional and may also contain the endpoint references for the consuming services. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Trigger&lt;Noun&gt;Request
+Output Message: Trigger&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TriggerResponse" type="TriggerResponse"/>
+	<xs:complexType abstract="true" name="TriggerResponse">
+		<xs:annotation>
+			<xs:documentation>Trigger &amp;ndash; The trigger operation provides a capability for an external service [requester] to initiate the publication of master data records to one or more interested parties. The trigger is expected to contain metadata specifying the type of publication, i.e. either bulk or transactional and may also contain the endpoint references for the consuming services. This endpoint must have the following configuration:
+
+Pattern: Request-Reply
+Input Message: Trigger&lt;Noun&gt;Request
+Output Message: Trigger&lt;Noun&gt;Response</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SetResponse" type="SetResponse"/>
+	<xs:complexType abstract="true" name="SetResponse">
+		<xs:annotation>
+			<xs:documentation>Set &amp;ndash; The set operation like the get deals with multiple resources at a time and encapsulates the capability of both an update and create. It accepts a representation of the resources as input, generally the representation of each must be the same within the set to  gain some ease of use. If the individual resource does not exist then it is created, if however, the resource exists then it must be modified with the new version1
+
+Pattern: Request-Reply
+Input Message: Set&lt;Nouns&gt;Request
+Output Message: Set&lt;Nouns&gt;Response-------------------------
+1 This places certain requirements on the definition of the resource in that it must have an &amp;lsquo;KEY&amp;rsquo;, this must be a business identifier rather than an artificial surrogate key as exposing surrogates other than at the document level is not considered best practice.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ArrayOfEnumValues" type="ArrayOfEnumValues"/>
+	<xs:complexType name="ArrayOfEnumValues">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="EnumValue" type="EnumValue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EnumValue" type="EnumValue"/>
+	<xs:complexType name="EnumValue">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="ArrayOfStatusRecord" type="ArrayOfStatusRecord"/>
+	<xs:complexType name="ArrayOfStatusRecord">
+		<xs:annotation>
+			<xs:documentation>Container class used when an operation performs the same function to a list of entities.
+
+e.g. createEvents(ArrayOfEvent)
+
+A status record is needed for each event that is attempted to be created.  This class is the containing class.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="statusRecord" type="StatusRecord"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ClientDetail" type="ClientDetail"/>
+	<xs:complexType name="ClientDetail">
+		<xs:annotation>
+			<xs:documentation>This class encapsualtes details about the client/consumer of the service detailed in 'Service Detail'.  
+
+This could be an Application (systemId, subsystemId), or an Enterprise Service (serviceIdentifier, operationIdentifier)
+
+clientTransactionId is universally used as a 'correlationId' for auditing and non-repudiation of service calls.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="systemId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The system/application id of the consumer invoking the service.  This is in the instance of external application (non Enterprise Services, which would use serviceIdentifier and operationIdentifier instead).
+
+Examples include:
+
+- shopId representing the shopId where a FBOT resides.
+- Trader Application
+- BusinessEvents</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="subsystemId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The sub system/application id of the consumer invoking the service.  Examples include:
+
+- fbotId representing the a FBOT machine within a shop.
+- RD (results Derivation) component within BE</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="serviceIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The service acting as 'consumer' in a service composition, invoking the endpoint in 'Service Detail'
+
+This should be the NAMESPACE of the service
+
+e.g. http://ladbrokes.com/service/betting/fulfilment/Betslip Payout/1.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="operationIdentifier"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The service OPERATION acting as initiating the message exchange in a service composition, invoking the endpoint (and Operation) in 'Service Detail'.
+
+This should be the NAMESPACE of the service and the operation
+
+e.g. http://ladbrokes.com/service/betting/fulfilment/Betslip Payout/1.0/submitBetslipPayout</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="clientTransactionId"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The unique identifier supplied by the client/consumer application.  This enables correlation of request to reply in asynchronous message exchanges and enables auditing and non-repudiation of a service call through its lifecycle.
+
+This MUST be passed if JMS transport is used of the consumer exposes a callback service whereby correlation of request to response is required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="userDetails" type="UserDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateRequest" type="CreateRequest"/>
+	<xs:complexType abstract="true" name="CreateRequest">
+		<xs:annotation>
+			<xs:documentation>A second level, abstract request class specific to operations that are a create</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="responseRequired"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean indicating if a response is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="notificationRequired"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean indicating if a notification is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CreateResponse" type="CreateResponse"/>
+	<xs:complexType abstract="true" name="CreateResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DeleteRequest" type="DeleteRequest"/>
+	<xs:complexType abstract="true" name="DeleteRequest">
+		<xs:annotation>
+			<xs:documentation>A second level, abstract request class specific to operations that are a delete</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="responseRequired"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean indicating if a response is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="notificationRequired"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean indicating if a notification is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DeleteResponse" type="DeleteResponse"/>
+	<xs:complexType abstract="true" name="DeleteResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteType"  type="DeleteKind">
+						<xs:annotation>
+							<xs:documentation>The type of the delete - Soft of Hard</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetRequest" type="GetRequest"/>
+	<xs:complexType abstract="true" name="GetRequest">
+		<xs:annotation>
+			<xs:documentation>A second level, abstract request class specific to operations that are a 'get by key'.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="includeHistorical"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Boolean to indicate where any historical data is required as part of the response. This can save processing time of only the latest snapshot of current data is required.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="dataFilters"  type="DataFilters"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetResponse" type="GetResponse"/>
+	<xs:complexType abstract="true" name="GetResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ProcessRequest" type="ProcessRequest"/>
+	<xs:complexType abstract="true" name="ProcessRequest">
+		<xs:annotation>
+			<xs:documentation>A second level, abstract request class specific to operations that are a long running process.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="maxProcessTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="dataFilters"  type="DataFilters"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SearchEventRequest" type="SearchEventRequest"/>
+	<xs:complexType name="SearchEventRequest">
+		<xs:complexContent>
+			<xs:extension base="SearchRequest">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="WarningCategoryKind">
+		<xs:annotation>
+			<xs:documentation>This enumeration represents the categories of ServiceWarnings that can occur.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ComponentServiceFailure">
+				<xs:annotation>
+					<xs:documentation>As part of service composition, a call to a composed service failed, however this is not critical to the post condition of the composing service.
+
+In such a case, a ServiceError from the composed Service is converted to a ServiceWarning by the composing service and added to the collection</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ValidationWarning">
+				<xs:annotation>
+					<xs:documentation>element (name/xpath) is not present or is not in the expected format.  In some instances, they may be critical, and thus a ServiceError generated.  Some instances this may not be critical, and be created as a ServiceWarning</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="InvalidDataFilterProfileWarning">
+				<xs:annotation>
+					<xs:documentation>The combination of dataFilters you provide is not valid, therefore not all of them were actioned. A Warning message may be:
+
+'The following dataFilters were ignored :  xxx, xxx'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GenericWarning">
+				<xs:annotation>
+					<xs:documentation>A Generic Warning category.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ActionRequest" type="ActionRequest"/>
+	<xs:complexType abstract="true" name="ActionRequest">
+		<xs:complexContent>
+			<xs:extension base="ServiceRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="dataFilters"  type="DataFilters"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ActionResponse" type="ActionResponse"/>
+	<xs:complexType abstract="true" name="ActionResponse">
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FindResponse" type="FindResponse"/>
+	<xs:complexType abstract="true" name="FindResponse">
+		<xs:annotation>
+			<xs:documentation>Find &amp;ndash; The find operation gives the requester the opportunity to retrieve the identifiers for a number of master records from the store given the parameters of the search in the request message. This endpoint must have the following configuration:
+Pattern: Request-Reply
+Input Message: Find&lt;Noun&gt;Request
+Output Message: Find&lt;Noun&gt;Response
+	The key difference here is that only the key of matching records are returned, rather then full 		set of data as is the case with the &amp;lsquo;Search&amp;rsquo;.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ServiceResponse">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

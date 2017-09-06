@@ -1,0 +1,2542 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0" xmlns:bts="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:aff="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0" xmlns:sel="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" xmlns:wal="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0" xmlns:ret="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0" xmlns:imy="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" xmlns:sbk="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:bprc="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:evt="http://cdm.ladbrokes.co.uk/trading/Event/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BasePrice/2.0" schemaLocation="../../BasePrice/2.0/BasePrice.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" schemaLocation="../../Sportsbook/2.0/Sportsbook.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/InternationalMoney/2.0" schemaLocation="../../InternationalMoney/2.0/InternationalMoney.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0" schemaLocation="../../RetailShop/2.0/RetailShop.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0" schemaLocation="../../Wallet/2.0/Wallet.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" schemaLocation="../../Customer/2.0/Customer.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" schemaLocation="../../Selection/2.0/Selection.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0" schemaLocation="../../Affiliate/2.0/Affiliate.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" schemaLocation="../../Promotions/2.0/Promotions.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="BetLineSummary" type="BetLineSummary"/>
+	<xs:complexType name="BetLineSummary">
+		<xs:annotation>
+			<xs:documentation>This class contains line summary information as a result of settlement</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numLegs" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of legs in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numVoidLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of void lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numWinLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of winning lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numLoseLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of loosing lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetStatus" type="BetStatus"/>
+	<xs:complexType name="BetStatus">
+		<xs:annotation>
+			<xs:documentation>A class the represents the logical state of a Bet.  The lifecycle of a bet is such that it is 'in transit' (i.e. not persisted) during some processes (e.g. BIR, OBAC), and finally persisted when accepted.
+
+Of the enumerated states, the upper case are 'transient' processing states, the lower cases are the permanent states.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time that this status became invalid.  Once not valid, it should never go back to valid - rather, a new state is created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time that this status became valid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this the active record?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acceptanceStatus" type="BetAcceptanceStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>An enumeration of 'acceptance' status.  After a Bet is accepted, it will be persisted and then can change state based on other external events not controlled by the Customer (e.g. Cancelled - If the selection withdraws?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fulfilmentStatus" type="BetFulfilmentStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>An enumeration of 'fulfilment' status.  After a Bet is accepted, it will be persisted and then can change state based on other external events not controlled by the Customer (e.g. Cancelled - If the selection withdraws?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betFailure" type="BetFailure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="otherInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - Placeholder for extra info if required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipSource" type="BetslipSource"/>
+	<xs:complexType name="BetslipSource">
+		<xs:annotation>
+			<xs:documentation>This class encapsulates details about the source of the Betslip.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ipAddress" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The IP address of the computer/device where the bet is placed. This will be applicable for online bets only, not retail.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="country" type="cty:Country" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="channel" type="chn:Channel" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BetFulfilmentStatusKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration of 'fulfilment' status.  After a Bet is accepted, it will be persisted and then can change state based on other external events not controlled by the Customer (e.g. Cancelled - If the selection withdraws?)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Bet is Suspended.  This should be transformed to an 'S' for OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cancelled">
+				<xs:annotation>
+					<xs:documentation>Bet is Cancelled.  This should be transformed to an 'X' for OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Expired">
+				<xs:annotation>
+					<xs:documentation>Bet is Expired.  This should be transformed to an 'Expired' for OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Other placeholder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetslipFormat" type="BetslipFormat"/>
+	<xs:complexType name="BetslipFormat">
+		<xs:sequence>
+			<xs:element name="formTypeCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The form type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="formTypeDesc" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The form type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="formSizeCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The form size</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="formSizeDesc" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The form size</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetSort" type="BetSort"/>
+	<xs:complexType name="BetSort">
+		<xs:annotation>
+			<xs:documentation>The BetSort class enables a more generic categorisation of the BetTypes. This can help with creating generic functionality based on the higher level of classification.
+
+e.g. there are a number of 'Accumulator' BetTypes
+
+e.g. Accumulator (4), Accumulator (5)
+
+which would have a BetSort of 'Accumulator'. 
+
+Note: This is not within Openbet, so potential mapping in integration layer BetTypes to BetSort would be required.
+
+Known BetSorts would be (not exhaustive yet):
+
+SingleBet  - only a single bet results from these (
+Single
+Double
+Treble
+Accumulator) (even if multiple selections selected, only one bet)
+
+MultipleBets - number of bets depends on the type
+Trixie
+Patent
+Yankee
+Lucky 15
+Canadian
+Lucky 31
+Heinz
+Lucky 63
+Super Heinz
+Goliath
+)
+
+Forecast / Tricast Bets - related to horses and relates to finishing positions of horses, exact or 'boxed'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The code of the BetSort (e.g. MultipleBets)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the BetSort (e.g. Multiple Bets)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The description of the BetSort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipKey" type="BetslipKey"/>
+	<xs:complexType name="BetslipKey">
+		<xs:annotation>
+			<xs:documentation>This class encapsulates unique system identifiers for a Betslip.  Can be identified by:
+
+betslipKey - unique system / store level key
+barcode - a retail barcode.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="betslipKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>System / store level unique identifier for the Betslip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="barcode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Retail barcode on a physical betslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uniqueId" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>OpenBet specific 'unique' id </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LottoItem" type="LottoItem"/>
+	<xs:complexType name="LottoItem">
+		<xs:sequence>
+			<xs:element name="number" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A number selected</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isSpecialNumber" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this a special number (e.g. powerball)?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LegSort" type="LegSort"/>
+	<xs:complexType name="LegSort">
+		<xs:annotation>
+			<xs:documentation>The legSort determines what sort of bet leg this is:
+
+-- Simple selection (a good, old-fashioned vanilla selection)
+SF &#8211; Forecast selection (2 per leg)
+RF &#8211; Reverse forecast selection (2 per leg)
+CF &#8211; Combination forecast (3+ per leg, 6+ permed RFs)
+TC &#8211; Tricast selection (3 per leg)
+CT &#8211; Combination tricast (3+ per leg; 6+ bets)
+SC &#8211; Scorecast
+AH &#8211; Asian Handicap
+WH &#8211; Western (straight) Handicap
+OU &#8211; Over/Under
+HL &#8211; Higher/Lower</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The Leg Sort code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The Leg Sort name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The leg Sort description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this leg sort active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isFieldbookEnabled" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this leg sort Fieldbook enabled?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numLegParts" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The default number of leg parts, if applicable, that this legSort would require in a leg of a bet.  e.g. straight forecast is only 2 parts, tricast 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isExplicitPlaces" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Does this legSort require explicit placing winPlaceType reference?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type has a cross reference associated to it? This value is persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legSortKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BetslipResultKind">
+		<xs:annotation>
+			<xs:documentation>The allowed values for the overall result of a betslip.  </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Win">
+				<xs:annotation>
+					<xs:documentation>Winner</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Lose">
+				<xs:annotation>
+					<xs:documentation>Looser</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Void">
+				<xs:annotation>
+					<xs:documentation>Voided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Unknown">
+				<xs:annotation>
+					<xs:documentation>Looser</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetslipRetailValidation" type="BetslipRetailValidation"/>
+	<xs:complexType name="BetslipRetailValidation">
+		<xs:annotation>
+			<xs:documentation>This class represents details of a physical Betslip's validation state. This may be required to by shops to verify a physical Betslip either from remote payouts or paying out a retail betslip in a different channel</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="isAgentValidated" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Has this retail Betslip been validated by an authorised shop agent?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="agentId" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The id of the shop agent that validated the Betslip.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validationCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A time limited and encrypted confirmation code.  This code will expire after a business defined time period.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validationStatus" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - validation status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validityPeriod" type="typ:TimePeriod" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Time period for the validation period</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isValidationCodeEncrypted" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is the Validation code encrypted?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Placeholder for extra information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetSettlement" type="BetSettlement"/>
+	<xs:complexType name="BetSettlement">
+		<xs:annotation>
+			<xs:documentation>This class encapsulates settlement information if a Bet has been settled (i.e. the event is over, the result known, and the customer bets settled)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time this settlement is valid from.  Resettlement possible.  Deprecates the old 'settleDateTIme'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time this settlement is valid from.  Resettlement possible.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="settlementStatus" type="SettlementStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The status of the settlement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this record the active one?  e.g.  no validTo set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="winnings" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="refund" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="bonus" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="taxRate" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The rate of tax applied to any winnings, if applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="taxType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of tax applied to this bet, if applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="settledHow" type="SettlementMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>How was the bet settled?  Manual or Auto?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="settleInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Arbitrary settlement information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lineSummary" type="SettlementLineSummary" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="tax" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="WinPlaceType" type="WinPlaceType"/>
+	<xs:complexType name="WinPlaceType">
+		<xs:annotation>
+			<xs:documentation>The win-place type of the Leg.  This was LegType, but renamed to be more accurate.
+
+Win, Place, EachWay, ExplicitPlaces</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The Leg Type code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The Leg Type name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The Leg Type description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type has a cross reference associated to it? This value is persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="winPlaceTypeKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetOverride" type="BetOverride"/>
+	<xs:complexType name="BetOverride">
+		<xs:sequence>
+			<xs:element name="overrideDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overrideType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="operator" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reason" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipCapture" type="BetslipCapture"/>
+	<xs:complexType name="BetslipCapture">
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The to date and time the Betslip was captured with its constituent Bets.  This will be set in instances when there is a recapture</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The from date and time the Betslip was captured with its constituent Bets.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="capturedBy" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The employee id that captured the bet if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="captureMethod" type="BetslipEntryMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The style of entry for the betslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isRecapture" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this BetCapture instance a re-capture?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="callId" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The call used to place the bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shopTillKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The shop till that the betslip was captured on</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailShop" type="ret:RetailShop" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="bet" type="Bet" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="HandicapDetail" type="HandicapDetail"/>
+	<xs:complexType name="HandicapDetail">
+		<xs:annotation>
+			<xs:documentation>This class represents Handicap detail of a selection
+
+For Asian Handicap markets the handicap values will be a whole number which translates to a scale of single/twin offer. The sign (+/-) determines which team the handicap applies to. 
+For straight handicap markets the handicap is the value which should be added/subtracted from the team scores. 
+For over/under markets handicap contains the number of (goals, runs etc) that the over/under betting is on (typically 2.5 goals). 
+For higher/lower markets handicap contains the pivot point for the higher/lower bets</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="handicapType" type="BetHandicapTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the handicap e.g. "-1.5,1.0"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue1" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The first value of the handicap e.g. for '-1.5,1.0', this is -1.5. This is the string version separated out for ease of use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue2" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The second value of the handicap e.g. for '-1.5,1.0', this is 1.0.  This is the string version separated out for ease of use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="handicapValue3" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetKey" type="BetKey"/>
+	<xs:complexType name="BetKey">
+		<xs:annotation>
+			<xs:documentation>This class that encapsulates that various ways that a bet can be identified through its lifecycle.  Overtime this should resolve to one or two, however this enables the capture of various 'legacy' ways of identifying a bet depending on where it is in its lifecycle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="betNo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A unique number for the bet (specified by the CLIENT) within the associated Betslip.  This enables the client to manage the individual constituent bets as part of a conversation BEFORE the bet is actually submitted and .  e.g. building and checking the bet occur before the acceptance and persistence of the bet. Errors can also be associated to the Bet, and need to be attached to a specific Bet that created the error, and so the client can identify this.
+
+This only needs to be unique within the context of a single Betslip, not between DIFFERENT Betslips</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The unique identifier for the Bet entity generated and maintained by the betting SERVER when persisted.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birToken" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The unique identifier for the Bet that has been placed in running.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shopBetKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The unique identifier for the Bet entity generated and maintained by the BS2000 (retail) bet system in shop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="barcode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The barcode for the bet from the shop if it is available</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inPendingState" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Indicates whether the state of the Bet is in a 'Pending' state. This can affect the mediation to back end operations. (Refer Sequence Diagrams)
+
+This should be passed if known (e.g. as part of BIR or OBAC scenarios)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Bet" type="Bet"/>
+	<xs:complexType name="Bet">
+		<xs:annotation>
+			<xs:documentation>The Bet entity captures the details of a single Bet that is associated to a Betslip. This is the unit of Bet 'transaction'.
+
+A Bet is of a particular 'Bet Type and has a 'Let Type' which describes if it is Win, Place or Each Way</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="betKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The canonical bet key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sessionToken" type="cus:SessionToken" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betNo" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A transient bet in running token used to identify a bet in a slip before persistence and validate in running bets</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="birToken" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A transient bet number used to identify a bet in a slip before persistence</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="inPendingState" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Indicates if a bet is in a pending state - as in an async bet where it is awaiting a OBAC decision</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betReciept" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A unique, customer facing receipt that signifies a successfully submitted Bet.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betSource" type="BetSource" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betType" type="BetType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betStatus" type="BetStatus" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betStake" type="BetStake" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="isConfirmed" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this bet confirmed?  Can be unconfirmed in BIR scenarios, or OBAC</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isReferred" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Was the bet referred?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isFunded" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Has the bet been paid for? Will have a 'BetPayout' element if so</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isParked" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Bet can be parked during settlement</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isCancelled" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is the Bet cancelled?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isSettled" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Has the bet been settled? Will have a 'BetSettlement' class if so</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isPaid" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Was the Bet funded by the Customer or was just funded using freebets?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isBetValid" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this bet valid?  Determined by a call to 'checkBetslip' or as a result of a call to 'submitBetslip'.
+
+If isBetValid==false, a 'BetFailure' element will associated to the Bet.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="birDelay" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The number of seconds delay for the bet.  Client should check the status after waiting x seconds</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betTag" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Tag which applies to the bet e.g. MRKSNS - which means the bet was place by marksense</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="smsOnSettle" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Boolean to indicate that a SMS should be sent, to the registered mobile number, once the bet is settled.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="resultConfirmed" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Has the bet been resulted?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="outcomesChecked" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Were the selections checked?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betOffer" type="BetOffer" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betPromotion" type="pro:Promotion" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betLineSummary" type="BetLineSummary" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betOverride" type="BetOverride" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="legGroup" type="LegGroup" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="leg" type="Leg" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="selectionGroup" type="SelectionGroup" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="eligibleBetType" type="EligibleBetType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betSettlement" type="BetSettlement" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betPayout" type="BetPayout" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betCharacteristics" type="BetCharacteristics" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="barcode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Barcode at bet level</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PayoutMethodKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the methods of payout.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Auto">
+				<xs:annotation>
+					<xs:documentation>Auto payout by the betting system into online account</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Manual">
+				<xs:annotation>
+					<xs:documentation>Manual payout by to the customer by a shop</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ResultDetail" type="ResultDetail"/>
+	<xs:complexType name="ResultDetail">
+		<xs:annotation>
+			<xs:documentation>This class contains the result detail.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="result" type="SelectionResultCodeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The result of the selection that forms this part of the bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultConfirmed" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether the result has been confirmed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultPlaces" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipResult" type="BetslipResult"/>
+	<xs:complexType name="BetslipResult">
+		<xs:annotation>
+			<xs:documentation>This class represents the result information if a total Betslip has been resulted (i.e. the event is over, the result known). </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="betslipResultCode" type="BetslipResultKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The result of the overall betslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time the result of the Betslip was determined</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetOffer" type="BetOffer"/>
+	<xs:complexType name="BetOffer">
+		<xs:annotation>
+			<xs:documentation>The details of a counter offer made by a trader to a bet not initially accepted. This is the result of the OBAC process, where a trader reviews a bet that has been sent for review.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="offerDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time that the offer was made</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offerStatus" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The ID of the trader that made the counter offer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offeredBy" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The ID of the trader that made the counter offer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offerExpiryDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time that the offer will expire</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="responseExpectedByDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time that the offer will expire</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offeredBet" type="Bet" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PlaceDetail" type="PlaceDetail"/>
+	<xs:complexType name="PlaceDetail">
+		<xs:annotation>
+			<xs:documentation>This class represents the 'place' detail (i.e. calculated place values) based on the e/w terms after the result</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="placeNum" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The place price numerator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="placeDen" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The place price denominator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="placeNumPlaces" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The number of places to be paid out for the place bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EachWayDetail" type="EachWayDetail"/>
+	<xs:complexType name="EachWayDetail">
+		<xs:annotation>
+			<xs:documentation>The Each Way (E/W) detail related to the market at the time of bet placement</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="eachWayNum" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The numerator for the each way factor related to the market at the point for placing the bet (E/W terms can change over time) e.g in the example of - 1/4 odds for Top 3, the numerator is '1'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eachWayDen" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The denominatorfor the each way factor related to the market at the point for placing the bet (E/W terms can change over time) e.g in the example of - 1/4 odds for Top 3, the denominator is 4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eachWayPlaces" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The places paid for each way factor related to the market at the point for placing the bet (E/W terms can change over time) e.g in the example of - 1/4 odds for Top 3, the places paid for e/w is 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SelectionGroup" type="SelectionGroup"/>
+	<xs:complexType name="SelectionGroup">
+		<xs:annotation>
+			<xs:documentation>This class is a container for a list of selectionKey, representing a logical grouping of outcomes that are POSSIBLE as a result of GetEligbileBetTypes.
+
+This is NOT the slections as part of the struc bet (refer Leg.Part.PartSelection details)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="selectionKey" type="xs:string" minOccurs="0" maxOccurs="unbounded" >
+				<xs:annotation>
+					<xs:documentation>A group of keys, each uniquely identifying selections</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LegGroup" type="LegGroup"/>
+	<xs:complexType name="LegGroup">
+		<xs:annotation>
+			<xs:documentation>NEW:  Align to openbet future state.  Currently this will just be one to one to leg (i.e. legGroup just contains 1 leg).  But indications are for this to be used more in future, thus included for completeness, even though the group for now will only have 1 leg.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ordering" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The ordering (from 1-n) of repeated elements of the same name.  The elements need not be in ascending numerical order but should have no gaps.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isBanker" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether the leg is a banker (should appear in all lines)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="leg" type="Leg" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipImage" type="BetslipImage"/>
+	<xs:complexType name="BetslipImage">
+		<xs:annotation>
+			<xs:documentation>This class captures Betslip image details relevant for physical generation of Betslips such as the image, the size and the contents for display.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="imageBinary" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Encoded image binary. The binary image of the BetSlip which would be a scanned copy that has been serialised into binary format and encoded in ASCII, a deserialisation process would be required by the client to decode it and produce the image in JPG or PNG format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="capturedImageText" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The image text captured in readable from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imageFormatMIME" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The format of the image - this should be a MIME type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imageSize" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The image size in KB</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isEncryped" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is the binary encrypted?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Placeholder for extra info for the Betslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="URL" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A URI/URL for the official source of the image if it exists?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decryptDateTime" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Date and time the image was decrypted if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Leg" type="Leg"/>
+	<xs:complexType name="Leg">
+		<xs:annotation>
+			<xs:documentation>NEW:  Association to 'selectionPrice' is new
+
+The legs are containers for an event (selection as parts)
+
+For a multiple bet (such as an accumulator), the legs of the bet refer to the events (selections) on which the individual "bets" within the multiple are placed. So the first leg of a Double is the event that takes place first out of the two events involved.
+
+N.B. Legs are not actually stored in start time order, but in the order they are added to the betslip. Hence leg 1 for a double might not necessarily be the first to run.
+
+Line
+
+For a Combination bet, the lines of the bet are the individual "bets" within the package, and as such may be either Singles or Multiples. The same stake is placed on each line of the bet.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="legNo" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Leg number for that bet (each leg would correspond to an
+event for the bet)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legStatus" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The status of the leg</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numPermutations" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The number of permutations in this leg</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketTags" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Market tags</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legCancelReason" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The reason the leg was cancelled</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="outcomeCombination" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>This is only available for bets with multiple legs parts. 
+
+Possible values:
+STRAIGHT_FORECAST
+REVERSE_FORECAST
+COMBI_FORECAST
+STRAIGHT_TRICAST
+COMBI_TRICAST
+SCORECAST
+ANYTIME_SCORECAST
+LAST_SCORECAST</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legSort" type="LegSort" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="betPrice" type="BetPrice" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="eachWayDetail" type="EachWayDetail" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="placeDetail" type="PlaceDetail" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="part" type="Part" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="legOverride" type="LegOverride" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipCharacteristics" type="BetslipCharacteristics"/>
+	<xs:complexType name="BetslipCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class represents a container for future generic extensibility characteristics</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="betslipCharacteristic" type="BetslipCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetFailure" type="BetFailure"/>
+	<xs:complexType name="BetFailure">
+		<xs:annotation>
+			<xs:documentation>This class captures the summary details of a failed Bet validation.  This can happen during building the Bet, checking the Bet and submitting the Bet.  The class will contain the code and reason for failure.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="betFailureCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The code identifying the type of failure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betFailureReason" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The reason for the failure if available</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betFailureDesc" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The description of the failure if available</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betFailureDetail" type="BetFailureDetail" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BetHandicapTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AsianFullTime">
+				<xs:annotation>
+					<xs:documentation>Asian handicap market, full time
+
+marketSort='A'
+marketMeaningMajorCode='A'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AsianHalfTime">
+				<xs:annotation>
+					<xs:documentation>Asian handicap market, full time
+
+marketSort='A'
+marketMeaningMajorCode='A'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Match">
+				<xs:annotation>
+					<xs:documentation>Match handicap</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Western">
+				<xs:annotation>
+					<xs:documentation>Western handicap type
+
+marketSort='M'
+marketMeaningMajorCode='M'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OverUnder">
+				<xs:annotation>
+					<xs:documentation>Western handicap type
+
+marketSort='M'
+marketMeaningMajorCode='M'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HighLowFullTime">
+				<xs:annotation>
+					<xs:documentation>High low full time handicap type
+
+marketSort='M'
+marketMeaningMajorCode='M'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HighLowFirst">
+				<xs:annotation>
+					<xs:documentation>High low first handicap type
+
+marketSort='M'
+marketMeaningMajorCode='M'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LegResultKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Win">
+				<xs:annotation>
+					<xs:documentation>Winner (OpenBet W)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Lose">
+				<xs:annotation>
+					<xs:documentation>Looser (OpenBet 'L')</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Void">
+				<xs:annotation>
+					<xs:documentation>Voided (openbet 'V')</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="-">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetslipSettlement" type="BetslipSettlement"/>
+	<xs:complexType name="BetslipSettlement">
+		<xs:annotation>
+			<xs:documentation>This class represents the settlement information if a total Betslip has been settled (i.e. the event is over, the result known, and ALL the customer bets on the slip are settled).  Will be a function of all the constituent Bet settlement states.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Date and Time the settlement was valid from 
+
+DEPRECATED: SettleDateTime (Now use this)
+(The old settleDateTime)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Date and Time the settlement was valid to.. Only set in the case of resettlement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="settlementStatus" type="SettlementStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The settlement status of the Betslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isResettlement" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Transiant only.  Is this BetslipSettlement a 're-settlement'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="winnings" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="refund" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="bonus" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="tax" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="taxRate" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The rate of tax applied to any winnings, if applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="taxType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of tax applied to this bet, if applicable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="settledHow" type="SettlementMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>How settled?  Auto or Manual</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="settleInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Arbitrary settlement information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LineCombinationKind">
+		<xs:annotation>
+			<xs:documentation>The type of line combination</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACC">
+				<xs:annotation>
+					<xs:documentation>Lines are combined as simple accumulator</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SSA">
+				<xs:annotation>
+					<xs:documentation>Lines are combined as double stakes about</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DSA">
+				<xs:annotation>
+					<xs:documentation>Lines are combined as double stakes about</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetslipTake" type="BetslipTake"/>
+	<xs:complexType name="BetslipTake">
+		<xs:sequence>
+			<xs:element name="takeDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time the slip was taken (but not captured yet)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="takenBy" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>ID of the employee doing the take</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="takeMethod" type="BetslipEntryMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>how the take was entered into the system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="freeTextLine1" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Free text from the take to eventually be captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="freeTextLine2" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Free text from the take to eventually be captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="freeTextLine3" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Free text from the take to eventually be captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="freeTextLine4" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Free text from the take to eventually be captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="freeTextLine5" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Free text from the take to eventually be captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="freeTextLine6" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Free text from the take to eventually be captured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="callId" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The call used to take the Bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shopTillKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The ID of the shopTill the Betslip was taken on</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="captureToFollow" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is there a capture to follow this take?  Default to true, however sometimes (e.g. retail pools and lottos) a capture will not follow</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailShop" type="ret:RetailShop" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PoolBet" type="PoolBet"/>
+	<xs:complexType name="PoolBet">
+		<xs:complexContent>
+			<xs:extension base="Bet">
+				<xs:sequence>
+					<xs:element name="stakePerLinePoolCurrency" type="typ:Money" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The stake per line in the currency OF THE POOL PROVIDER</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="win" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>true if pool bet is is WIN / WIN-PLACE / WIN-SHOW / WIN_PLACE_SHOW</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="place" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>true if pool bet is is PLACE / WIN-PLACE / PLACE-SHOW / WIN_PLACE_SHOW</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="show" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>true if pool bet is is SHOW / WIN-SHOW / PLACE-SHOW / WIN_PLACE_SHOW</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="otherInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>TBD - Future palceholder</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="poolType" type="sbk:PoolType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="poolItem" type="PoolItem" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DeductionDetail" type="DeductionDetail"/>
+	<xs:complexType name="DeductionDetail">
+		<xs:sequence>
+			<xs:element name="isRule4" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Was the bet subject to rule4?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rule4RuleRef" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The rule 4 rule reference used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rule4Deductions" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of any reductions as a result of rule 4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isDeadHeatReduced" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Were odds reduced due to rule4?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deadHeatRef" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The id of the deadhead reduction rule used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deadHeatNum" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The numerator of the dead heat fraction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deadHeatDen" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The numerator of the dead heat fraction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetSource" type="BetSource"/>
+	<xs:complexType name="BetSource">
+		<xs:annotation>
+			<xs:documentation>This class encapsulates details about the source of the Bet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ipAddress" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The IP address of the computer/device where the bet is placed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="channel" type="chn:Channel" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="retailShop" type="ret:RetailShop" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SelectionResultCodeKind">
+		<xs:annotation>
+			<xs:documentation>Temporary - the Values remain the same as in the 'Result' under trading, however to remove the dependency on Trading at this point in time, this is 'copied' for now - the values still remain the same</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Win"/>
+			<xs:enumeration value="Lose"/>
+			<xs:enumeration value="Void"/>
+			<xs:enumeration value="Place"/>
+			<xs:enumeration value="Unset"/>
+			<xs:enumeration value="Handicap"/>
+			<xs:enumeration value="ResultedNotSettled">
+				<xs:annotation>
+					<xs:documentation> Resulted but not necessarily settled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ContainedBetType" type="ContainedBetType"/>
+	<xs:complexType name="ContainedBetType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Code of the contained bet type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numSelections" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The number of selection, based on the parent number of selections, to consider for the contained bet type.  e.g. a code of 'ACC' for accumulator, the numSelections could be 4 (for 4 folds) or 5 (for 5 folds)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numBets" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The number of bets, for this bet type, in the context of the parent betType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="stake" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A positive decimal up to 1.0.  Some contained bet types, as part of the parent definition,  only use part of the stake.  This can be used to specify how much of the stake to consider.  This is implied as 1.0 if not specified, as most are 1.0.  
+
+e.g. 0.5 for half stake</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="winPlaceRefCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Sometimes a contained has part that is E/W.  Not often, but sometimes.  In this case, this would be set.  Otherwise implied as 'Win'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="allPosCombi" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>All possible combinations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="explicitLegGroupCombis" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The explicit combination of selections (in legs groups), each possibility separated by a comma.
+
+'1-2, 1-6, 1-7, 2-6, 2-7, 3-4, 3-5, 4-5, 6-7'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BetClassKind">
+		<xs:annotation>
+			<xs:documentation>This class is an enumeration of 'bet class'.  </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Pure">
+				<xs:annotation>
+					<xs:documentation>bets &#8211; Consisting of the standard bet types such as singles, doubles, trebles and accumulators.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Container">
+				<xs:annotation>
+					<xs:documentation>bets &#8211; Consisting of a set of Pure bets for eg: a Yankee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Conditional">
+				<xs:annotation>
+					<xs:documentation>Consisting of bets with conditional rules which decide the stake for the coming selection or if the next selection is active and so on.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BetAcceptanceStatusKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration of 'acceptance' status.  After a Bet is accepted, it will be persisted and then can change state based on other external events not controlled by the Customer (e.g. Cancelled - If the selection withdraws?)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success">
+				<xs:annotation>
+					<xs:documentation>Success - Maps to OpenBet 'OK'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pending">
+				<xs:annotation>
+					<xs:documentation>Bet is Pending.  Maps to OpenBet 'PENDING'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+            <xs:enumeration value="Cancelled">
+				<xs:annotation>
+					<xs:documentation>The Bet Placement has 'Cancelled' This will map to OpenBet 'CANCELLED'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NewBetOffer">
+				<xs:annotation>
+					<xs:documentation>Bet Placement could not complete because the stake or price was changed as part of OBAC process.  This would populate the 'BetOffer' with the new offered values if the trader proposed these.
+
+This would map to 'DIFFERENT STAKE + PRICE' in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PriceChanged">
+				<xs:annotation>
+					<xs:documentation>The Bet Placement could not complete because the price had changed from the value that the customers bet represents.  This can change pre and inplay - however the later is going to occur far more frequently.
+
+This will map to OpenBet  'BIP_PRC_CHANGED'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GeneralError">
+				<xs:annotation>
+					<xs:documentation>TBD
+
+This will map to OpenBet  'ERROR'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LowFunds">
+				<xs:annotation>
+					<xs:documentation>The customer does not have the funds for the bet to be accepted.
+
+This will map to OpenBet  'LOW_FUNDS'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TimedOut">
+				<xs:annotation>
+					<xs:documentation>The Bet Placement has 'Time Out'
+
+This will map to OpenBet  'TIMED OUT'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Placeholder for others</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BetPayoutStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the status of the payout</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NotPaid">
+				<xs:annotation>
+					<xs:documentation>The Bet has NOT been paid out to the customer.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FullPaid">
+				<xs:annotation>
+					<xs:documentation>The Bet has been fully paid out to the customer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NothingToPay">
+				<xs:annotation>
+					<xs:documentation>The Bet is a looser and there is nothing to ever be paid out</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cancelled">
+				<xs:annotation>
+					<xs:documentation>The Bet has been cancelled voided and wont be paid.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Parked">
+				<xs:annotation>
+					<xs:documentation>The Bet has been parked.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>The Bet has been Voided and wont be paid.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BetSlipAction">
+		<xs:annotation>
+			<xs:documentation>This represent BetSlip operations </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CAPTURE">
+				<xs:annotation>
+					<xs:documentation>BetSlip captured data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SETTLEMENT">
+				<xs:annotation>
+					<xs:documentation>BetSlip Settlement data </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TAKE">
+				<xs:annotation>
+					<xs:documentation>BetSlip Take data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AMENDMENT">
+				<xs:annotation>
+					<xs:documentation>Amended betslip data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PAYOUT">
+				<xs:annotation>
+					<xs:documentation>BetSlip Payout data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CANCELLATION">
+				<xs:annotation>
+					<xs:documentation>BetSlip Cancellation data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BetslipTypeKind">
+		<xs:annotation>
+			<xs:documentation>The enumerated values for the type of selections in the Betslip.  can be :
+
+Fixed Odds:  Standard or virtuals
+Pools:  Pool Bets
+
+CANNOT mix the types of selections</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Sports"/>
+			<xs:enumeration value="Pools"/>
+			<xs:enumeration value="Lotto"/>
+			<xs:enumeration value="Numbers"/>
+			<xs:enumeration value="Manual"/>
+            <xs:enumeration value="FixedOdds"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetPayout" type="BetPayout"/>
+	<xs:complexType name="BetPayout">
+		<xs:annotation>
+			<xs:documentation>This class represents the payout details for a Bet that has been paid out.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="potentialPayout" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="maxPayout" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="payoutStatus" type="BetPayoutStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The status of the Payout for this individual Bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoutDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time the bet was paid out to a customer - either online, or in the shop, depending on the type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="actualPayout" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="payoutBy" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The operator that paid out  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoutMethod" type="PayoutMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - Auto (online payout to account) or Manual (over coutner)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoutTerminal" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The terminal that the Bet was paid out at.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="terminalType" type="ret:TerminalTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The terminal that the Bet was paid out at.  This is applicable for Retail or SSBT only.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Placeholder for extraInfo</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPaidDirect" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Was the betslip payout direct to the customer (in person)?  Always false for betslips placed over digital channels</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPaidRemoteShop" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>In the case where the paid out is in person, was this a remote payout (i.e. the payout is in a different shop to where the betslip was placed?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPaidToAccount" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Was the betslip payout direct to the customer (in person)? Will always be true for betslips placed over digital channels</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailShop" type="ret:RetailShop" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="betReturnsTransaction" type="wal:BetReturns" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PoolItem" type="PoolItem"/>
+	<xs:complexType name="PoolItem">
+		<xs:annotation>
+			<xs:documentation>A poolBet item</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="position" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>- [0..9] ordered position of outcome 
+- F floating banker 
+- "" or empty unordered outcome</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pool" type="sbk:SportsbookPool" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="selectionKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BetslipEntryMethodKind">
+		<xs:annotation>
+			<xs:documentation>This class represents the entry method for a Betslip at Take and Capture.  e.g  Auto, Manual</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Auto">
+				<xs:annotation>
+					<xs:documentation>Betslip was manually captured - human interaction was requried</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Manual">
+				<xs:annotation>
+					<xs:documentation>Betslip was auto captured - no human interaction was involved</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="LottoBet" type="LottoBet"/>
+	<xs:complexType name="LottoBet">
+		<xs:complexContent>
+			<xs:extension base="Bet">
+				<xs:sequence>
+					<xs:element name="pickCombination" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Pick combination id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="howMany" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Count of the number of numbers (LottoItems)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lottoItem" type="LottoItem" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="lottoType" type="LottoType" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="SettlementMethodKind">
+		<xs:annotation>
+			<xs:documentation>This class represents the method for settlement  e.g  Auto, Manual</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Auto">
+				<xs:annotation>
+					<xs:documentation>Betslip was manually captured - human interaction was requried</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Manual">
+				<xs:annotation>
+					<xs:documentation>Betslip was auto captured - no human interaction was involved</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetPrice" type="BetPrice"/>
+	<xs:complexType name="BetPrice">
+		<xs:annotation>
+			<xs:documentation>This is the price that the Bet ws captured at.  This is not always directly related to a selection price, but if it is, then there is an association to the correct SelectionPrice.
+
+The attribute may or may not be populated depending on the selectionpPriceType e.g. SP (Starting price) wont have a 'price' at point of capture, rather it will get the price at the start of the event, what ever that is.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numFractionalPrice" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The fractional numerator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="denFractionalPrice" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The fractional denominator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="americanPrice" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The american representation of the price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decimalPrice" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The decimal representation of the price</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionPriceType" type="sel:SelectionPriceType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="selectionPrice" type="sel:SelectionPrice" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SettlementStatusKind">
+		<xs:annotation>
+			<xs:documentation>The settlement state of the Betslip</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NotSettled">
+				<xs:annotation>
+					<xs:documentation>No part of the Betslip is settled yet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartSettled">
+				<xs:annotation>
+					<xs:documentation>One or more of the Bets in the Betslip are settled yet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FullSettled">
+				<xs:annotation>
+					<xs:documentation>All Bets in the slip have been settled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ReSettled">
+				<xs:annotation>
+					<xs:documentation>Resettled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Voided">
+				<xs:annotation>
+					<xs:documentation>Resettled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BetslipCharacteristic" type="BetslipCharacteristic"/>
+	<xs:complexType name="BetslipCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic name / value pair for future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the Betslip characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the Betslip characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the Betslip characteristic value (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetFailureDetail" type="BetFailureDetail"/>
+	<xs:complexType name="BetFailureDetail">
+		<xs:annotation>
+			<xs:documentation>This class captures the details of a failed Bet validation.  This can happen during building the Bet, checking the Bet and submitting the Bet.  The class will contain the event and selection that was affected.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="selectionKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The unique identifier for the selection (outcome) that caused the failure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="selectionName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the selection (outcome) that caused the failure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The unique identifier for the event, containing the selection,  that caused the failure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the event that caused the failure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="price" type="bprc:Price" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SettlementLineSummary" type="SettlementLineSummary"/>
+	<xs:complexType name="SettlementLineSummary">
+		<xs:annotation>
+			<xs:documentation>This class contains line summary information as a result of settlement</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numSelections" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of selections in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numLegs" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of legs in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numVoidLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of void lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numWinLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of winning lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numLoseLines" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Number of loosing lines in the bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipStake" type="BetslipStake"/>
+	<xs:complexType name="BetslipStake">
+		<xs:annotation>
+			<xs:documentation>Staking details related to this Betslip</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="stake" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="funded" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="freeBet" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="stakeFactor" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The stake factor applied to this Bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="restrictionCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Need to map OpenBet to Retail Segments in terms of "restricted" bets/customers. Any digital bet that has a SF of less than 1.0 is considered to have come from a restricted customer (though customers can have different SF for different event classes and types). This maps to bets from customers with a KB status (unprofitable) in Retail.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentMethodCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The payment method code used to fund the betslip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betFundingTransaction" type="wal:BetFunding" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetCharacteristic" type="BetCharacteristic"/>
+	<xs:complexType name="BetCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a name value pair for a bet characteristic (aka flag) for extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the Bet Flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the Bet characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the Bet characteristic value (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LegOverride" type="LegOverride"/>
+	<xs:complexType name="LegOverride">
+		<xs:sequence>
+			<xs:element name="overrideDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overrideType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="operator" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reason" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the override</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EligibleBetType" type="EligibleBetType"/>
+	<xs:complexType name="EligibleBetType">
+		<xs:annotation>
+			<xs:documentation>This class represents an 'eligible bet type, based on a number of selections in a group to be considered.  This contains a reference to the bet type itself, and any dtermined stake limits of the customer/event</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="numOfLines" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="betTypeStakeLimits" type="BetStake" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="betType" type="BetType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Part" type="Part"/>
+	<xs:complexType name="Part">
+		<xs:annotation>
+			<xs:documentation>A Part contains the selection level detail for the bet.
+
+OpenBet uses the concept of &#8220;Parts&#8221; to model bet lines featuring multiple selections that compose a single leg. The most common use of this is to handle Forecast and Tricast bet lines. 
+
+For example a Forecast bet will have a single leg, but two parts. Another example of a multi-part bet line would be a Scorecast (combination Correct Score and First Scorer market).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="partNo" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Part number for the bet (each part would correspond to an selection for the leg).Part number for that bet (each part would correspond to an outcome for the leg).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mustPlace" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>For straight forecast/tricast, this should indicate the place the selection MUST finish.  For combinations FC TC, this is left blank.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="alternateSettleRuleId" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A Bet settelment rule that will be applied to the leg to indicate that the bet shouldn't be settled with standard rules for the market.  For example that the bet should take the first past the post result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partSelection" type="PartSelection" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="winPlaceType" type="WinPlaceType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="handicapDetail" type="HandicapDetail" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="deductionDetail" type="DeductionDetail" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="resultDetail" type="ResultDetail" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetStake" type="BetStake"/>
+	<xs:complexType name="BetStake">
+		<xs:annotation>
+			<xs:documentation>Staking details related to this Bet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="stakePerLine" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="stake" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="funded" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="freeBet" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="stakeFactor" type="xs:decimal" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The stake factor applied to this Bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="restrictionCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Need to map OpenBet to Retail Segments in terms of "restricted" bets/customers. Any digital bet that has a SF of less than 1.0 is considered to have come from a restricted customer (though customers can have different SF for different event classes and types). This maps to bets from customers with a KB status (unprofitable) in Retail.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betMaxStake" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="betMinStake" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="betFundingTransaction" type="wal:BetFunding" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BetslipPayoutStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration representing the status of the payout</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NotPaid">
+				<xs:annotation>
+					<xs:documentation>The Betslip has NOT been paid out at all.  None of the constituent Bets have been been settled and paid.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PartPaid">
+				<xs:annotation>
+					<xs:documentation>The Betslip has been partially paid out to the customer.  Some bets are still to be settled and paid, while others have allready been so.   Refer 'extraInfo' for extra detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FullPaid">
+				<xs:annotation>
+					<xs:documentation>The Betslip has been fully paid out to the customer in terms of the possible winnings (all bets settled and paid)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NothingToPay">
+				<xs:annotation>
+					<xs:documentation>The Betslip is a looser and there is nothing to pay at all.  All bets settled, no payout obligations required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cancelled">
+				<xs:annotation>
+					<xs:documentation>The Betslip has been cancelled and nothing to be paid.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Parked">
+				<xs:annotation>
+					<xs:documentation>The Betslip has been parked.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>The Betlip has been Voided and wont be paid.  Refer to extraInfo for more detail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="LottoType" type="LottoType"/>
+	<xs:complexType name="LottoType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Name of the Lotto Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Code of the Lotto Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Name of the Lotto Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lottoTypeKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetType" type="BetType"/>
+	<xs:complexType name="BetType">
+		<xs:annotation>
+			<xs:documentation>The type of the bet (e.g. single, double, yankie etc).  This is the CANONICAL representation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The code of the Bet Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the BetType (e.g. Accumulator (4))</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The description of the Bet Type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this bet type active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isFieldbookEnabled" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this type enabled for fieldbook?  A type may be active in the totla system, but not consumed by fieldbook</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betClass" type="BetClassKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The class of the bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numBets" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The total number of bets that this BetType will generated in a NON_PERMED state.  That is, the number of bets when considering this bet in its 'usual' number of bets - or, the minNumSelections.  
+
+e.g.
+
+Patent
+
+A Patent consists of 7 bets involving 3 selections in different events. The bet includes:
+
+3 single bets
+3 double bets
+1 treble bet
+Just one successful selection guarantees a return.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="minSelections" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Minimum leg/selection restrictions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maxSelections" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Max leg/selection restrictions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasContainedBetTypes" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Does this betType have contained types?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="canPerm" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Can this Bet Type be permed?  e.g. Double with 5 selections is actually 10 individual double bets permed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isBonusAvail" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is there bonus available on this bet type? e.g. on a Lucky 15</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isConsolationAvail" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is there consolation available on this bet type? e.g. on a Lucky 15</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="condition" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Comma seperate list of conditons.  Only applicable if the betClass=Conditional.
+
+e.g. MultiAnyToCome,NonUniformStakes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="containedBetType" type="ContainedBetType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="extraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Extra information supporting the bet type.
+
+e.g. for a 'Patent' the extraInfo would look like:
+
+Just one successful selection guarantees a return.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requiresCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type requries xref?  If so, the canonical 'code' is blank, but will have a link to the 'CrossRefEntityKeys' for Integration to corss ref.  The resulting value will be placed in the canonical 'code' attribute.  This value is used by services, thus is not persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasCrossRef" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Whether this type has a cross reference associated to it?   This value is persisted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="betTypeKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BetslipPayout" type="BetslipPayout"/>
+	<xs:complexType name="BetslipPayout">
+		<xs:annotation>
+			<xs:documentation>This class represents the payout details for a Betslip.  This can contain details like 'potentialPayout' and when paid out, the payout details.  This would be the total payout of the constituent Bets</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="potentialPayout" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="payoutStatus" type="BetslipPayoutStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The status of the whole Betslip payout of the winning funds to the customer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoutDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The date and time the betslip was paid out to a customer - either online, or in the shop, depending on the type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="actualPayout" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="cumulativePayout" type="imy:InternationalMoney" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="payoutBy" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The operator that paid out the betslip if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoutMethod" type="PayoutMethodKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Auto (online payout to account) or Manual (over coutner)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoutTerminal" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The terminal that the Bet was paid out at.  This is applicable for Retail or SSBT only.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="terminalType" type="ret:TerminalTypeKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of terminal if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Any extra other info</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPaidDirect" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Was the betslip payout direct to the customer (in person)?  Always false for betslips placed over digital channels</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPaidRemoteShop" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>In the case where the paid out is in person, was this a remote payout (i.e. the payout is in a different shop to where the betslip was placed?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPaidToAccount" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Was the betslip payout direct to the customer (in person)? Will always be true for betslips placed over digital channels</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retailShop" type="ret:RetailShop" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="betReturnsTransaction" type="wal:BetReturns" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Betslip" type="Betslip"/>
+	<xs:complexType name="Betslip">
+		<xs:annotation>
+			<xs:documentation>A Betslip is a container for a number of potential bets, based on selection(s) that a customer has chosen from those available, possibly across multiple events.  
+
+This is similar to a 'cart' in a traditional retail model.  It is session based, and involves a number of business interactions with the betting system:
+
+1 - Betslip can be configured with the allowed combinations of betTypes, based on the state of the selections in the Betslip. 
+2 - Betslip can be validated
+3 - Betslip can be submitted for processing
+
+A Betslip is placed via a channel (Internet, Mobile, Retail etc).
+
+A Betslip can be associated to 1 or more Bets</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="betslipKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The canonical betslip unique id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betslipKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="customerKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The canonical customer key who placed the bet.  Only if not an anonymous bet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKeys" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sessionToken" type="cus:SessionToken" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="sportsbookAccountKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The sportsbook account key (openbet)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betslipSource" type="BetslipSource" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipType" type="BetslipTypeKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The type of the Betslip -  FixedOdds, Pools, Lotto</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="barcode" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The barcode of the betslip if the slip is a physical slip.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betslipReceipt" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The receipt text for the betslip</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isValid" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is the Betslip valid?  Determined by the Betting System as a result from a call to 'CheckBetslip' as part of online, or by BS2000 for retail validation.  If the bet source is retail, then the BetslipRetailValidation' will contain specific Retail validation information</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isSettled" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is the entire Betslip settled? Can be derived from the settled state of the constituent bets</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isPaid" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is the entire Betslip paid?  Can be derived from the settled state of the constituent bets</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isAnonymousBet" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Whether the bet is being made anonymously.  Believe only used for Retail or SSBT.  TBD.  Default is false if not present.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="anonymousTag" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isHedgedBet" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Is this a Hedged Bet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastValidationDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The dateTime of the last call to check the Betslip, if applicable.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="affiliate" type="aff:Affiliate" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="loyaltyCardNo" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>This will be the loyalty card number used by the customer.  Currently this is a Givex scheme, however in future this may change.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isBACApproved" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Was the Betslip accepted as part of the 'Bet Acceptance' process? Either Online or Standard (Retail) Bet acceptance.  
+
+Refer to BetOffer entity for details of counter offers from traders.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betslipStake" type="BetslipStake" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipPromotion" type="pro:Promotion" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipImage" type="BetslipImage" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipFormat" type="BetslipFormat" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipTake" type="BetslipTake" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipCapture" type="BetslipCapture" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="bet" type="Bet" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betslipResult" type="BetslipResult" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipSettlement" type="BetslipSettlement" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betslipPayout" type="BetslipPayout" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="betslipRetailValidation" type="BetslipRetailValidation" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="betslipCharacteristics" type="BetslipCharacteristics" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="BetCharacteristics" type="BetCharacteristics"/>
+	<xs:complexType name="BetCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class represents a container of generic Bet characteristics (aka flags) for extensibility.  The Retail Fieldbook OXI integration requires this.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="betCharacteristic" type="BetCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PartSelection" type="PartSelection"/>
+	<xs:complexType name="PartSelection">
+		<xs:annotation>
+			<xs:documentation>This class contains the summary details of the Selection associated to the Part. This includes details about the selection, its price at a point in time, the event and market names for display purpose. 
+
+NOTE:  for 2.0, 'currentPrice' depricated.  This was part of an error returned if the price had changed against the customer as part of betPlacement.  This should be on the service error rather</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="selectionKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="selectionName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the selection</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the market the selection belongs to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="marketIndex" type="xs:integer" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The index, if the selection is part of an indexed market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketMeaningMajorCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The market sort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="outcomeMeaningMajorCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The market sort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="outcomeMeaningMinorCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Defines the meaning of the result for the selection (old fb_result)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="isInRunning" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Is this selection part of an inRuunning market?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventTypeKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="eventStartDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The event start date time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventSubtype" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="eventSort" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The event sort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventClassKey" type="xref:CrossRefEntityKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="eventTypeName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the event type the event belongs to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventSubtypeName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the event subtype the event belongs to (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventClassName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The event class name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventClassExtraInfo" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventCategoryName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The event class name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noCombinationsWith" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - Think this means if the selection can be used in combinations?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nonRunnerNoBet" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>Non runner no bet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

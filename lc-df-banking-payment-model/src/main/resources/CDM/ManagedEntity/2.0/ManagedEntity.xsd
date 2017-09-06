@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0">
+	<xs:element name="ManagedEntity" type="ManagedEntity"/>
+	<xs:complexType name="ManagedEntity">
+		<xs:annotation>
+			<xs:documentation>Contains generic attributes across managed entities such as market/event/event type etc.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="entityKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the managed entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="entityType"  type="ManagedEntityTypeKind">
+				<xs:annotation>
+					<xs:documentation>Type of the managed entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="createdBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>User/System that created the entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="createdDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date/Time that the entity was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastUpdatedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>User/System that last updated the entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastUpdatedDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date/Time that the last updated was affected.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="audit" type="Audit"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Audit" type="Audit"/>
+	<xs:complexType name="Audit">
+		<xs:annotation>
+			<xs:documentation>Maintain audit header details of updates happening on the record of entity, header details would be who has updated (user / system), when the update was carried out and what was the action which resulted in the update.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="auditId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for each of the update</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="auditDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Specifies the date and time the modification was carried out</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="auditAction"  type="AuditActionKind">
+				<xs:annotation>
+					<xs:documentation>Specifies the action which result in the update</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="modifiedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the user / system who carried out the modification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="auditDetail" type="AuditDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AuditDetail" type="AuditDetail"/>
+	<xs:complexType name="AuditDetail">
+		<xs:annotation>
+			<xs:documentation>Maintain audit details of updates happening on the record of the entity, Details would encompass which field is getting modified, what was its old value and what is its new value. For example 4 attributes are getting modified during the transaction, then there would one record in header table and 4 records in the detail table i.e. once each for the attributes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="auditDetailId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for each of the update</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="attributeName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the attribute (column) which is getting modified.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="fromValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>From values indicates the old value of the attribute (column), i.e. value of the attribute before the update.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="toValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>To values indicates the new value of the attribute (column), i.e. value of the attribute after the update.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AuditActionKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Create"/>
+			<xs:enumeration value="Update"/>
+			<xs:enumeration value="Delete"/>
+			<xs:enumeration value="Publish"/>
+			<xs:enumeration value="Activate"/>
+			<xs:enumeration value="Suspend"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ManagedEntityTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Event"/>
+			<xs:enumeration value="EventClass"/>
+			<xs:enumeration value="EventType"/>
+			<xs:enumeration value="EventSubtype"/>
+			<xs:enumeration value="Market"/>
+			<xs:enumeration value="MarketType"/>
+			<xs:enumeration value="SelectionType"/>
+			<xs:enumeration value="Selection"/>
+			<xs:enumeration value="SelectionPrice"/>
+			<xs:enumeration value="SelectionResult"/>
+			<xs:enumeration value="FeedProvider"/>
+			<xs:enumeration value="Characteristic"/>
+			<xs:enumeration value="Notification"/>
+			<xs:enumeration value="CharacteristicGroup"/>
+			<xs:enumeration value="Party"/>
+			<xs:enumeration value="PartyRole"/>
+			<xs:enumeration value="BusinessInteraction"/>
+			<xs:enumeration value="BusinessInteractionItem"/>
+			<xs:enumeration value="Customer"/>
+			<xs:enumeration value="CustomerCredentials"/>
+			<xs:enumeration value="Account"/>
+			<xs:enumeration value="Transaction"/>
+			<xs:enumeration value="WalletTransaction"/>
+			<xs:enumeration value="Payment"/>
+			<xs:enumeration value="PaymentMethod"/>
+			<xs:enumeration value="PaymentMethodType"/>
+			<xs:enumeration value="Employee"/>
+			<xs:enumeration value="Betslip"/>
+			<xs:enumeration value="Bet"/>
+			<xs:enumeration value="SportsbookCategory"/>
+			<xs:enumeration value="SportsbookMarket"/>
+			<xs:enumeration value="SportsbookSelection"/>
+			<xs:enumeration value="SportsbookPrice"/>
+			<xs:enumeration value="SportsbookResult"/>
+			<xs:enumeration value="Participant"/>
+			<xs:enumeration value="Promotion"/>
+			<xs:enumeration value="RetailShop"/>
+			<xs:enumeration value="Affiliate"/>
+			<xs:enumeration value="SelectionPriceType"/>
+			<xs:enumeration value="BetType"/>
+			<xs:enumeration value="LegSort"/>
+			<xs:enumeration value="WinPlaceType"/>
+			<xs:enumeration value="PaymentType"/>
+			<xs:enumeration value="WalletTransactionType"/>
+			<xs:enumeration value="Channel"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

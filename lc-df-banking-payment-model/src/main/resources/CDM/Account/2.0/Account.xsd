@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://cdm.ladbrokes.co.uk/customer/Account/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://cdm.ladbrokes.co.uk/customer/Account/2.0" xmlns:acc="http://cdm.ladbrokes.co.uk/customer/Account/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:txn="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" xmlns:pty="http://cdm.ladbrokes.co.uk/party/Party/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/Party/2.0" schemaLocation="../../Party/2.0/Party.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0" schemaLocation="../../Customer/2.0/Customer.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Transaction/2.0" schemaLocation="../../Transaction/2.0/Transaction.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" schemaLocation="../../Promotions/2.0/Promotions.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:simpleType name="AccountCharacteristicStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the status' of account characterisitcs</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Characteristic is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Characteristic is Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsbookAccountTypeKind">
+		<xs:annotation>
+			<xs:documentation>This enumeration represents the various values for the type of the sportsbook account</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Deposit">
+				<xs:annotation>
+					<xs:documentation>Deposit Account (DEP in OpenBet)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Credit">
+				<xs:annotation>
+					<xs:documentation>Credit Account (CDT in OpenBet) - This will mean a customer has line of credit with ladbrokes, defined by 'creditLimit'</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Debit">
+				<xs:annotation>
+					<xs:documentation>Debit Account (DBT in OpenBet)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="GamesAccount" type="GamesAccount"/>
+	<xs:complexType name="GamesAccount">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AccountType" type="AccountType"/>
+	<xs:complexType name="AccountType">
+		<xs:annotation>
+			<xs:documentation>This class represents a PartyRoleType TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="accountTypeKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - The unique key identifying the Account Type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accountTypeName" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the AccountType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accountTypeCode" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The code of the AccountType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - Status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>A description of the PartyRoleType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="other" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>TBD - placeholder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PokerAccount" type="PokerAccount"/>
+	<xs:complexType name="PokerAccount">
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence>
+					<xs:element name="pokerHeldFunds" type="typ:Money" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoyaltyAccount" type="LoyaltyAccount"/>
+	<xs:complexType name="LoyaltyAccount">
+		<xs:annotation>
+			<xs:documentation>Business entity representing a LoyaltyAccount, a type of Financial Account, that contains details related to a loyalty programme such as points balance, segment, rating etc.  It also provides reference to any LoyaltyTransaction(s) that have occurred on the account.
+
+Note:  The unique key inherited from 'Account'</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence>
+					<xs:element name="pointsBalance" type="xs:integer" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The current balance of points accumulated on this loyalty account and available for redemption.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loyaltySegment" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>This loyaltySegment field may be populated with a 3 digit text message to be displayed to the operator. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loyaltyTier" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The name of the tier of the member in the loyalty program.  For example, if the tier level of the member is labelled "VIP" in the Givex profile, then this field will return "VIP".</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountNote" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>A message to related to the account the interested parties (e.g. the operator) may be interested in knowing.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastTransactionDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The last date/time of the last successful transaction, including a cancel transaction.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="referringAccountKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The loyaltyAccount identifier for customer who referred the customer owning this account.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="referringCustomerName" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The full name of customer who referred the customer owning a particular account.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="rewardMessageNotificationRequired" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+					<xs:element name="productCategory" type="cat:ProductCategory" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="promotion" type="pro:Promotion" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="loyaltyTransaction" type="txn:LoyaltyTransaction" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SportsbookAccount" type="SportsbookAccount"/>
+	<xs:complexType name="SportsbookAccount">
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence>
+					<xs:element name="sportsbookAccountStatus" type="SportsbookAccountStateKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The status of the Sportsbook Account.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sportsbookAccountType" type="SportsbookAccountTypeKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The type of the sports book account.  Debit, Credit or Deposit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currency" type="typ:CurrencyCodeKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The default currency for the sportsbook acccount</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="currentExposure" type="typ:Money" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The current exposure</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="creditLimit" type="typ:Money" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>If the Sportsbook account is 'Credit', then a customer may have a line of credit to the value define here.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LiveCasinoAccount" type="LiveCasinoAccount"/>
+	<xs:complexType name="LiveCasinoAccount">
+		<xs:annotation>
+			<xs:documentation>TBD - Live Casino Accounts</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FinancialsAccount" type="FinancialsAccount"/>
+	<xs:complexType name="FinancialsAccount">
+		<xs:annotation>
+			<xs:documentation>TBD - A Financial's Account (External)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="AccountMasteredKind">
+		<xs:annotation>
+			<xs:documentation>The enumeration of values for account jurisdiction e.g. Internal, External</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Internal">
+				<xs:annotation>
+					<xs:documentation>Internally managed by Ladbrokes (e.g. Sportsbook)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="External">
+				<xs:annotation>
+					<xs:documentation>Externally managed outside of  Ladbrokes (e.g. Poker Account)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SportsbookAccountStateKind">
+		<xs:annotation>
+			<xs:documentation>This enumeration represents that various sportsbook account status' that the account can take on.   </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>A in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>S in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Locked">
+				<xs:annotation>
+					<xs:documentation>L in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Closed">
+				<xs:annotation>
+					<xs:documentation>C in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WithdrawOnly">
+				<xs:annotation>
+					<xs:documentation>W in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NoDepositsWithdrawals">
+				<xs:annotation>
+					<xs:documentation>T in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MustChangePassword">
+				<xs:annotation>
+					<xs:documentation>P in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Account" type="Account"/>
+	<xs:complexType name="Account" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Abstract business entity 'Account', realised through the various subclasses.
+
+A customer can have a number of Accounts of different types.  With MDM and Unified Wallet porgrammes of work, the concept of 'Account' is a little blurred.
+
+Accounts are almost becoming 'System' level buckets of information.  As far as a customer is concerned, they have profile/settings and a wallet to transact with.
+
+Accounts can be managed internally (Sportsbook) or externally (e.g. Poker), and from an integration / master data point of view, may be important to modlled this.
+
+Some accounts may have financial transaction occure, others may be a 'System' account like CRM Account.
+
+TBD:  MDM and Unified Wallet Project to agree a conceptual model for this.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="accountKey" type="xs:string" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The account key, a unique identifier. (aka the Member number within Givex world with description below)
+
+A accountKey  can be either 7 or 14 digits in length.
+The 14-digit number is constructed as follows: 
+
+    &lt;prefix&gt; &lt;validation code&gt; &lt;serial number&gt; &lt;check digit&gt;
+
+Prefix:
+    This field is a 2-digit number for identification purposes. For Ladbrokes 
+this will always be 10.
+
+Validation code:
+    A four digit random number.
+
+Serial number:
+    Sequential number identifying the loyalty member in the Givex database. 
+The number will be left padded with zeros so that it is always 7 digits in
+length.
+
+Check digit:
+    The check digit is a single digit to allow terminals to check for 
+single digit errors.   
+
+The 7-digit number is essentially the serial number described above.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKey" type="cus:CustomerKey" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The unique ID for the customer owning the account.  In the case of system accounts, this will not be applicable.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountName" type="xs:string" minOccurs="0" maxOccurs="1" />
+					<xs:element name="accountType" type="AccountType" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The specialisation of the account</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountMastered" type="AccountMasteredKind" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Where the account is mastered from</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountStatus" type="AccountStatusKind" minOccurs="0" maxOccurs="1" />
+					<xs:element name="owningParty" type="pty:Party" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>The Key of the organisation owning this account if external</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isFinancial" type="xs:boolean" minOccurs="0" maxOccurs="1" >
+						<xs:annotation>
+							<xs:documentation>Does this account have financial transactions that can occur on it?
+
+TBD - Could have a separate classification?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="transaction" type="txn:Transaction" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="characteristic" type="AccountCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="AccountTypeKind">
+		<xs:annotation>
+			<xs:documentation>An enumeration representing the specialisation of the Account.  e.g. SportsbookAccount, PokerAccount etc</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SportsbookAccount">
+				<xs:annotation>
+					<xs:documentation>A sportsbook account (internal - OpenBet)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PokerAccount">
+				<xs:annotation>
+					<xs:documentation>A Poker Account (external - currently MGS)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LoyaltyAccount">
+				<xs:annotation>
+					<xs:documentation>A Loyalty Account (currently Givex Internal)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CRMAccount">
+				<xs:annotation>
+					<xs:documentation>CRM Account (Internal - TBD)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CasinoAccount">
+				<xs:annotation>
+					<xs:documentation>A Casino Account (External)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LiveCasinoAccount">
+				<xs:annotation>
+					<xs:documentation>A Live Casino Account (External)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LottosAccount">
+				<xs:annotation>
+					<xs:documentation>A Lottos Account (External)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FinancialsAccount">
+				<xs:annotation>
+					<xs:documentation>A Financials Account (External)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SystemAccount">
+				<xs:annotation>
+					<xs:documentation>Generic System Account e.g. MW, BS2000, DW etc - a non financial account that may require integration to</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Other type?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="AccountCharacteristic" type="AccountCharacteristic"/>
+	<xs:complexType name="AccountCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for account characteristics / properties - this aids in future extensibility of the account entity</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The name of the account characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The value of the account characteristic.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The type of the account characteristic value (if known or applicible - default String)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="AccountCharacteristicStatusKind" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+					<xs:documentation>The status of the characteristic.  Active or Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LottosAccount" type="LottosAccount"/>
+	<xs:complexType name="LottosAccount">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CRMAccount" type="CRMAccount"/>
+	<xs:complexType name="CRMAccount">
+		<xs:annotation>
+			<xs:documentation>TBD - A CRM Account that may need to be integrated with</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CasinoAccount" type="CasinoAccount"/>
+	<xs:complexType name="CasinoAccount">
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SystemAccount" type="SystemAccount"/>
+	<xs:complexType name="SystemAccount">
+		<xs:annotation>
+			<xs:documentation>TBD - A generic system account that may need to be modelled for integration</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="AccountStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Inactive"/>
+			<xs:enumeration value="Suspended"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

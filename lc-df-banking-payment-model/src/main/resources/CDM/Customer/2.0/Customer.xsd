@@ -1,0 +1,2408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://cdm.ladbrokes.co.uk/customer/Customer/2.0"
+	 xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0"
+	 xmlns:ptr="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0"
+	 xmlns:acc="http://cdm.ladbrokes.co.uk/customer/Account/2.0"
+	 xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0"
+	 xmlns:aff="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0"
+	 xmlns:cty="http://cdm.ladbrokes.co.uk/common/Country/2.0"
+	 xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0"
+	 xmlns:ret="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0"
+	 xmlns:loc="http://cdm.ladbrokes.co.uk/common/Location/2.0"
+	 xmlns:wal="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0"
+	 xmlns:pay="http://cdm.ladbrokes.co.uk/banking/Payment/2.0"
+	 xmlns:pro="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0"
+	 xmlns:cus="http://cdm.ladbrokes.co.uk/customer/Customer/2.0"
+	 xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0"
+	 xmlns:pty="http://cdm.ladbrokes.co.uk/party/Party/2.0"
+	 targetNamespace="http://cdm.ladbrokes.co.uk/customer/Customer/2.0"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/Party/2.0" schemaLocation="../../Party/2.0/Party.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/marketing/Promotions/2.0" schemaLocation="../../Promotions/2.0/Promotions.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/banking/Payment/2.0" schemaLocation="../../Payment/2.0/Payment.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/banking/Wallet/2.0" schemaLocation="../../Wallet/2.0/Wallet.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Location/2.0" schemaLocation="../../Location/2.0/Location.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/retail/RetailShop/2.0" schemaLocation="../../RetailShop/2.0/RetailShop.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Country/2.0" schemaLocation="../../Country/2.0/Country.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/partner/Affiliate/2.0" schemaLocation="../../Affiliate/2.0/Affiliate.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/customer/Account/2.0" schemaLocation="../../Account/2.0/Account.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" schemaLocation="../../PartyRole/2.0/PartyRole.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:include schemaLocation="../../Customer/2.0/Customer.xsd"/>
+	<xs:element name="SecurityDetail" type="cus:SecurityDetail"/>
+	<xs:complexType name="SecurityDetail">
+		<xs:annotation>
+			<xs:documentation>This class represents the core security detail the customer would know and could be asked to enter (online) and/or respond to (e.g. telesales, CSR).
+
+Such detail incldues sessionToken (for OpenBet authentication, userName, passwords and pins, in plain and encoded format and temporary passwords.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="encodedPassword" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer's encrypted password.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="encodedPin" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer's Encrypted pin (used for store and forward).
+If pin is include it can either be clear or encrypted.
+One of password or pin must be included.  
+
+4 Digits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="password" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Clear text password</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pin" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer's clear text pin.
+If pin is include it can either be clear or encrypted.
+One of password or pin must be included.
+
+4 Digits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sessionToken" type="cus:SessionToken"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The most current session token as mastered currently by OpenBet.  This is generated after a successful login using 'userName' and 'password' (clear or encoded)
+
+
+This token is required for nearly all OXI API's and is OpenBet's way of authenticating the customer, and their current session.
+
+This would change once a proper IDM solution is looked at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="significantDate" type="xs:date"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A significant date as part of challenge response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="temporaryPassword" type="xs:string"  minOccurs="0"/>
+			<xs:element name="temporaryPin" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer's clear text pin.
+If pin is include it can either be clear or encrypted.
+One of password or pin must be included.
+
+4 Digits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="userName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customers userName across all Ladbrokes products.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerRegistration" type="cus:CustomerRegistration"/>
+	<xs:complexType name="CustomerRegistration">
+		<xs:annotation>
+			<xs:documentation>This class contains details of customers registration process.  Details such as what channel, what ip address, affiliate information and 'hear about'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="affiliateKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The canonical ID of the affiliate that the customer registered through</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0"/>
+			<xs:element name="documentsRequired" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether document proof is required</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hearAbout" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for where the customer heard about Ladbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hearAboutText" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for where the customer heard about Ladbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ipAddress" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>IP address of the device registering</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="registrationComplete" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is the customers registration complete?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="registrationCompleteDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time that the registration Completed.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="registrationStartDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time that the registration STARTED.  In some instance, a registration may not have completed and is 'Pending'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="registrationChannel" type="chn:Channel" minOccurs="0"/>
+			<xs:element name="registrationCountry" type="cty:Country" minOccurs="0"/>
+			<xs:element name="affiliate" type="aff:Affiliate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerKey" type="cus:CustomerKey"/>
+	<xs:complexType name="CustomerKey">
+		<xs:annotation>
+			<xs:documentation>This class represents unique identification for a customer.  A customer can be identified in a number of different systems in Ladbrokes.  This class represents a single identification key - there may (most likely is) a number of these for each system.
+
+MDM programme would resolve this down to 1, the MDM unique key</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="key" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identifying key for the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="system" type="cus:SystemKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The system which is mastering the key.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="cus:CustomerKeyTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the key.
+
+system (internal)
+email
+socialMediaUsername</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sessionToken" type="cus:SessionToken" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerMessage" type="cus:CustomerMessage"/>
+	<xs:complexType name="CustomerMessage">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a message by which Ladbrokes wish to communicate with a Customer</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="content" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Message Content.  HMTL encoded?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deleteDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The date and time the message was read</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isDeleted" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Has the message been deleted by the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPriority" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Is this message a priority one?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isRead" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Has the message been read by the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="language" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - A message language if known or converted?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="messageCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Unique code / template code this message is based on (e.g. in some content management system)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="messageKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - unique key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="messageType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Unique code / template code this message is based on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherInfo" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - for other info</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="readDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The date and time the message was read</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sender" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Just a string for now, should be a more sturctured relationship</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sentDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The date and time the message was sent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subject" type="xs:string"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ReactivateMethodKind">
+		<xs:annotation>
+			<xs:documentation>Specifies what is to be removed from the account (a self exclusion or a queued reactivation)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Manual">
+				<xs:annotation>
+					<xs:documentation>A self exclusion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ReactivationQueue">
+				<xs:annotation>
+					<xs:documentation>Queued reactivation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="HVC" type="cus:HVC"/>
+	<xs:complexType name="HVC">
+		<xs:annotation>
+			<xs:documentation>High Value Customer – A customer that does a disproportionately high amount of business with Ladbrokes compared to normal customers and is therefore highly valued and subject to different business rules</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cus:Customer">
+				<xs:sequence>
+					<xs:element name="primaryProduct" type="cat:ProductCategory"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The primary category of product the HVC consumes and generates money for Ladborkes</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="value" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - HVC Value</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="worth" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - Score indicating the HVC worth to Ladbrokes</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RedeemedPromotions" type="cus:RedeemedPromotions"/>
+	<xs:complexType name="RedeemedPromotions">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a collection of available promotions the Customer HAS Redeemed</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="promotion" type="pro:Promotion" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LimitTypeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of credit limit types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WithdrawalLimit">
+				<xs:annotation>
+					<xs:documentation>Withdrawal Limit Type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TimeWindow">
+				<xs:annotation>
+					<xs:documentation>Time Window Type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DepositFrequency">
+				<xs:annotation>
+					<xs:documentation>Deposit Frequency Type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DepositLimit">
+				<xs:annotation>
+					<xs:documentation>Deposit Limit Type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerApplicationTrust" type="cus:CustomerApplicationTrust"/>
+	<xs:complexType name="CustomerApplicationTrust">
+		<xs:annotation>
+			<xs:documentation>Describes a trust relationship between a Customer and an Application. This will initially be used in mobile use cases (although not restricted to just mobile, full eComm could also use in future) where mobile applications (built by Ladbrokes or third parties) us these trust relationship details to to support modern trust based security schemes like OAuth.  </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="validFrom" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>The date and time this is valid from?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validTo" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time this is valid from?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this record active</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationKey" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>In the case of an API Client, this is their API Key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationType" type="cus:ApplicationTypeKind">
+				<xs:annotation>
+					<xs:documentation>The type of application the trust is with</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerKey" type="cus:CustomerKey">
+				<xs:annotation>
+					<xs:documentation>The customer key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="created" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>when does the autorisationCode or refreshToken created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUpdated" type="xs:dateTime"/>
+			<xs:element name="lastUpdatedBy" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Last updated by</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastUsed" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>when does the refreshToken used last time to create access-token</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="trustComment" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Additional comments from the person updating the trust record</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationTrustStatus" type="cus:ApplicationTrustStatusKind">
+				<xs:annotation>
+					<xs:documentation>The status of the trust</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="authorisationCode" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The encrypted token that specifies that the customer trusts the application. API Clients use this to start new sessions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="authorisationCodeStatus" type="cus:AuthorisationCodeStatusKind"/>
+			<xs:element name="refreshToken" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>oAuth refresh token</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="refreshTokenStatus" type="cus:RefreshTokenStatusKind">
+				<xs:annotation>
+					<xs:documentation>oAuth refresh token status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noOfUses" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of time refreshToken or AuthorisationCode is used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="revocationReason" type="cus:ApplicationTrustRevocationReasonKind">
+				<xs:annotation>
+					<xs:documentation>Reason the trust was revoked?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expireTime" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>expire time in seconds</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="revocationComment" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>revocation comment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CustomerPriceFormatKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Decimal"/>
+			<xs:enumeration value="Fractional"/>
+			<xs:enumeration value="American"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CustomerCharacteristicStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the status' of customer characteristics</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>Characteristic is Active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Characteristic is Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerDeviceProfile" type="cus:CustomerDeviceProfile"/>
+	<xs:complexType name="CustomerDeviceProfile">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unique key for the customer owning this consent profile</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deviceId" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>device id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deviceName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the device</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AnonymousCustomer" type="cus:AnonymousCustomer"/>
+	<xs:complexType name="AnonymousCustomer">
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole">
+				<xs:sequence>
+					<xs:element name="hasLoyaltyAccount" type="xs:boolean"  minOccurs="0"/>
+					<xs:element name="channel" type="chn:Channel" minOccurs="0"/>
+					<xs:element name="currentLocation" type="loc:Location" minOccurs="0"/>
+					<xs:element name="currentShop" type="ret:RetailShop" minOccurs="0"/>
+					<xs:element name="loyaltyAccount" type="acc:LoyaltyAccount" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="anonymousCustomerSession" type="cus:AnonymousCustomerSession" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AnonymousCustomerSession" type="cus:AnonymousCustomerSession"/>
+	<xs:complexType name="AnonymousCustomerSession">
+		<xs:annotation>
+			<xs:documentation>The concept of a n anonymous customer session can apply to telebetting or inshop terminal usage. For instore terminals (such as SSBTs) it is based on the following rules:
+
+- Session starts when the balance of a terminal public account balance goes from £0 to £&gt;0
+
+- Session ends when the balance returns to 0 or is cashed out
+
+All bets in between the above events are assumed to be from a single customer, although there is no way to be sure.
+
+It is likely that a real anonymous customer session will span several AnonymousCustomerSession instances fairly regularly. Especially in the instance that the customer spends their balance before topping up.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sessionId" type="xs:string"  minOccurs="0"/>
+			<xs:element name="startTime" type="xs:dateTime"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerPromotionsProfile" type="cus:CustomerPromotionsProfile"/>
+	<xs:complexType name="CustomerPromotionsProfile">
+		<xs:annotation>
+			<xs:documentation>Models eligibility and history of available, redeemed, and offered promotions for a customer, whether they be generic or targeted via a personalisation engine or marketing campaign</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique identifier for the customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasAvailPromotions" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have promotions available to redeem?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="availablePromotions" type="cus:AvailablePromotions" minOccurs="0"/>
+					<xs:element name="redeemedPromotions" type="cus:RedeemedPromotions" minOccurs="0"/>
+					<xs:element name="profileValue" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A derived profile value</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerSubscriptionProfile" type="cus:CustomerSubscriptionProfile"/>
+	<xs:complexType name="CustomerSubscriptionProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a Customer's subscription profile.
+
+TBD - Overlap with 'Customer Product Profile?
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerSubscription" type="cus:CustomerSubscription" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerSportsbookProfile" type="cus:CustomerSportsbookProfile"/>
+	<xs:complexType name="CustomerSportsbookProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'Sportsbook' profile.
+
+Details of bet history, patterns, segmentation, liability, limits, freebets etc are contained within this CustomerSportsbookProfile class.  
+
+A lot of this information can be gathered direct from OpenBet, some in future may come from some BI / Analytics input.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="averageBetsPerDay" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The average number of bets per day</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="averageStakeAmountPerDay" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The average stake about per day</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betCount" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of Bets placed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betLoseCount" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of losing bets</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="betWinCount" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of win bets</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The key of the  customer whose sportsbook profile this is for</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="favouriteEventClassKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The canonical key of the customers favourite type of sport.  
+e.g. Key for Football</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasRedeemedPromotions" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Has the customer redeemed a promotion before?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastBetDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time of the last Bet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastPromotionRedemptionDateTime" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the last promotion was redeemed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productCategory" type="cat:CategoryTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The product category that this profile relates to.
+In this case, 'SportsbookCategory'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="profileValue" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A derived sportsbook profile value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="secondEventClassKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The canonical MDM key of the customers favourite type of sport. e.g. Key for Cricket</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="secondLastBetDateTime" type="xs:dateTime"  minOccurs="0"/>
+					<xs:element name="totalManualAdjustments" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total manual adjustments made</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalNumOpenTokens" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of open tokens</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalNumRedeemedTokens" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of tokens redeemed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalOpenTokens" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of open tokens available to redeem</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalProfitLoss" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Total Profit and Loss</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalRedeemedTokens" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of token redeemed</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalRefunds" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total money refunded to the customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalStaked" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of money staked</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalStakedSettled" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total amount of money staked</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalWinnings" type="typ:Money"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total winnings for the customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sportsbookProfileCharacteristic" type="cus:ProductProfileCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="customerBetLiability" type="cus:CustomerBetLiability" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerCampaignProfile" type="cus:CustomerCampaignProfile"/>
+	<xs:complexType name="CustomerCampaignProfile">
+		<xs:annotation>
+			<xs:documentation>Models marketing campaigns in which the customer has participated or been targeted. E.G. email marketing</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="campaignDetail" type="cus:CampaignDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerLimit" type="cus:CustomerLimit"/>
+	<xs:complexType name="CustomerLimit">
+		<xs:annotation>
+			<xs:documentation>This class represents a Customers Limit setting - this may be associated to a product (category)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The key of the customer the limit is for</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="effectiveDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the limit should take effect.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="endDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the limit should cease.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="limitKey" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique key/id of the limit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="limitPeriod" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The code for the period of the limit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="limitRange" type="cus:LimitRangeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The range of the limit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="limitType" type="cus:LimitTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The type of the limit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="limitValue" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The code for the type of the limit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="limitProductCategory" type="cat:ProductCategory" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="selfExclude" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is it a self exclusion. Default N</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="updateable" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Can the exclusion be updated</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerLiveCasinoProfile" type="cus:CustomerLiveCasinoProfile"/>
+	<xs:complexType name="CustomerLiveCasinoProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'LiveCasino' profile.
+
+TBD</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="CustomerFlagType" type="cus:CustomerFlagType"/>
+	<xs:complexType name="CustomerFlagType">
+		<xs:annotation>
+			<xs:documentation>The type of customer flag</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"  minOccurs="0"/>
+			<xs:element name="description" type="xs:string"  minOccurs="0"/>
+			<xs:element name="name" type="xs:string"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerBingoProfile" type="cus:CustomerBingoProfile"/>
+	<xs:complexType name="CustomerBingoProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'Bingo' profile.
+
+TBD</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="CustomerAcquisition" type="cus:CustomerAcquisition"/>
+	<xs:complexType name="CustomerAcquisition">
+		<xs:sequence>
+			<xs:element name="acquisitionDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time that the affiliate acquired the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acquisitionMethod" type="aff:AcquisitionMethod" minOccurs="0"/>
+			<xs:element name="affiliate" type="aff:Affiliate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Anonymous" type="cus:Anonymous"/>
+	<xs:complexType name="Anonymous">
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerConsent" type="cus:CustomerConsent"/>
+	<xs:complexType name="CustomerConsent">
+		<xs:annotation>
+			<xs:documentation>A class representing a configured consent setting for a customer.  There can be many of these as defined by the CustomerConsentKind enumeration type. There are legal implications to not acting in accordance with the customers settings.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="dateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time that the Customer Consent was set</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="type" type="cus:CustomerConsentKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The type of the customer consent given.
+e.g: ContactByEmail, ContactBySms, IdentityCheck, DataProtectionAct</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="value" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The value of the consent - true or false</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Customer" type="cus:Customer"/>
+	<xs:complexType name="Customer">
+		<xs:annotation>
+			<xs:documentation>A role assumed by a Party when they interact with Ladbrokes as a betting customer.   That is, uses Ladbrokes  products such as sportsbook, poker, casino etc and accompanied services.    This customer will have a number of accounts and profiles associated with them.  they will initiate transactions on these accounts as the consume Ladbrokes products and services.
+
+This is modeled as a Party playing the role of Customer.  A Customer is a type of PartyRole. There could be a further classification of the partyRole to say 'FraudulantCustomer' 'AnonymousCustomer', 'ProspectiveCustomer' etc.
+
+This is the principle entity of focus within Ladbrokes business, generating revenue based on usage of the various products offered by Ladbrokes. Most customers are actually individuals/persons, rather the organisations. However, it is possible that Ladbrokes could act as a 'reseller' as was explored in the case with Project New Zealand to the NZ Tab.
+
+Ladbrokes Customer facing products include:
+
+Sportsbook
+Poker
+Games
+Casino
+Financials
+Lotto
+Live Casino</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The list of identifiers used to identify this customer.  There may be numerous of these as customer information is distributed across many systems.  
+
+When MDM is in place, in theory, only the 'MDM' customer identifier is required.
+
+This class allows a representation of various system managed ID's (e.g. Openbet, Givex, ODIN, MGM)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerStatus" type="cus:CustomerStatusKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The status of the customer. 
+e.g:  Active, Suspended, Closed
+
+Possible values:
+
+Active (OpenBet ='A')
+Suspended (OpenBet='S')
+Closed (OpenBet='Closed')
+
+Greater granularity of customer status is offered by the customer status flags. (CustomerFlag)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isHVC" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is the customer a high value customer of ladbrokes?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="note" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A general purpose note on the Customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="wallet" type="wal:Wallet" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="account" type="acc:Account" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="customerGroupProfile" type="cus:CustomerGroupProfile" minOccurs="0"/>
+					<xs:element name="customerCharacteristics" type="cus:CustomerCharacteristics" minOccurs="0"/>
+					<xs:element name="customerSubscriptionProfile" type="cus:CustomerSubscriptionProfile" minOccurs="0"/>
+					<xs:element name="customerConsentProfile" type="cus:CustomerConsentProfile" minOccurs="0"/>
+					<xs:element name="customerCampaignProfile" type="cus:CustomerCampaignProfile" minOccurs="0"/>
+					<xs:element name="customerContentProfile" type="cus:CustomerContentProfile" minOccurs="0"/>
+					<xs:element name="customerAcquisition" type="cus:CustomerAcquisition" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="customerPaymentProfile" type="cus:CustomerPaymentProfile" minOccurs="0"/>
+					<xs:element name="customerSelfExclusionProfile" type="cus:CustomerSelfExclusionProfile" minOccurs="0"/>
+					<xs:element name="customerPromotionsProfile" type="cus:CustomerPromotionsProfile" minOccurs="0"/>
+					<xs:element name="customerLimitsProfile" type="cus:CustomerLimitsProfile" minOccurs="0"/>
+					<xs:element name="customerFlagProfile" type="cus:CustomerFlagProfile" minOccurs="0"/>
+					<xs:element name="customerPreference" type="cus:CustomerPreference" minOccurs="0"/>
+					<xs:element name="customerDeviceProfile" type="cus:CustomerDeviceProfile" minOccurs="0"/>
+					<xs:element name="customerSocialMediaProfile" type="cus:CustomerSocialMediaProfile" minOccurs="0"/>
+					<xs:element name="customerSession" type="cus:CustomerSession" minOccurs="0"/>
+					<xs:element name="customerProductProfile" type="cus:CustomerProductProfile" minOccurs="0"/>
+					<xs:element name="customerRegistration" type="cus:CustomerRegistration" minOccurs="0"/>
+					<xs:element name="customerCredentials" type="cus:CustomerCredentials" minOccurs="0"/>
+					<xs:element name="customerMessages" type="cus:CustomerMessages" minOccurs="0"/>
+					<xs:element name="CustomerTrustProfile" type="cus:CustomerTrustProfile" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SessionStatistics" type="cus:SessionStatistics"/>
+	<xs:complexType name="SessionStatistics">
+		<xs:annotation>
+			<xs:documentation>This class represents statistics about a customers session over time</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lastLoginChannel" type="chn:Channel"  minOccurs="0"/>
+			<xs:element name="lastLoginDateTime" type="xs:dateTime"  minOccurs="0"/>
+			<xs:element name="lastLoginIP" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The IP address of the last login</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loginCount" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of times a customer has successfully logged in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loginFailureCount" type="xs:integer"  minOccurs="0"/>
+			<xs:element name="numOfBetsPlaced" type="xs:integer"  minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerCasinoProfile" type="cus:CustomerCasinoProfile"/>
+	<xs:complexType name="CustomerCasinoProfile">
+		<xs:annotation>
+			<xs:documentation>This represents a customers 'Casino' profile.
+
+Details of bet history, patterns, segmentation, liability, limits, freebets etc are contained within this CustomerCasinoProfile.
+
+This would be populated from some BI / Analytics input or a third party casino supplier data source</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="averageBetsPerDay" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The average amount of money spent on casino bets per day</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasOpenPromos" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Does this customer have any open promotions available for redemption?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastBetDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The last date and time a casino bet was made by the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastPromoRedeemDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date and time the last promotion redemption occurred</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="productCategory" type="cat:CategoryTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The product category that this profile relates to.
+In this case, 'CasinoCategory'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="totalStaked" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The total amount staked on casino by the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="totalWinnings" type="typ:Money"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The total amount won or lost on casino by the customer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="usageIndicator" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>An indicator of the casino product usage by the customer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerFlagProfile" type="cus:CustomerFlagProfile"/>
+	<xs:complexType name="CustomerFlagProfile">
+		<xs:annotation>
+			<xs:documentation>A container for various customer flags, which Openbet masters.
+
+This will remain as an 'OpenBet' specific concept for now.
+
+It is arguable whether these should be returned, or abstracted some how?  At the point in time,that is TBD
+
+However, may be retired in the future.
+
+This should be treated different to Customer Characteristics</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique key of the owning customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numFlags" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The number of CustomerFlags </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerFlag" type="cus:CustomerFlag" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerSelfExclusionProfile" type="cus:CustomerSelfExclusionProfile"/>
+	<xs:complexType name="CustomerSelfExclusionProfile">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a Customers self exclusion profile.  A customer may be able to self exclude at a Product level.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="completeExclusion" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Has this customer completely self excluded themselves from all products?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasExclusions" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have product specific exclusions?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerSelfExclusion" type="cus:CustomerSelfExclusion" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CustomerFlagStatusKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration for the status values for a customer flag.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active">
+				<xs:annotation>
+					<xs:documentation>- 'Active' and should be applied to customer. 'A' in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>- 'Suspended' and not to be considered.  'S' in OpenBet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerPreference" type="cus:CustomerPreference"/>
+	<xs:complexType name="CustomerPreference">
+		<xs:annotation>
+			<xs:documentation>This class represents a general container for generic customer preferences.
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique identifier for the owning customer of these preferences</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="language" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customers preferred language settings.  This should be an ISO value.
+e.g: en</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nickname" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customers preferred Nickname</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="preferredCurrency" type="typ:CurrencyCodeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The preferred currency of the customer.  This value will be one of those from the ISO code set.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="priceFormat" type="cus:CustomerPriceFormatKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The preferred price format which to show prices odds for.  
+e.g. Decimal, Fractional, American</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerPrefCharacteristic" type="cus:CustomerPreferenceCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="customerAlias" type="cus:CustomerAlias" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SessionToken" type="cus:SessionToken"/>
+	<xs:complexType name="SessionToken">
+		<xs:annotation>
+			<xs:documentation>This class represents a session token as mastered by OpenBet and required for all external call to OXI.  This represents an 'authenticated' customer if valid</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="loginTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The timestamp corresponding to when the customer logged in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sessionStatus" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>OK (Derived if not == EXPIRED)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="timeToLive" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The duration in milliseconds that the token is valid for</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tokenExpiryTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The time in seconds that the token is valid for.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tokenValue" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A base 64 encoded hexadecimal string representing the current session</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerSession" type="cus:CustomerSession"/>
+	<xs:complexType name="CustomerSession">
+		<xs:annotation>
+			<xs:documentation>Details about the customer’s current logged in session</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customers unique identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sessionStatistics" type="cus:SessionStatistics" minOccurs="0"/>
+			<xs:element name="sessionToken" type="cus:SessionToken" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerSocialMediaProfile" type="cus:CustomerSocialMediaProfile"/>
+	<xs:complexType name="CustomerSocialMediaProfile">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a customer social media profile</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customerSocialMedia" type="cus:CustomerSocialMedia" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerCharacteristic" type="cus:CustomerCharacteristic"/>
+	<xs:complexType name="CustomerCharacteristic">
+		<xs:annotation>
+			<xs:documentation>This class represents a generic container for Customer characteristics / properties - this aids in future extensibility of the account entity.
+
+Note:  CustomerFlags is meant to be retained as 'OpenBet' specific and hopefully would be retired over time - however is modelled to support transition</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name of the Customer characteristic.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="status" type="cus:CustomerCharacteristicStatusKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The status of the characteristic.  Active or Inactive</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="value" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The value of the Customer characteristic.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="valueType" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The type of the customer characteristic value (if known or applicable - default String)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerBackgammonProfile" type="cus:CustomerBackgammonProfile"/>
+	<xs:complexType name="CustomerBackgammonProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'backgammon' profile.
+
+TBD</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="CustomerGamesProfile" type="cus:CustomerGamesProfile"/>
+	<xs:complexType name="CustomerGamesProfile">
+		<xs:annotation>
+			<xs:documentation>Customer FOG (Fixed Odd Games) Profile</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:simpleType name="CustomerConsentKind">
+		<xs:annotation>
+			<xs:documentation>The types of customer consent given (or not) by the Customer.  This has legal implications in terms of compliance for acting on this in accordance with Customers wishes.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DataProtectionAct"/>
+			<xs:enumeration value="LadbrokesMarketing"/>
+			<xs:enumeration value="TermsAndConditions"/>
+			<xs:enumeration value="IdentityCheck"/>
+			<xs:enumeration value="ContactBySms"/>
+			<xs:enumeration value="ContactByEmail"/>
+			<xs:enumeration value="ContactByMail"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="PartnerMarketing"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerProductPreferences" type="cus:CustomerProductPreferences"/>
+	<xs:complexType name="CustomerProductPreferences">
+		<xs:sequence>
+			<xs:element name="customerProductPreference" type="cus:CustomerProductPreference" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ProductProfileCharacteristic" type="cus:ProductProfileCharacteristic"/>
+	<xs:complexType name="ProductProfileCharacteristic">
+		<xs:annotation>
+			<xs:documentation>A generic container for profile characteristics.  Future use.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the profile characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerSubscription" type="cus:CustomerSubscription"/>
+	<xs:complexType name="CustomerSubscription">
+		<xs:sequence>
+			<xs:element name="validFor" type="typ:TimePeriod"  minOccurs="0"/>
+			<xs:element name="productCatagegory" type="cat:ProductCategory" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AvailablePromotions" type="cus:AvailablePromotions"/>
+	<xs:complexType name="AvailablePromotions">
+		<xs:annotation>
+			<xs:documentation>This class represents a collection of available promotions the Customer is entitled to Redeem</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="promotion" type="pro:Promotion" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerBetLiability" type="cus:CustomerBetLiability"/>
+	<xs:complexType name="CustomerBetLiability">
+		<xs:annotation>
+			<xs:documentation>This class represents the customers betting liability, as mastered in OpenBet and can be modified by traders.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="liabilityGroup" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The liability group this customer is associated with</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="stakeFactor" type="xs:decimal"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Max stake scale should be multiplied by the maximum stake from the event hierarchy to get the true maximum stake for this customer. It is a decimal number between 0.01 and 99.99.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerSelfExclusion" type="cus:CustomerSelfExclusion"/>
+	<xs:complexType name="CustomerSelfExclusion">
+		<xs:annotation>
+			<xs:documentation>This class represents the details of whether a customer has self excluded themselves from gambling across all products.  
+
+This has regulatory implications and is part of the gaming compliance and gameware.
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="config" type="xs:string"  minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Additional field information, client-specific</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="coolOffDaysLeft" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The number of days the the customer has to change their mind before self exclusion takes affect.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique key of the customer the self exclusion details are for</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="endTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Datetime self exclusion ceases effect</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="exclusionDaysFor" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The number of days that customer was originally excluded for</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="exclusionDaysLeft" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The number of days left to exclude the customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="productCategory" type="cat:ProductCategory" minOccurs="0"/>
+					<xs:element name="exclusionRequestDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time of the exclusion request</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isExcluded" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is the customer excluded?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="reactivateDate" type="xs:dateTime"  minOccurs="0"/>
+					<xs:element name="reactivateMethod" type="cus:ReactivateMethodKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Specifies what is to be removed from the account (a self exclusion or a queued reactivation)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="selfExcludeAction" type="cus:SelfExcludeActionKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Specifies the self exclusion action to be attempted</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="startTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Datetime self exclusion takes effect</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="RefreshTokenStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Expired"/>
+			<xs:enumeration value="Invalid"/>
+			<xs:enumeration value="Revoked"/>
+			<xs:enumeration value="Superceded"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LimitRangeKind">
+		<xs:annotation>
+			<xs:documentation>Enumeration of the range of limits</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AllTime">
+				<xs:annotation>
+					<xs:documentation>Default</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PerTransaction">
+				<xs:annotation>
+					<xs:documentation>Limit applied all the time</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RollingAccumulation">
+				<xs:annotation>
+					<xs:documentation>Limit applied per transaction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Default">
+				<xs:annotation>
+					<xs:documentation>RollingAccumulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerAvailableContent" type="cus:CustomerAvailableContent"/>
+	<xs:complexType name="CustomerAvailableContent">
+		<xs:annotation>
+			<xs:documentation>TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="description" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expiryDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - Date and time of expiry of this content availability</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="URL" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - URL of content provider to use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerLottosProfile" type="cus:CustomerLottosProfile"/>
+	<xs:complexType name="CustomerLottosProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'Lottos' profile.
+
+TBD</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:simpleType name="ApplicationTrustRevocationReasonKind">
+		<xs:annotation>
+			<xs:documentation>Describes reasons why an ApplicationTrustRecord may have had its status set to one of the following:
+
+- RevokedByCustomer
+- RevokedByLadbrokes
+- RevokedByApplicationOwner</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ApplicationPermissionsChanged">
+				<xs:annotation>
+					<xs:documentation>The set of actions that an App is allowed to perform has changed. This causes all authorisation codes to be revoked for that API Client, meaning customer's have to re-authorise with the new permissions.  Only valid for:
+
+- ApplicationTrustStatus.RevokedByApplicationOwner
+- ApplicationTrustStatus.RevokedByLadbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LostOrStolenCustomerDevice">
+				<xs:annotation>
+					<xs:documentation>If a customer has lost their phone, tablet, laptop etc, or it has been stolen, then they can revoke the trust, thus incvalidating the authorisation code. The next time the app tries to access the API on behalf of that customer, re-authorisation will be required, which requires knowledge of the customer's username and password. Only Valid for:
+
+- ApplicationTrustStatus.RevokedByCustomer
+- ApplicationTrustStatus.RevokedByLadbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SuspectedMisuseByCustomer">
+				<xs:annotation>
+					<xs:documentation>The App is being used in a way not consistent with expected behaviour or T's and C's.  Only valid for:
+
+- ApplicationTrustStatus.RevokedByApplicationOwner
+- ApplicationTrustStatus.RevokedByLadbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ApplicationHasBeenDisabled">
+				<xs:annotation>
+					<xs:documentation>If there is something about the app that we think warrants disabling it, then their API Key will be disabled, and all authorisations will be set to this status. Only valid for:
+
+ApplicationTrustStatus.RevokedByLadbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerNoLongerUsesApplication">
+				<xs:annotation>
+					<xs:documentation>A customer may simply not wish to use the app anymore, and so revokes their trust. Only valid for:
+
+- ApplicationTrustStatus.RevokedByCustomer
+- ApplicationTrustStatus.RevokedByLadbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerNoLongerTrustsApplication">
+				<xs:annotation>
+					<xs:documentation>Something may have happened that arouses the customer's suspicions and they decide not to trust the app anymore. Only valid for:
+
+- ApplicationTrustStatus.RevokedByCustomer
+- ApplicationTrustStatus.RevokedByLadbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerOldDevice">
+				<xs:annotation>
+					<xs:documentation>Customer's old device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustomerSoldDevice">
+				<xs:annotation>
+					<xs:documentation>Customer has sold the device</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>Any thing else other than above</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CustomerStatusKind">
+		<xs:annotation>
+			<xs:documentation>Customer&amp;rsquo;s status. Possible values:
+
+Active - 'A' in OpenBet
+Suspended - 'S' in OpenBet
+Closed - 'C' in OpenBet</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Suspended"/>
+			<xs:enumeration value="Closed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerTrustProfile" type="cus:CustomerTrustProfile"/>
+	<xs:complexType name="CustomerTrustProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a profile of all customer related trust configuration and settings (e.g:  between a Customer and Mobile Applications)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="profileValue" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A overall derived profile value if applicable?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerApplicationTrust" type="cus:CustomerApplicationTrust" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CampaignDetail" type="cus:CampaignDetail"/>
+	<xs:complexType name="CampaignDetail"/>
+	<xs:element name="CustomerMobileProfile" type="cus:CustomerMobileProfile"/>
+	<xs:complexType name="CustomerMobileProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'Mobile' channel profile.
+
+TBD</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="CustomerLimitsProfile" type="cus:CustomerLimitsProfile"/>
+	<xs:complexType name="CustomerLimitsProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents the product based limits a customer may have.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer Key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hasLimits" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Has the customer limits?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerLimit" type="cus:CustomerLimit" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CustomerKeyTypeKind">
+		<xs:annotation>
+			<xs:documentation>TBD - The kind of key this is.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SystemKey">
+				<xs:annotation>
+					<xs:documentation>A general unique system level Key.  e.g. custId=1232342</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Email">
+				<xs:annotation>
+					<xs:documentation>An email identifier e.g. kdmaile@yahoo.com</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UserName">
+				<xs:annotation>
+					<xs:documentation>A user defined user name understood by a system (e.g. Ladbrokes online userName)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SocialMediaUser">
+				<xs:annotation>
+					<xs:documentation>A social media user name for Twitter and Facebook</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Token">
+				<xs:annotation>
+					<xs:documentation>A token, that has the lifespan of a period of time, that can be used to identify a customer (e.g. session token from openBet, oAuth token from facebook connect, SAML token)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>TBD - Other - Future extension?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplicationTypeKind">
+		<xs:annotation>
+			<xs:documentation>Lists the types of application supported. See the Application Portfolio (in Application Architecture) for examples of each type of application</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Internal">
+				<xs:annotation>
+					<xs:documentation>Internal means Ladbrokes owned and supported</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="External">
+				<xs:annotation>
+					<xs:documentation>External normally means a third party app that is not managed by Ladbrokes</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerConsentProfile" type="cus:CustomerConsentProfile"/>
+	<xs:complexType name="CustomerConsentProfile">
+		<xs:annotation>
+			<xs:documentation>This class is a profile container for the various customer consents required by various privacy acts.  This will vary between countries, however is crucial for compliance and regulatory reasons.
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The unique key for the customer owning this consent profile</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="profileValue" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A degree of conformance as measured by Ladborkes.  TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerConsent" type="cus:CustomerConsent" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerGroupProfile" type="cus:CustomerGroupProfile"/>
+	<xs:complexType name="CustomerGroupProfile">
+		<xs:annotation>
+			<xs:documentation>A profile container class for the CustomerGroups that the customer belongs to.
+
+TBD - Sync up with Mercury differential pricing.
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0"/>
+					<xs:element name="isDiffPricingEnabled" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Is this customer subject to differential pricing as a result of the group they are associated with?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerGroup" type="cus:CustomerGroup" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="numOfGroups" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>TBD - The number of groups this customer is in.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerPaymentProfileCharacteristic" type="cus:CustomerPaymentProfileCharacteristic"/>
+	<xs:complexType name="CustomerPaymentProfileCharacteristic">
+		<xs:annotation>
+			<xs:documentation>A generic container of name value pair characteristics for future payment profile extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the generic characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the generic characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the value of the generic characteristic (if applicable)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SelfExcludeActionKind">
+		<xs:annotation>
+			<xs:documentation>Specifies the self exclusion action to be attempted (ADD | DEL | QUEUE_FOR_DEL)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Add"/>
+			<xs:enumeration value="Delete"/>
+			<xs:enumeration value="QueueForDelete"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerCharacteristics" type="cus:CustomerCharacteristics"/>
+	<xs:complexType name="CustomerCharacteristics">
+		<xs:annotation>
+			<xs:documentation>This class is a container for generic CustomerCharacteristics to use for future extensibility</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hasCharacteristics" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The customer has applicable Characteristics </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerCharacteristic" type="cus:CustomerCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerPaymentProfile" type="cus:CustomerPaymentProfile"/>
+	<xs:complexType name="CustomerPaymentProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers payment profile, including details such as registered payment methods, limits, prefered/default methods.
+
+This could contain any derived data from analystics/BI on the profile</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The owning customers unique identifier</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastFailedPaymentDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time of last payment</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastSuccessPaymentDateTime" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time of last payment successful payment</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="numActivePaymentMethods" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The number of active payment methods for the customer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="totalNumFailedPayments" type="xs:integer"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total number of failed payments</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentMethod" type="pay:PaymentMethod" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="customerPaymentProfileCharacteristic" type="cus:CustomerPaymentProfileCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerPokerProfile" type="cus:CustomerPokerProfile"/>
+	<xs:complexType name="CustomerPokerProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'Poker' profile.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="productCategory" type="cat:CategoryTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The type of product category in Hybris that this profile relates to</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pokerProfileCharacteristic" type="cus:ProductProfileCharacteristic" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerContentProfile" type="cus:CustomerContentProfile"/>
+	<xs:complexType name="CustomerContentProfile">
+		<xs:annotation>
+			<xs:documentation>TBD - A Profile container for customer preferences/allowances for content (e.g. video, audio, text etc)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The key of the customer whose content profile this is for</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="isVideoContentAvailable" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does the customer have video content available for consumption?  From OpenBet</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerAvailableContent" type="cus:CustomerAvailableContent" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LimitAmount" type="cus:LimitAmount"/>
+	<xs:complexType name="LimitAmount">
+		<xs:annotation>
+			<xs:documentation>Reference data element for a customer limit period</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="endDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the reference value becomes effective</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limitAmountCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limitAmountKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limitAmountName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sortOrder" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the reference value becomes ineffective</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerProspect" type="cus:CustomerProspect"/>
+	<xs:complexType name="CustomerProspect">
+		<xs:annotation>
+			<xs:documentation>The role assumed by a person who is not a customer with Ladbrokes, however has been identified as a 'prospect'. Often used to categorise those that can be marketed at with outbound campaigns.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ptr:PartyRole"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerProductPreference" type="cus:CustomerProductPreference"/>
+	<xs:complexType name="CustomerProductPreference">
+		<xs:sequence>
+			<xs:element name="productCategory" type="cat:CategoryTypeKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The category of the product in the preference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="weight" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Weighting of the preference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SystemKind">
+		<xs:annotation>
+			<xs:documentation>TBD - Enumeration of the kinds of system that master customer information</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MDM">
+				<xs:annotation>
+					<xs:documentation>The master customer system, the MDM hub</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OpenBet">
+				<xs:annotation>
+					<xs:documentation>The OpenBet system.  This will be a sessionToken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Givex">
+				<xs:annotation>
+					<xs:documentation>The Givex Loyalty System</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MGS">
+				<xs:annotation>
+					<xs:documentation>The Micro Gaming</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CRM">
+				<xs:annotation>
+					<xs:documentation>The CRM System</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ODIN">
+				<xs:annotation>
+					<xs:documentation>The Data Warehouse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BS2000">
+				<xs:annotation>
+					<xs:documentation>The Data Warehouse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Hybris">
+				<xs:annotation>
+					<xs:documentation>The master customer system, the MDM hub</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RacingClub">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PokerShop">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Twitter">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Facebook">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerFlag" type="cus:CustomerFlag"/>
+	<xs:complexType name="CustomerFlag">
+		<xs:annotation>
+			<xs:documentation>A generic name/value flag element managed by OpenBet to augment a customers 'status' with.
+
+The combination of customer/account status, plus flags, determines actions associated with the customer (e.g. a 'Fraud' flag would not allow the customer to log in)  TBD
+
+Sometimes a flag can have a reason as to why the flag was set.
+
+From OpenBet:
+
+The top-level statuses on a customer account are not very granular (Active/Suspended or Closed), but simplify handling for login. However, the Authentication module in OpenBet provides a much more detailed mechanism for controlling customer access to various aspects of the OpenBet system. This relies on Status Flags being set against a customer account. A list of these flags can be found below. N.B. This is not necessarily a complete list, as specific OpenBet
+implementations may add Status Flags.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="createdDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Sometimes a reason can accompany a flag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name/code for the flag.  Below is a list of possible (not exhaustive - to confirm with Ladbrokes)
+
+LOCK Locked Login attempted three times with a bad password or can be set
+manually
+PWORD Change Password The customer must change their current password
+DEP Deposits Blocked Deposits are not allowed by this customer
+WTD Withdrawals Blocked Withdrawals are not allowed by this customer
+STOP Bets blocked Betting is not allowed by this customer
+ASK Login Restricted Login is restricted to supervisors
+SUPERVISOR Bets restricted Betting is restricted to supervisors
+MONITOR Bets Monitored Betting should be monitored
+LOOK Check customer Customer notes should be read</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reason" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Sometimes a reason can accompany a flag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="cus:CustomerFlagStatusKind"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of the flag.  'Active' or 'Suspended'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value for the flag if applicable.  May be empty as only a status is required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerFlagType" type="cus:CustomerFlagType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AuthorisationCodeStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Used"/>
+			<xs:enumeration value="ExpiredNotUsed"/>
+			<xs:enumeration value="Invalid"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerSocialMedia" type="cus:CustomerSocialMedia"/>
+	<xs:complexType name="CustomerSocialMedia">
+		<xs:annotation>
+			<xs:documentation>TBD - This class represents a customers social media profile.  A customer may have a number of socialMedia enrolments they use?</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ladbrokes can use customer details to connect if logged in with using connect (e.g. facebookConnect)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="socialMediaType" type="cus:SocialMediaType"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of social media</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="userName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The username</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ChallengeResponse" type="cus:ChallengeResponse"/>
+	<xs:complexType name="ChallengeResponse">
+		<xs:annotation>
+			<xs:documentation>This class represents a challenge response Q &amp; A a customer will have specified on registration.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="challenge" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Free text field representing a personal question for the user.
+This personal question may be used by the bookmaker's customer service department should user forget his password.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="response" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Free text field representing the user's answer to challenge</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LimitPeriod" type="cus:LimitPeriod"/>
+	<xs:complexType name="LimitPeriod">
+		<xs:annotation>
+			<xs:documentation>Reference data element for a customer limit period</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="endDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the reference value becomes effective</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limitPeriodCode" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limitPeriodKey" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limitPeriodName" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sortOrder" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code for the limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="startDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date and time the reference value becomes ineffective</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ApplicationTrustStatusKind">
+		<xs:annotation>
+			<xs:documentation>The current status of the application trust record</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Expired"/>
+			<xs:enumeration value="RevokedByCustomer"/>
+			<xs:enumeration value="RevokedByLadbrokes"/>
+			<xs:enumeration value="RevokedByApplicationOwner"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CustomerGroup" type="cus:CustomerGroup"/>
+	<xs:complexType name="CustomerGroup">
+		<xs:annotation>
+			<xs:documentation>This class represents the Customer Group that a customer belongs to.
+
+Mercury is doing lots of work on this for differential pricing.  TBD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="custGroupShortName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="customerGroupCode" type="xs:string"  minOccurs="0"/>
+			<xs:element name="customerGroupDescription" type="xs:string"  minOccurs="0"/>
+			<xs:element name="customerGroupId" type="xs:string"  minOccurs="0"/>
+			<xs:element name="customerGroupName" type="xs:string"  minOccurs="0"/>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isApplyToAllLevels" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If TRUE then mapping is applicable to all the childs of the selected entity else not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerMessages" type="cus:CustomerMessages"/>
+	<xs:complexType name="CustomerMessages">
+		<xs:annotation>
+			<xs:documentation>Messages to be shown to the customer via whatever channel is appropriate. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hasPriorityUnread" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - is there a priority/urgent unread in the inbox</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastNewMessageDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The date and time of last new message was recieved.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numUnread" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The total number of messages unread in the inbox</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="totalNumMessages" type="xs:integer"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The total number of messages in the inbox</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customerMessage" type="cus:CustomerMessage" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerFinancialsProfile" type="cus:CustomerFinancialsProfile"/>
+	<xs:complexType name="CustomerFinancialsProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a customers 'Financials' profile.
+
+TBD</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="CustomerPreferenceCharacteristic" type="cus:CustomerPreferenceCharacteristic"/>
+	<xs:complexType name="CustomerPreferenceCharacteristic">
+		<xs:annotation>
+			<xs:documentation>A generic container for preference characteristics.  Enables flexible extension for future use</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the profile characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of the characteristic</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valueType" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerProductProfile" type="cus:CustomerProductProfile"/>
+	<xs:complexType name="CustomerProductProfile">
+		<xs:annotation>
+			<xs:documentation>This class represents a container for the collection of 'product' based profiling of the customer.  Currently, only the 'Sportsbook' profile would be populated with any substance, as this information is gathered from OpenBet.
+
+Other profiles may need to be built up over time from BI/analytics, or may need integrating with the 3rd party provider that would master such profile details.  e.g. MGS would have a poker profile of the customer, not Ladborkes.
+
+A customer may only have a profile on a single product, or multiple. Purely depends on what products they are subscribed to.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customer owning this profile</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerProductPreferences" type="cus:CustomerProductPreferences" minOccurs="0"/>
+					<xs:element name="customerLiveCasinoProfile" type="cus:CustomerLiveCasinoProfile" minOccurs="0"/>
+					<xs:element name="customerPokerProfile" type="cus:CustomerPokerProfile" minOccurs="0"/>
+					<xs:element name="customerSportsbookProfile" type="cus:CustomerSportsbookProfile" minOccurs="0"/>
+					<xs:element name="customerGamesProfile" type="cus:CustomerGamesProfile" minOccurs="0"/>
+					<xs:element name="customerBackgammonProfile" type="cus:CustomerBackgammonProfile" minOccurs="0"/>
+					<xs:element name="customerCasinoProfile" type="cus:CustomerCasinoProfile" minOccurs="0"/>
+					<xs:element name="customerMobileProfile" type="cus:CustomerMobileProfile" minOccurs="0"/>
+					<xs:element name="customerLottosProfile" type="cus:CustomerLottosProfile" minOccurs="0"/>
+					<xs:element name="customerBingoProfile" type="cus:CustomerBingoProfile" minOccurs="0"/>
+					<xs:element name="customerFinancialsProfile" type="cus:CustomerFinancialsProfile" minOccurs="0"/>
+					<xs:element name="hasBackgammonProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a financial's profile?  This will only be the case if they consume financial's products (e.g. lotto game play)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasBingoProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a bingo profile?  This will only be the case if they consume bingo products (e.g. bingo game play)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasCasinoProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a casino profile?  This will only be the case if they consume casino products (e.g. casino game play)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasFinancialsProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a financial's profile?  This will only be the case if they consume financial's products (e.g. financial's betting)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasGamesProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a games profile?  This will only be the case if they consume games products (e.g. general game play)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasLottosProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a lottos profile?  This will only be the case if they consume lotts products (e.g. lotto game play)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasMobileProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a mobile profile?  This will only be the case if they consume products via mobile apps (e.g. kickoff)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasPokerProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a poker profile?  This will only be the case if they consume poker products (e.g. poker game play)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="hasSportsbookProfile" type="xs:boolean"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Does this customer have a sportsbook profile?  This will only be the case if they consume the sportsbook product (e.g. bet placement)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastConsumedProductCat" type="cat:CategoryTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The product category that was last transacted with.
+enum: SportsbookCategory, PokerCategory, CasinoCategory, GamesCategory, FinancialsCategory, LottosCategory, LiveCasino</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastTransactionDate" type="xs:dateTime"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Date and time of the last product transaction</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="mostConsumedProductCat" type="cat:CategoryTypeKind"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The product category that is the most consumed.
+enum: SportsbookCategory, PokerCategory, CasinoCategory, GamesCategory, FinancialsCategory, LottosCategory, LiveCasino</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="profileValue" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A generic profile value that is derived based on rules.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerCredentials" type="cus:CustomerCredentials"/>
+	<xs:complexType name="CustomerCredentials">
+		<xs:annotation>
+			<xs:documentation>This class represents a container for various customer credentials used to authenticate and authorise the customer.  e.g. userName, password, challenge response, token.
+
+As this inherits from ManagedEntity, any change/audit details can be represented if available/applicable.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="currentIPAddress" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The IP Address that the customer is currently using</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="customerKey" type="cus:CustomerKey"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customers identification if not parented by the customer entity</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="securityDetail" type="cus:SecurityDetail" minOccurs="0"/>
+					<xs:element name="challengeResponse" type="cus:ChallengeResponse" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="mobileNumber" type="xs:string"  minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CustomerAlias" type="cus:CustomerAlias"/>
+	<xs:complexType name="CustomerAlias">
+		<xs:sequence>
+			<xs:element name="alias" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the alias</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="aliasHost" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The host of the alias?  Different providers could host different alias</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isActive" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this the active alias (may have changed it?)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isAvailable" type="xs:boolean"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is this alias available?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="passPhraseID" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFromDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This alias is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validToDateTime" type="xs:dateTime"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This alias is valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="productCategory" type="cat:ProductCategory" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SocialMediaType" type="cus:SocialMediaType"/>
+	<xs:complexType name="SocialMediaType">
+		<xs:annotation>
+			<xs:documentation>TBD - A Social Media type.  e.g. Facebook, Twitter, LinkedIn etc</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Display name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="connetURL" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URL of 'connect' API</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="domain" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The domain of the company</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The domain of the company</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="organisation" type="pty:Organisation"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD - The party (organisation)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="xs:string"  minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

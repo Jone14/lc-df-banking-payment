@@ -1,0 +1,1492 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/trading/Market/2.0" xmlns:bts="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0" xmlns:cat="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" xmlns:cha="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:evt="http://cdm.ladbrokes.co.uk/trading/Event/2.0" xmlns:grd="http://cdm.ladbrokes.co.uk/trading/Grade/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:mkt="http://cdm.ladbrokes.co.uk/trading/Market/2.0" xmlns:prc="http://cdm.ladbrokes.co.uk/trading/Price/2.0" xmlns:res="http://cdm.ladbrokes.co.uk/trading/Result/2.0" xmlns:sbk="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" xmlns:sel="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" xmlns:typ="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" xmlns:xref="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/trading/Market/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Result/2.0" schemaLocation="../../Result/2.0/Result.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/BaseType/2.0" schemaLocation="../../BaseType/2.0/BaseType.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Sportsbook/2.0" schemaLocation="../../Sportsbook/2.0/Sportsbook.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/product/Catalogue/2.0" schemaLocation="../../Catalogue/2.0/Catalogue.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/betting/Betslip/2.0" schemaLocation="../../Betslip/2.0/Betslip.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Selection/2.0" schemaLocation="../../Selection/2.0/Selection.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Price/2.0" schemaLocation="../../Price/2.0/Price.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Grade/2.0" schemaLocation="../../Grade/2.0/Grade.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/CrossRef/2.0" schemaLocation="../../CrossRef/2.0/CrossRef.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Characteristic/2.0" schemaLocation="../../Characteristic/2.0/Characteristic.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:element name="MarketBettingConfig" type="MarketBettingConfig"/>
+	<xs:complexType name="MarketBettingConfig">
+		<xs:annotation>
+			<xs:documentation>Contains the details of market betting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFor"  type="typ:TimePeriod">
+				<xs:annotation>
+					<xs:documentation>Time and Period for which market betting is valid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPayOut"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount that all winners can win cumulative. Maximum payout should be configurable in the system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPotentialWin"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Default maximum potential win for any market created based on this Market Type, If a market is not set any maximum bet then this would apply for that market. It this is not set then it will be inherited from type or sub type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="minSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies minimum amount a winner can win.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount one can win in a single bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxMultipleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum multiple bets which can accepted for a customer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="defaultLiaLimitAmount"  type="typ:Money"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isPreMatchGrade"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isInPlayGrade"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="grade" type="grd:Grade"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketSort" type="MarketSort"/>
+	<xs:complexType name="MarketSort">
+		<xs:annotation>
+			<xs:documentation>Maintains details of all the sorts used in Ladbrokes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="sortId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Market Sort Id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sortName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the sort which again could be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sortDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the sort which again could be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="sortCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Type of the market sort.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="parentId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Mercury - TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketCategory" type="MarketCategory"/>
+	<xs:complexType name="MarketCategory">
+		<xs:annotation>
+			<xs:documentation>Maintains details of all the sorts used in Ladbrokes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketCategoryId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Market category Id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryName"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the category which again could be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryDescription"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description of the category.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="categoryCode"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Code of the category which again could be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketTypeChannel" type="MarketTypeChannel"/>
+	<xs:complexType name="MarketTypeChannel">
+		<xs:annotation>
+			<xs:documentation>Maintains details of channels and sub channels for market type</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketTypeChannelId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Mercury - TBD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketTypeHandicapDetail" type="MarketTypeHandicapDetail"/>
+	<xs:complexType name="MarketTypeHandicapDetail">
+		<xs:annotation>
+			<xs:documentation>Maintain details of handicap for the market like handicap value etc, Handicap is always attached to home team with +(plus) / -(minus) value. For example if home team is Chelsea and away team is stoke, handicap is given to Chelsea is +3.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time of validity of over under for the market, which can change over time.  This is the 'from' date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time of validity of handicap detail for the market, which can change over time.  This is the 'to' date.  If this is null, this is the active record.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this the active record?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lowHandicap"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Lowest for an handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="highHandicap"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Highest for an handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapChange"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Handicap change</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapRefundDed"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies % of deduction for handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicap"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Handicap added to Home side. Handicap is always added to home side using + (optional) and - sign</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapStep"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies the value by which a handicap can be modified. example if the step is 1 and the handicap value is 3 them we can modify handicap to 2 or 4 only, cannot modify to 1 or 5 directly.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapLineValue"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies the handicap line value, i.e. for 2 way it would always have decimal value and for 3 way it would have integer value.
+line value is used to identify whether the score is over the line or under the line or even at the line depending on the market sort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketTypePublication" type="MarketTypePublication"/>
+	<xs:complexType name="MarketTypePublication">
+		<xs:annotation>
+			<xs:documentation>Maintains the details for market publication.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the user who published the market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time the market was published to channel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publicationState"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Status of the publication</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketType" type="MarketType"/>
+	<xs:complexType name="MarketType">
+		<xs:annotation>
+			<xs:documentation>Maintains details of various market types</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketTypeKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identification(Surrogate key) for market type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketTypeName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the market type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketTag"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Tag for market type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>The order in which the market type will displayed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrderType"  type="DisplayOrderTypeKind">
+						<xs:annotation>
+							<xs:documentation>Specifies the display order type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="layoutStyle"  type="WebsiteLayoutStyleKind">
+						<xs:annotation>
+							<xs:documentation>Layout style for the market type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="onlineBetAcceptance"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to indicate if OBAC applies.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="BIRMarketExpanded"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to indicate if BIR market is expanded.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displaySort"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies how the market would be displayed on web site for customers.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayTemplate"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies how the display template.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="defaultLiaLimitAmount"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Default liability limit for any market created based on this Market Type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="BIRDelay"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Default delay(in seconds) for in running bets for any market created based on this Market Type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="BIRFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies the BIR status for the Market type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketBlurb"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Market blurb</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="BIRStartIndex"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Start point for the Index market for the market type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="suspensionDefault"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>This value is used as default for any selection of this market.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="twoWayMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>A two way market will only have two selections. 
+Flag which indicates whether it is a two way market or not.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether market type has been deleted or not. There won't be any hard delete, all deletes are soft delete.  An market type cannot be deleted if it has child entries or has been published.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="translatedMarketTypeName"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventTypeKey"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventSubtypeKey"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketTypeId"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="defaultMargin"  type="xs:decimal"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="status"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayStatus"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="adjust"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPreMatchAlternatePriceApplicable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isInPlayAlternatePriceApplicable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isExtraTime"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPenaltyShootout"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="disableAutoResultDerivation"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="inPlayMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="preMatchMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketSortID"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="birRetailFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD.  Flag to identify if inplay updates should be published to Retail</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="market" type="Market"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketSort" type="MarketSort"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroupPriceStreams" type="prc:CustomerGroupPriceStreams"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="availableSelectionType" type="sel:SelectionType"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="defaultAccumulatorConfig" type="MarketTypeAccumulatorConfig"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="priceSummary" type="MarketTypePriceSummary"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketTypePublication" type="MarketTypePublication"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="defaultMarketBettingConfig" type="MarketTypeBettingConfig"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketTypeChannel" type="MarketTypeChannel"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketTypeGroup" type="MarketTypeGroup"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="defaultHandicapSummary" type="MarketTypeHandicapDetail"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="parentMarketType" type="MarketType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MarketTypeBettingConfig" type="MarketTypeBettingConfig"/>
+	<xs:complexType name="MarketTypeBettingConfig">
+		<xs:annotation>
+			<xs:documentation>Contains the details of market betting.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time this default betting config record was valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time this default betting config record was valid from</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this record active?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPayOut"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount that all winners can win cumulative. Maximum payout should be configurable in the system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxPotentialWin"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Default maximum potential win for any market created based on this Market Type, If a market is not set any maximum bet then this would apply for that market. It this is not set then it will be inherited from type or sub type level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="minSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies minimum amount a winner can win.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxSingleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum amount one can win in a single bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxMultipleBet"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Specifies maximum multiple bets which can accepted for a customer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="defaultLiaLimitAmount"  type="typ:Money"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isPreMatchGrade"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isInPlayGrade"  type="xs:boolean"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="grade" type="grd:Grade"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketTypeGroup" type="MarketTypeGroup"/>
+	<xs:complexType name="MarketTypeGroup">
+		<xs:annotation>
+			<xs:documentation>Maintains details of event groups for which the marketType would be available as default market. It basically maintains mapping between marketType and eventGroup, which would facilitate in adding the market as default if the event group(sort in event table) matches the event group in this table</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketTypeGroupId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for the market type group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketTypeKey"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique identification(Surrogate key) for market type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eventGroupId"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Unique identification for event group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketTypePriceSummary" type="MarketTypePriceSummary"/>
+	<xs:complexType name="MarketTypePriceSummary">
+		<xs:annotation>
+			<xs:documentation>Maintains price details for a market.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceLowest"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Lower limit of handicap price scale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceHighest"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Higher limit of handicap price scale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceChange"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Price jump when equaliser point is adjusted in handicap price scale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceChangeState"  type="PriceChangeStateKind">
+				<xs:annotation>
+					<xs:documentation>Status of changed price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MarketSettlementStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HoldSettle"/>
+			<xs:enumeration value="AllowSettle"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AccumulatorCriteriaKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Unrestricted"/>
+			<xs:enumeration value="ThisClassOnly"/>
+			<xs:enumeration value="ThisTypeOnly"/>
+			<xs:enumeration value="NotThisClass"/>
+			<xs:enumeration value="NotThisType"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DisplayOrderTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HA"/>
+			<xs:enumeration value="CS"/>
+			<xs:enumeration value="HF"/>
+			<xs:enumeration value="PO"/>
+			<xs:enumeration value="PS"/>
+			<xs:enumeration value="AB"/>
+			<xs:enumeration value="PL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketDisplayStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Displayed"/>
+			<xs:enumeration value="NotDisplayed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketEachWayKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Applicable"/>
+			<xs:enumeration value="NotApplicable"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketEachWayTermsKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BetPlaced"/>
+			<xs:enumeration value="Others"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketPriceStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Finished"/>
+			<xs:enumeration value="NotFinished"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketResultStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ResultingComplete"/>
+			<xs:enumeration value="NotResulted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketRule4ValidKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Valid"/>
+			<xs:enumeration value="NotValid"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketSortKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WinDrawWin"/>
+			<xs:enumeration value="HeatToHead"/>
+			<xs:enumeration value="ToWin"/>
+			<xs:enumeration value="NextScorer"/>
+			<xs:enumeration value="ThreeOptionWesternHandicap"/>
+			<xs:enumeration value="TwoOptionWesternHandicap"/>
+			<xs:enumeration value="OverUnder"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MarketStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Suspended"/>
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Completed and Archived</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriceChangeStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Unset"/>
+			<xs:enumeration value="Active"/>
+			<xs:enumeration value="Inactive"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PricingDerivationStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success"/>
+			<xs:enumeration value="Failure"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WebsiteLayoutStyleKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Default"/>
+			<xs:enumeration value="EventCoupon"/>
+			<xs:enumeration value="Coupon"/>
+			<xs:enumeration value="WinDrawWin"/>
+			<xs:enumeration value="RacingSpecials"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Market" type="Market"/>
+	<xs:complexType name="Market">
+		<xs:annotation>
+			<xs:documentation>Maintains details of various market for an event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for market.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketName"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of the market.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketStatus"  type="MarketStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies status of market, not considering the parents state</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketStatusDerived"  type="MarketStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies status of market - but derived based on parent values states.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayStatus"  type="MarketDisplayStatusKind">
+						<xs:annotation>
+							<xs:documentation>Specifies if it would displayed or not</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="displayOrder"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The order in which the market will displayed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isIndexMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies whether it is a Index Market or Normal Market</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isOverUnderMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies whether it is a over/under market or Normal Market</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isHandicapMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies whether it is handicap market or Normal Market</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isTwoWayMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>A two way market will only have two selections. 
+Flag which indicates whether it is a two way market or not.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="onlineBetAcceptance"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to indicate if OBAC applies.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="liabilityLimitAmount"  type="typ:Money">
+						<xs:annotation>
+							<xs:documentation>Default liability limit for any market created based on this Market Type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="BIRDelay"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Default delay(in seconds) for in running bets for any market created based on this Market.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="BIRFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies the BIR status for the Market type</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isAntepost"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>If it is antepost market (yes or no). Antepost means the jockeys or teams for a race or tournament has not been finalized and the market is being setup before that</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="allowSettlement"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies if settlement for the market can be allowed or not.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="settlementState"  type="MarketSettlementStateKind">
+						<xs:annotation>
+							<xs:documentation>Specifies the state of settlement for the Market. indicates if the market can be settled, but result can be entered even if the settlement is not allowed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="APCSuspension"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies APC suspension which can have 
+Yes 
+No</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="pricingCompleteState"  type="MarketPriceStateKind">
+						<xs:annotation>
+							<xs:documentation>Indicate if user has finished pricing of the selections</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="resultingCompleteState"  type="MarketResultStateKind">
+						<xs:annotation>
+							<xs:documentation>If all the results for all the selections of a market are completed(i.e entered) then this flag is set to Y which indicates all selection results have been completed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="resultConfirmedState"  type="res:ResultConfirmationStateKind">
+						<xs:annotation>
+							<xs:documentation>If all the results for all the selections of a market are confirmed(i.e entered) then this flag is set to Y which indicates all selection results have been confirmed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind">
+						<xs:annotation>
+							<xs:documentation>Specifies whether market has been deleted or not. There won't be any hard delete, all deletes are soft delete.  An market cannot be deleted if it has child entries or has been published.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="suspendDatetime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Date and Time when the market should(has) be suspended.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isOff"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies it the market is off or not</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="OffDatetime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Specifies actual date and time at which the market would start. if there is delay it would capture actual start time which would different from normal scheduled time.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="resultLine"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Specifies the final result which has been achieved for overUnder or 2 way or 3 way western handicap after the match is over</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="bookMargin"  type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Specifiespercentage of the book priceswith respect to a market</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="linkedToAlgorithm"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies whether a market is linked to an algorithm or not</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="translatedMarketName"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventKey"  type="xs:string"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketTypeKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The market type id/key</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketSortCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The market sort code</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketGroupCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Market group code</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="totalProbability"  type="xs:double"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="pricingDerivationState"  type="PricingDerivationStateKind"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="lastStatusChangedBy"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Defines the last system which changed the status. Required for identifying Hard/Soft suspension like scenarios. Possible examples are BE, TA, PA etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="lastResultConfirmedBy"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Identifies the last system which confirmed the market result. Useful for RD to decide if it can override the result or not. A result last confirmed by TA cannot be overridden by RD.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="lastStatusChangedDateTime"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Timestamp for lastStatusChangedBy field update</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="lastResultConfirmedDateTime"  type="xs:dateTime"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="defaultMargin"  type="xs:double"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="adjust"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>TBD - Mercury</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPreMatchAlternatePriceApplicable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies if the pre-match alternate price is applicable or not</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isInPlayAlternatePriceApplicable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Specifies if the in-play alternate price is applicable or not</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventClassMarketTypeId"  type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>Attribute links the market to EventClassMarketType</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="autoPriced"  type="xs:boolean"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="actualMargin"  type="xs:decimal">
+						<xs:annotation>
+							<xs:documentation>SS - Used for derived pricing</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isSpecified"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isLinked"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is the market linked to alternate prices.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="publishDepth"  type="xs:integer"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="timeUpdated"  type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketBlurb"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketBlurbTemplate"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="startValue"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="bandWidth"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endValue"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="startA"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endA"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="startB"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="endB"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="timeline"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="disableAlgorithmOverwrite"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="IsMarginFunctionApplied"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="disableAutoResultDerivation"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="inPlayMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="preMatchMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="hasSelectionsPrice"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPrematchAlternatePricesSwitchedOn"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isBipAlternatePricesSwitchedOn"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPriceStreamManualOverride"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD.  Required to identify whether a market is manual or auto that can be priced by pricing algorithms</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isManualMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Mercury - TBD</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="birRetailFlag"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Flag to identify if inplay updates should be published to Retail</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isStandardFixedOddsMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Place only betting Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isForecastMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Place only betting Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isTricastMarket"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Place only betting Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isSPAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Starting Price (SP) Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isGPAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Guaranteed Pricing (GP) Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isEWAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Place only betting Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPlaceOnlyAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Place only betting Pricing Available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isLPAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is scorecasts available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isPMAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Paramutal betting available? (e.g. Pools)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isSCAvailable"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is Live Pricing available?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketMeaningMajorCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Site Server market meaning major code (old market_sort)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketMeaningMinorCode"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Site Server market meaning major code (old leg_sort)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="isResulted"  type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Is this market resulted</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="priceTypeCodes"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Set of zero or more short codes representing all the types of prices currently offered on this market</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="ncastTypeCodes"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>ncastTypeCodes</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="handicapMarketType"  type="sbk:HandicapMarketTypeKind">
+						<xs:annotation>
+							<xs:documentation>Type of the handicap market</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="poolKey"  type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Canonical key for the sportsbook pool this market is associated to</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="1" minOccurs="0" name="product" type="cat:Product"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketChannel" type="MarketChannel"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="accumulatorConfig" type="MarketAccumulatorConfig"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="couplingStrategy" type="prc:PriceCoupling"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketIndex" type="MarketIndex"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="handicap" type="MarketHandicapDetail"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="selection" type="sel:Selection"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="historicalEachWayTerm" type="MarketEachWayDetail"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="rule4" type="MarketRule4Detail"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="priceSummary" type="MarketPriceSummary"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="historicalHandicap" type="MarketHandicapDetail"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="overUnder" type="MarketOverUnderDetail"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketNcastDividend" type="sbk:MarketNcastDividend"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eachWayTerm" type="MarketEachWayDetail"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketBettingConfig" type="MarketBettingConfig"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="historicalIndex" type="MarketIndex"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketPublication" type="MarketPublication"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="customerGroupPriceStreams" type="prc:CustomerGroupPriceStreams"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketCategory" type="MarketCategory"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketSort" type="MarketSort"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="eventKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="1" minOccurs="0" name="marketKeys" type="xref:CrossRefEntityKeys"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="marketCharacteristic" type="MarketCharacteristic"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="selectionPriceTypes" type="sel:SelectionPriceType"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="legSort" type="bts:LegSort"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="scorecastSelection" type="sbk:ScorecastSelection"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MarketCharacteristic" type="MarketCharacteristic"/>
+	<xs:complexType name="MarketCharacteristic">
+		<xs:complexContent>
+			<xs:extension base="cha:Characteristic">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MarketChannel" type="MarketChannel"/>
+	<xs:complexType name="MarketChannel">
+		<xs:annotation>
+			<xs:documentation>Maintains details of channels and sub channels for market.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the user who published the market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time the market was published to channel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="deleteFlag"  type="typ:DeleteFlagKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether it has been deleted or not. There won't be any hard delete, all deletes are soft delete. 
+Deleted
+NotDeleted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="chn:Channel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketHandicapDetail" type="MarketHandicapDetail"/>
+	<xs:complexType name="MarketHandicapDetail">
+		<xs:annotation>
+			<xs:documentation>Maintain details of handicap for the market like handicap value etc, Handicap is always attached to home team with +(plus) / -(minus) value. For example if home team is Chelsea and away team is stoke, handicap is given to Chelsea is +3.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time of validity of over under for the market, which can change over time.  This is the 'from' date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time of validity of handicap detail for the market, which can change over time.  This is the 'to' date.  If this is null, this is the active record.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this the active record?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lowHandicap"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Lowest for an handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="highHandicap"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Highest for an handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapChange"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Handicap change</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapRefundDed"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies % of deduction for handicap.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicap"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Handicap added to Home side. Handicap is always added to home side using + (optional) and - sign</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapStep"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies the value by which a handicap can be modified. example if the step is 1 and the handicap value is 3 them we can modify handicap to 2 or 4 only, cannot modify to 1 or 5 directly.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapLineValue"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies the handicap line value, i.e. for 2 way it would always have decimal value and for 3 way it would have integer value.
+line value is used to identify whether the score is over the line or under the line or even at the line depending on the market sort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>String version of the value e.g. '-1.5,1.0'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="handicapType"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="overUnderLineValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value of the overUnder line value if the market is a over-under market (aka above/below).  This can change over time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="rawHandicapValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>OB Raw version</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketTypeAccumulatorConfig" type="MarketTypeAccumulatorConfig"/>
+	<xs:complexType name="MarketTypeAccumulatorConfig">
+		<xs:annotation>
+			<xs:documentation>Maintains details of Accumulator details of the market.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="minAccumulator"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Minimum number of selections of this market in accumulator for same event class.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxAccumulator"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Maximum number of selections of this market in accumulator for same event class.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="accumulatorCriteria"  type="AccumulatorCriteriaKind">
+				<xs:annotation>
+					<xs:documentation>Criteria for accumulator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketRule4Detail" type="MarketRule4Detail"/>
+	<xs:complexType name="MarketRule4Detail">
+		<xs:annotation>
+			<xs:documentation>Maintains all the rule 4 details for a market.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Rule 4 Deduction is applied to bets taken within this time period. This can change over time - this is the date this record is valid from.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Deduction is applied to bets taken within this time period.  This can change over time - this is the date this record is valid to.  If this is null, this is the active record.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this the active record?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="marketRule4Id"  type="xs:integer"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="rule4Warning"  type="MarketEachWayKind">
+				<xs:annotation>
+					<xs:documentation>Flag to indicate if Rule 4 applies for this market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="rule4PriceType"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Price type for market rule4.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="rule4Valid"  type="MarketRule4ValidKind">
+				<xs:annotation>
+					<xs:documentation>Specifies If deduction is valid or not</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="rule4Deduction"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Deduction in pence per pound.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="rule4Reason"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Reason for rule 4 deduction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketIndex" type="MarketIndex"/>
+	<xs:complexType name="MarketIndex">
+		<xs:annotation>
+			<xs:documentation>Maintain details of Index details of Index Market.
+For example 1st, 2nd, 3rd, 4th, 5th set winner in tennis match, so we will have one index market and it would can have five market for it.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="index"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Index of the market. index will be 1,2,3,4,5 for tennis match. its not necessary that index markets are created in advance, usually next set market is created when current set is running so next index would currentIndex+1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of the market index.  The to date if the index has moved on</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Validity of the market index.  The from date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this index the active one?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="resultingCompleteState"  type="MarketResultStateKind">
+				<xs:annotation>
+					<xs:documentation>If all the results for all the selections of the index market are confirmed(i.e entered) then this flag is set to Y which indicates all selection results have been entered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="resultConfirmedState"  type="res:ResultConfirmationStateKind">
+				<xs:annotation>
+					<xs:documentation>Specifies whether the result is confirmed or not </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="settlementState"  type="MarketSettlementStateKind">
+				<xs:annotation>
+					<xs:documentation>Specifies the state of settlement for the Market index. indicates if the market index can be settled, but result can be entered even if the settlement is not allowed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastStatusChangedBy"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastResultConfirmedBy"  type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastStatusChangedDateTime"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="lastResultConfirmedDateTime"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="timeUpdated"  type="xs:dateTime"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="isValidMarket"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this market a valid one?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isResulted"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this index resulted?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="selectionPrice" type="sel:SelectionPrice"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="selectionResult" type="sel:SelectionResult"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketPublication" type="MarketPublication"/>
+	<xs:complexType name="MarketPublication">
+		<xs:annotation>
+			<xs:documentation>Maintains the details for market publication.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedBy"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Specifies the user who published the market</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publishedDateTime"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time the market was published to channel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="publicationState"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Status of the publication</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="marketChannel" type="MarketChannel"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketEachWayDetail" type="MarketEachWayDetail"/>
+	<xs:complexType name="MarketEachWayDetail">
+		<xs:annotation>
+			<xs:documentation>Maintains Eachway details for a market. there could be multiple each way factors for a market, but latest eachway factor would active.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time this each way configuration is valid from. This can change over time for a Market.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time eachway was introduced. this would help in identifying latest eachway details for a market.  These can change over time, this is the 'from' date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this the active record?  This will be the record with the 'validTo' not set.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayFactor"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Factor of Maximum bet that can be placed as each way bet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayNum"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Numerator of the each way factor as a fraction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayDen"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Denominator of the each way factor as a fraction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWay"  type="MarketEachWayKind">
+				<xs:annotation>
+					<xs:documentation>Indicates whether each way is applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayPlace"  type="MarketEachWayKind">
+				<xs:annotation>
+					<xs:documentation>Indicates whether each way place is applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayPlaces"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>If places is applicable, how many places.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayAt"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Factor of adds for each way (1/4, 1/5 etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="eachWayTerms"  type="MarketEachWayTermsKind">
+				<xs:annotation>
+					<xs:documentation>Whether each way will be decided when bet is placed or when event starts.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketOverUnderDetail" type="MarketOverUnderDetail"/>
+	<xs:complexType name="MarketOverUnderDetail">
+		<xs:annotation>
+			<xs:documentation>Overunder markets are created only for market sorts of overUnder, for other it won't exist. 
+Would have the details of over under markets like who is the team( ot player) for whom the over under is being created, the time at which overunder was created and what is the over under value.
+Note 1: over under would always have decimal value like 2.5, 3.5 etc
+Note 2: The latest overunder for player is always the active one, other overunder's for the same player for the market are old ones which are no more active and are ignored.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="validFrom"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time of validity of over under for the market, which can change over time.  This is the 'from' date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="validTo"  type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date and time of validity of over under for the market, which can change over time.  This is the 'to' date.  If the to date is null, this is the active record. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="isActive"  type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this the active record?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="overUnderValue"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Specifies the value of overunder. the overunder value would always be decimal value, it won't be integer, it should have decimal value.
+Example 0.5, 1.5, 2.5 etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="overUnderStep"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Specifies value by which the overUnderValue can move. For example if current value of overUnderValue = 4.5 and overUnderStep is 1 then overUnderValue can move to either 4.5 or 3.5 not to 5.5 or 2.5</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="lowOverUnder"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Low for an overunder. Specifies higher limit for overunder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="highOverUnder"  type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>High for an overunder. Specifies higher limit for overunder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="overUnderLineValue"  type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Over Under line value as a string</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketAccumulatorConfig" type="MarketAccumulatorConfig"/>
+	<xs:complexType name="MarketAccumulatorConfig">
+		<xs:annotation>
+			<xs:documentation>Maintains details of Accumulator details of the market.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="minAccumulator"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Minimum number of selections of this market in accumulator for same event class.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="maxAccumulator"  type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Maximum number of selections of this market in accumulator for same event class.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="accumulatorCriteria"  type="AccumulatorCriteriaKind">
+				<xs:annotation>
+					<xs:documentation>Criteria for accumulator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MarketPriceSummary" type="MarketPriceSummary"/>
+	<xs:complexType name="MarketPriceSummary">
+		<xs:annotation>
+			<xs:documentation>Maintains price details for a market.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceLowest"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Lower limit of handicap price scale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceHighest"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Higher limit of handicap price scale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceChange"  type="typ:Money">
+				<xs:annotation>
+					<xs:documentation>Price jump when equaliser point is adjusted in handicap price scale.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="priceChangeState"  type="PriceChangeStateKind">
+				<xs:annotation>
+					<xs:documentation>Status of changed price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

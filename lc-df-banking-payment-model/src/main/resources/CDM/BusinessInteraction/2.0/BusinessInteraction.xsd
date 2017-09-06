@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<xs:schema xmlns="http://cdm.ladbrokes.co.uk/common/BusinessInteraction/2.0" xmlns:bin="http://cdm.ladbrokes.co.uk/common/BusinessInteraction/2.0" xmlns:chn="http://cdm.ladbrokes.co.uk/common/Channel/2.0" xmlns:evt="http://cdm.ladbrokes.co.uk/trading/Event/2.0" xmlns:man="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" xmlns:not="http://cdm.ladbrokes.co.uk/common/Notification/2.0" xmlns:ptr="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cdm.ladbrokes.co.uk/common/BusinessInteraction/2.0">
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/trading/Event/2.0" schemaLocation="../../Event/2.0/Event.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Channel/2.0" schemaLocation="../../Channel/2.0/Channel.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/party/PartyRole/2.0" schemaLocation="../../PartyRole/2.0/PartyRole.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/ManagedEntity/2.0" schemaLocation="../../ManagedEntity/2.0/ManagedEntity.xsd"/>
+	<xs:import namespace="http://cdm.ladbrokes.co.uk/common/Notification/2.0" schemaLocation="../../Notification/2.0/Notification.xsd"/>
+	<xs:simpleType name="BusinessInteractionMediumKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TradingApplication"/>
+			<xs:enumeration value="Web"/>
+			<xs:enumeration value="Phone"/>
+			<xs:enumeration value="System"/>
+			<xs:enumeration value="Email"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Paper"/>
+			<xs:enumeration value="RetailShop"/>
+			<xs:enumeration value="MobileDevice"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BusinessInteractionItem" type="BusinessInteractionItem"/>
+	<xs:complexType name="BusinessInteractionItem">
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="interactionItemKey" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="interactionItemType" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="description" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="timeStarted" type="xs:dateTime"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="timeCompleted" type="xs:dateTime"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="entityKind" type="man:ManagedEntityTypeKind"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="relatedNotification" type="not:Notification" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="involvedEntity" type="man:ManagedEntity" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="involves" type="evt:Event" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="BusinessInteractionSubtypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Create"/>
+			<xs:enumeration value="Update"/>
+			<xs:enumeration value="Delete"/>
+			<xs:enumeration value="Activate"/>
+			<xs:enumeration value="Suspend"/>
+			<xs:enumeration value="Archive"/>
+			<xs:enumeration value="Display"/>
+			<xs:enumeration value="NotDisplay"/>
+			<xs:enumeration value="Enquiry"/>
+			<xs:enumeration value="FirstPublish"/>
+			<xs:enumeration value="DepositFunds"/>
+			<xs:enumeration value="WithdrawFunds"/>
+			<xs:enumeration value="BetSubmission"/>
+			<xs:enumeration value="PasswordUpdate"/>
+			<xs:enumeration value="PaymentMethodUpdate"/>
+			<xs:enumeration value="Notification"/>
+			<xs:enumeration value="Dispute"/>
+			<xs:enumeration value="UserHelp"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BusinessInteractionActionKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NotificationRequired"/>
+			<xs:enumeration value="ReferToLegal"/>
+			<xs:enumeration value="ContactCustomer"/>
+			<xs:enumeration value="Dispute"/>
+			<xs:enumeration value="CreditAccount"/>
+			<xs:enumeration value="None"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BusinessInteractionTypeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EventManagement"/>
+			<xs:enumeration value="MarketManagement"/>
+			<xs:enumeration value="PriceManagement"/>
+			<xs:enumeration value="FeedManagement"/>
+			<xs:enumeration value="ResultManagement"/>
+			<xs:enumeration value="LiabilityManagement"/>
+			<xs:enumeration value="AccountManagement"/>
+			<xs:enumeration value="CustomerManagement"/>
+			<xs:enumeration value="LoginCustomer"/>
+			<xs:enumeration value="UserManagement"/>
+			<xs:enumeration value="AddCustomerPaymentMethod"/>
+			<xs:enumeration value="SetDepositLimit"/>
+			<xs:enumeration value="BetPlacement"/>
+			<xs:enumeration value="LogoutCustomer"/>
+			<xs:enumeration value="DepositFunds"/>
+			<xs:enumeration value="WithdrawFunds"/>
+			<xs:enumeration value="ValidateBetslipPayout"/>
+			<xs:enumeration value="SubmitBetslipPayout"/>
+			<xs:enumeration value="IssueLoyaltyPoints"/>
+			<xs:enumeration value="RedeemLoyaltyPoints"/>
+			<xs:enumeration value="TransferFunds"/>
+			<xs:enumeration value="RedeemPromotion"/>
+			<xs:enumeration value="RegisterCustomer"/>
+			<xs:enumeration value="ConsumeVideoFeed"/>
+			<xs:enumeration value="OBAC"/>
+			<xs:enumeration value="ChangePassword"/>
+			<xs:enumeration value="GamePlay"/>
+			<xs:enumeration value="CustomerComplaint"/>
+			<xs:enumeration value="CustomerQuery"/>
+			<xs:enumeration value="CustomerDispute"/>
+			<xs:enumeration value="ChangeCustomerDetails"/>
+			<xs:enumeration value="NotifyBetPayout"/>
+			<xs:enumeration value="CategoryManagement"/>
+			<xs:enumeration value="SelectionManagement"/>
+			<xs:enumeration value="Promotion"/>
+			<xs:enumeration value="TransactionHistory"/>
+			<xs:enumeration value="PaymentMethodManagement"/>
+			<xs:enumeration value="CouponManagement"/>
+			<xs:enumeration value="WalletManagement"/>
+			<xs:enumeration value="ApplicationManagement"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BusinessInteractionDirectionKind">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="BusinessInteractionStatusKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="New"/>
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="InProgress"/>
+			<xs:enumeration value="Unresolved"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BusinessInteraction" type="BusinessInteraction"/>
+	<xs:complexType name="BusinessInteraction">
+		<xs:complexContent>
+			<xs:extension base="man:ManagedEntity">
+				<xs:sequence>
+					<xs:element name="interactionKey" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="interactionType" type="BusinessInteractionTypeKind"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="interactionDate" type="xs:dateTime"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="interactionStatus" type="BusinessInteractionStatusKind"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="interactionAction" type="BusinessInteractionActionKind"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="interactionMedium" type="BusinessInteractionMediumKind"  minOccurs="0" maxOccurs="1"/>
+					<xs:element name="partyRoleInvolved" type="ptr:PartyRole" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="interactionItem" type="BusinessInteractionItem" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="interactionChannel" type="chn:Channel" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
