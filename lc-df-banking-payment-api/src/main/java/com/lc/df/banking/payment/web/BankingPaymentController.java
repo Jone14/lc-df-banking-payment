@@ -1,4 +1,4 @@
-package lc.df.banking.payment.web;
+package com.lc.df.banking.payment.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lc.df.banking.payment.service.api.BankingPaymentService;
+import com.lc.df.banking.payment.service.api.BankingPaymentService;
+
 import uk.co.ladbrokes.services.service.technical.ims.imspaymentwrapper._1.GetPaymentHistoryRequest;
 import uk.co.ladbrokes.services.service.technical.ims.imspaymentwrapper._1.GetPaymentHistoryResponse;
 
