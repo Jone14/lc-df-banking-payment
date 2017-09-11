@@ -48,7 +48,6 @@
 
 
 	<modules>
-		<module>api</module>
 		<module>lc-df-banking-payment-repo</module>
 		<module>lc-df-banking-payment-service</module>
 		<module>lc-df-banking-payment-model</module>
